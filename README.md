@@ -1,4 +1,5 @@
-# Java Final Project for team 名探偵コナン
+# Silver Bullet
+Java Final Project for team 名探偵コナン
 
 ## Building an executable Java FX 11 application with Maven
 This is an application that demonstrates how to construct an executable Java FX application.
