@@ -1,7 +1,7 @@
-module com.altran.igjava.demo.fx.application {
+module ca.ciccc.silverBullet {
 
     requires javafx.graphics;
     requires javafx.controls;
 
-    opens com.altran.igjava.demoserver to javafx.graphics;
+    opens ca.ciccc.silverBullet to javafx.graphics;
 }
