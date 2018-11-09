@@ -19,6 +19,8 @@ public class SilverBulletApplication extends Application {
     Scene scene = new Scene(l, 640, 480);
     stage.setScene(scene);
     stage.show();
+
+
   }
 
   public static void main(String[] args) {
