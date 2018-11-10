@@ -17,4 +17,12 @@ public enum Type {
     }
   }
 
+  public boolean isPlayer(){
+    return this == PLAYER;
+  }
+
+  public boolean isEnemy(){
+    return this == ENEMY;
+  }
+
 }

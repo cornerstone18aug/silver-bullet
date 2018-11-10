@@ -1,12 +1,18 @@
 package ca.ciccc.spaceInvader;
 
+import java.util.Collections;
+import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -16,6 +22,9 @@ import javafx.stage.Stage;
 public class SpaceInvaderApp extends Application {
 
   private Pane root = new Pane();
+  List<Node> children = Collections.synchronizedList(this.root.getChildren());
+  Stage primaryStage;
+  AnimationTimer timer;
 
   private Sprite player = new Sprite(300, 550, 40, 40, Type.PLAYER, Color.BLUE);
 
@@ -27,6 +36,7 @@ public class SpaceInvaderApp extends Application {
 
   @Override
   public void start(Stage stage) {
+    this.primaryStage = stage;
     Scene scene = new Scene(this.createContent());
     scene.setOnKeyPressed(e -> {
       switch (e.getCode()) {
@@ -41,6 +51,8 @@ public class SpaceInvaderApp extends Application {
           break;
       }
     });
+    stage.setTitle("Space Invader App");
+
     stage.setScene(scene);
     stage.show();
   }
@@ -49,7 +61,7 @@ public class SpaceInvaderApp extends Application {
     this.root.setPrefSize(600, 600);
     this.root.getChildren().add(player);
 
-    AnimationTimer timer = new AnimationTimer() {
+    timer = new AnimationTimer() {
       @Override
       public void handle(long l) {
         update();
@@ -71,30 +83,31 @@ public class SpaceInvaderApp extends Application {
     }
   }
 
-  private void update() {
+
+  synchronized private void update() {
     t += 0.016;
 
-    this.root.getChildren().stream()
+    this.children.stream()
         .map(n -> (Sprite) n)
-        .forEach(s -> {
-          switch (s.type) {
+        .forEach(sprite1 -> {
+          switch (sprite1.type) {
             case ENEMY_BULLET:
-              s.moveDown();
-              if (s.getBoundsInParent().intersects(player.getBoundsInParent())) {
+              sprite1.moveDown();
+              if (sprite1.getBoundsInParent().intersects(player.getBoundsInParent())) {
                 player.dead = true;
-                s.dead = true;
+                sprite1.dead = true;
               }
               break;
 
             case PLAYER_BULLET:
-              s.moveUp();
-              this.root.getChildren().stream()
+              sprite1.moveUp();
+              this.children.stream()
                   .map(n -> (Sprite) n)
-                  .filter(sprite -> sprite.type == Type.ENEMY)
+                  .filter(sprite -> sprite.type.isEnemy())
                   .forEach(enemy -> {
-                    if (s.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+                    if (sprite1.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
                       enemy.dead = true;
-                      s.dead = true;
+                      sprite1.dead = true;
                     }
                   });
               break;
@@ -102,28 +115,48 @@ public class SpaceInvaderApp extends Application {
             case ENEMY:
               if (t > 2) {
                 if (Math.random() < 0.3) {
-                  shoot(s);
+                  shoot(sprite1);
                 }
               }
           }
         });
 
-    this.root.getChildren()
-        .removeIf(child -> {
-          Sprite sprite = (Sprite) child;
-          if (sprite.type == Type.PLAYER && sprite.dead) {
-            System.exit(0);
-          }
-          return sprite.dead;
-        });
+    this.children.removeIf(child -> ((Sprite) child).dead);
 
     if (t > 2) {
       t = 0;
     }
+
+    if (this.player.dead) {
+      Label secondLabel = new Label("Game Over..");
+
+      StackPane secondaryLayout = new StackPane();
+      secondaryLayout.getChildren().add(secondLabel);
+
+      Scene secondScene = new Scene(secondaryLayout, 230, 100);
+
+      // New window (Stage)
+      Stage newWindow = new Stage();
+      newWindow.setTitle("Game Over..");
+      newWindow.setScene(secondScene);
+
+      // Specifies the modality for new window.
+      newWindow.initModality(Modality.WINDOW_MODAL);
+
+      // Specifies the owner Window (parent) for new window
+      newWindow.initOwner(primaryStage);
+
+      // Set position of second window, related to primary window.
+      newWindow.setX(primaryStage.getX() + 200);
+      newWindow.setY(primaryStage.getY() + 100);
+
+      newWindow.show();
+      timer.stop();
+    }
   }
 
   private void shoot(Sprite who) {
-    this.root.getChildren().add(
+    this.children.add(
         new Sprite((int) who.getTranslateX() + 20, (int) who.getTranslateY(), 5, 20,
             Type.getBullet(who.type), Color.BLACK));
   }
