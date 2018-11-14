@@ -1,7 +1,9 @@
 package ca.ciccc.spaceInvader;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -47,7 +49,7 @@ public class SpaceInvaderApp extends Application {
           player.moveRight();
           break;
         case SPACE:
-          this.shoot(player);
+          this.root.getChildren().add(this.shoot(player));
           break;
       }
     });
@@ -84,42 +86,43 @@ public class SpaceInvaderApp extends Application {
   }
 
 
-  synchronized private void update() {
+  private void update() {
     t += 0.016;
 
-    this.children.stream()
-        .map(n -> (Sprite) n)
-        .forEach(sprite1 -> {
-          switch (sprite1.type) {
-            case ENEMY_BULLET:
-              sprite1.moveDown();
-              if (sprite1.getBoundsInParent().intersects(player.getBoundsInParent())) {
-                player.dead = true;
-                sprite1.dead = true;
-              }
-              break;
-
-            case PLAYER_BULLET:
-              sprite1.moveUp();
-              this.children.stream()
-                  .map(n -> (Sprite) n)
-                  .filter(sprite -> sprite.type.isEnemy())
-                  .forEach(enemy -> {
-                    if (sprite1.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
-                      enemy.dead = true;
-                      sprite1.dead = true;
-                    }
-                  });
-              break;
-
-            case ENEMY:
-              if (t > 2) {
-                if (Math.random() < 0.3) {
-                  shoot(sprite1);
-                }
-              }
+    ListIterator<Node> childrenIt = this.children.listIterator();
+    while (childrenIt.hasNext()) {
+      Sprite child = (Sprite) childrenIt.next();
+      switch (child.type) {
+        case ENEMY_BULLET:
+          child.moveDown();
+          if (child.getBoundsInParent().intersects(player.getBoundsInParent())) {
+            player.dead = true;
+            child.dead = true;
           }
-        });
+          break;
+
+        case PLAYER_BULLET:
+          child.moveUp();
+          for (Node childNode : this.children){
+            Sprite enemy = (Sprite) childNode;
+            if (!enemy.type.isEnemy()) {
+              continue;
+            }
+            if (child.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+              enemy.dead = true;
+              child.dead = true;
+            }
+          }
+          break;
+
+        case ENEMY:
+          if (t > 2) {
+            if (Math.random() < 0.3) {
+              childrenIt.add(this.shoot(child));
+            }
+          }
+      }
+    }
 
     this.children.removeIf(child -> ((Sprite) child).dead);
 
@@ -153,12 +156,12 @@ public class SpaceInvaderApp extends Application {
       newWindow.show();
       timer.stop();
     }
+
   }
 
-  private void shoot(Sprite who) {
-    this.children.add(
-        new Sprite((int) who.getTranslateX() + 20, (int) who.getTranslateY(), 5, 20,
-            Type.getBullet(who.type), Color.BLACK));
+  private Sprite shoot(Sprite who) {
+    return new Sprite((int) who.getTranslateX() + 20, (int) who.getTranslateY(), 5, 20,
+        Type.getBullet(who.type), Color.BLACK);
   }
 
   private static class Sprite extends Rectangle {
