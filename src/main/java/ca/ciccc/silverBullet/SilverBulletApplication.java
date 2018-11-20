@@ -61,6 +61,15 @@ public class SilverBulletApplication extends Application {
 
     stage.setScene(scene);
     stage.show();
+  }*/
+
+  @Override
+  public void start(Stage stage) {
+    Board board = new Board();
+    Scene scene = new Scene(board.createContent());
+
+    stage.setScene(scene);
+    stage.show();
   }
 
   private Parent createContent() {
