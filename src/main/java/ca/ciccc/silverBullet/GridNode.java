@@ -7,12 +7,16 @@ public abstract class GridNode {
     protected int gridY;
     protected String name;
 
-    protected int screenX;
-    protected int screenY;
+    protected double screenX;
+    protected double screenY;
 
     protected boolean canMoveTo;
 
-    protected boolean hasPlayer;
+    protected Player playerInSpace = null;
+
+    protected Node image;
+    protected boolean hasPlayer = false;
+    public Node squareNode;
 
     public boolean isHasPlayer() {
         return hasPlayer;
@@ -30,9 +34,6 @@ public abstract class GridNode {
         this.playerInSpace = playerInSpace;
     }
 
-    protected Player playerInSpace;
-
-    protected Node image;
 
     public int getGridX() {
         return gridX;
@@ -58,7 +59,7 @@ public abstract class GridNode {
         this.name = name;
     }
 
-    public int getScreenX() {
+    public double getScreenX() {
         return screenX;
     }
 
@@ -66,7 +67,7 @@ public abstract class GridNode {
         this.screenX = screenX;
     }
 
-    public int getScreenY() {
+    public double getScreenY() {
         return screenY;
     }
 

@@ -1,11 +1,18 @@
 package ca.ciccc.silverBullet;
 
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
 public class Player {
     boolean hasShot;
     int playerNumber;
     Directions facingDirection;
     int gridPositionX;
     int gridPositionY;
+    Move targetMove;
+    Node playerNode;
+
 
     public Player(boolean hasShot, int playerNumber, int gridX, int gridY, Directions facingDirection) {
         this.hasShot = hasShot;
@@ -13,6 +20,7 @@ public class Player {
         this.facingDirection = facingDirection;
         gridPositionX = gridX;
         gridPositionY = gridY;
+        playerNode = new Circle(40, Color.GREEN);
     }
 
     public void rotatePlayer(Orientation move){
