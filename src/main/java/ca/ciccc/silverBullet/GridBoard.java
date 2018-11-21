@@ -117,5 +117,79 @@ public class GridBoard {
         }
         return null;
     }
+
+    public boolean tryShoot (Player playerShooting){
+        if(playerShooting.hasShot){
+            GridNode playerStartingNode = grid[playerShooting.gridPositionY][playerShooting.gridPositionX];
+            List<GridNode> nodesAffected = new ArrayList<>();
+            GridNode currentTargetNode;
+            int gridIterator = 1;
+            switch (playerShooting.facingDirection){
+                case NORTH:
+                    while (true){
+                        if(playerShooting.gridPositionY - gridIterator > 0){
+                            currentTargetNode = grid[playerStartingNode.gridY-gridIterator][playerStartingNode.gridX];
+                            if(currentTargetNode.canMoveTo){
+                                nodesAffected.add(currentTargetNode);
+                            } else {
+                                break;
+                            }
+                            gridIterator++;
+                        }
+
+                    }
+                    break;
+                case SOUTH:
+                    while (playerShooting.gridPositionY + gridIterator > gridSizeY-1){
+
+                            currentTargetNode = grid[playerStartingNode.gridY+gridIterator][playerStartingNode.gridX];
+                            if(currentTargetNode.canMoveTo){
+                                nodesAffected.add(currentTargetNode);
+                            } else {
+                                break;
+                            }
+                            gridIterator++;
+
+
+                    }
+                    break;
+                case EAST:
+                    while (playerShooting.gridPositionX + gridIterator > gridSizeX-1){
+
+                            currentTargetNode = grid[playerStartingNode.gridY][playerStartingNode.gridX+gridIterator];
+                            if(currentTargetNode.canMoveTo){
+                                nodesAffected.add(currentTargetNode);
+                            } else {
+                                break;
+                            }
+                            gridIterator++;
+
+
+                    }
+                    break;
+                case WEST:
+                    while (playerShooting.gridPositionX - gridIterator > 0){
+
+                            currentTargetNode = grid[playerStartingNode.gridY][playerStartingNode.gridX-gridIterator];
+                            if(currentTargetNode.canMoveTo){
+                                nodesAffected.add(currentTargetNode);
+                            } else {
+                                break;
+                            }
+                            gridIterator++;
+                        }
+
+            }
+            nodesAffected.forEach((o ->{
+                ((Rectangle)o.squareNode).setFill(Color.ORANGE);
+                if(o.hasPlayer()){
+                    o.playerInSpace.Die();
+                }
+            }));
+            playerShooting.hasShot = false;
+            return true;
+        }
+        return false;
+    }
 }
 

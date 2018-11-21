@@ -48,6 +48,9 @@ public class SilverBulletApplication extends Application {
         case E:
           testFirstPlayer.rotatePlayer(Orientation.RIGHT);
           break;
+        case SPACE:
+          gameBoard.tryShoot(testFirstPlayer);
+          break;
       }
     });
 

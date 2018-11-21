@@ -72,5 +72,10 @@ public class Player {
         }
     }
 
+    public void Die(){
+        playerNode.setDisable(true);
+        System.out.println("Player " + playerNumber + " was shot");
+    }
+
 
 }
