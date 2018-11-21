@@ -23,7 +23,7 @@ import java.util.List;
  * A very simple Java FX Application used to demonstrate a couple of aspects of the Java 11
  * ecosystem.
  */
-public class SilverBulletApplication extends Application {
+public class FileInputTest extends Application {
 
 
 
