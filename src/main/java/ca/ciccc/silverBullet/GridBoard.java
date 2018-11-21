@@ -12,19 +12,24 @@ public class GridBoard {
     GridNode[][] grid;
     GridPane gridBoard;
     static List<Player> players;
+    int gridSizeX;
+    int gridSizeY;
 
     public GridBoard(int sizeX, int sizeY) {
         generateBoard(sizeX, sizeY);
         players = new ArrayList<>();
+        gridSizeX = sizeX -1;
+        gridSizeY = sizeY-1;
 
     }
 
     public Move tryMovePlayer(Player playerToMove){
+
         GridNode originGrid = grid[playerToMove.gridPositionY][playerToMove.gridPositionX];
         int targetX = 0;
         int targetY = 0;
         GridNode targetNode;
-        if (originGrid.isHasPlayer()){
+        if (originGrid.hasPlayer()){
             switch (originGrid.playerInSpace.facingDirection){
                 case NORTH:
                     targetX = originGrid.gridX;
@@ -43,6 +48,9 @@ public class GridBoard {
                     targetY = originGrid.gridY;
                     break;
             }
+            if((targetX <0 || targetY < 0) || (targetX > gridSizeX || targetY > gridSizeY)){
+                return null;
+            }
             targetNode = grid[targetY][targetX];
 
             if (targetX < 0 || targetY < 0) {
@@ -59,12 +67,15 @@ public class GridBoard {
 
     public void movePlayer(Player playerToMove){
         if(playerToMove.targetMove != null){
-            GridNode targetNode = grid[playerToMove.gridPositionY][playerToMove.gridPositionX];
-            targetNode.playerInSpace = null;
+            GridNode targetNode = grid[playerToMove.targetMove.moveY][playerToMove.targetMove.moveX];
+            grid[playerToMove.gridPositionY][playerToMove.gridPositionX].playerInSpace = null;
             targetNode.playerInSpace = playerToMove;
 
-            playerToMove.playerNode.setTranslateX(targetNode.screenX);
-            playerToMove.playerNode.setTranslateY(targetNode.screenY);
+            playerToMove.gridPositionX = targetNode.gridX;
+            playerToMove.gridPositionY = targetNode.gridY;
+
+            playerToMove.playerNode.setTranslateX(targetNode.screenX + 50);
+            playerToMove.playerNode.setTranslateY(targetNode.screenY + 50);
 
             playerToMove.targetMove = null;
         }
@@ -96,7 +107,7 @@ public class GridBoard {
 
     public Player addPlayer(int gridX, int gridY) {
         GridNode targetNode = grid[gridY][gridX];
-        if(targetNode.hasPlayer == false){
+        if(targetNode.hasPlayer() == false){
             Player playerToAdd = new Player(true, 1, gridX, gridY, Directions.NORTH);
             players.add(playerToAdd);
             targetNode.playerInSpace = playerToAdd;

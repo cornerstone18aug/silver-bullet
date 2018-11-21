@@ -10,6 +10,5 @@ public class Space extends GridNode{
 
         name = "Space";
         canMoveTo = true;
-        hasPlayer = false;
     }
 }

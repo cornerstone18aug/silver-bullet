@@ -15,15 +15,13 @@ public abstract class GridNode {
     protected Player playerInSpace = null;
 
     protected Node image;
-    protected boolean hasPlayer = false;
     public Node squareNode;
 
-    public boolean isHasPlayer() {
-        return hasPlayer;
-    }
-
-    public void setHasPlayer(boolean hasPlayer) {
-        this.hasPlayer = hasPlayer;
+    public boolean hasPlayer() {
+        if(playerInSpace != null){
+            return true;
+        }
+        return false;
     }
 
     public Player getPlayerInSpace() {
