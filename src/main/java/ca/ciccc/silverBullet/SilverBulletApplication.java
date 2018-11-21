@@ -1,4 +1,3 @@
-package ca.ciccc.silverBullet;
 
 import ca.ciccc.silverBullet.gameplayEnums.PlayerAction;
 import ca.ciccc.silverBullet.gridElements.GridBoard;
