@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  * A very simple Java FX Application used to demonstrate a couple of aspects of the Java 11
  * ecosystem.
  */
-public class SilverBulletApp extends Application {
+public class SilverBulletAppMenu extends Application {
 
   public static void main(String[] args) {
     ConstUtil.setResourceBundle(ResourceBundle.getBundle("application"));

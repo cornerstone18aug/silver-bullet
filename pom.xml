@@ -56,10 +56,7 @@
       <artifactId>javafx-media</artifactId>
       <version>11</version>
     </dependency>
-
   </dependencies>
-
-
   <build>
     <resources>
       <!--In order to use jlink in a OS independent way with a config file
@@ -113,7 +110,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>ca.ciccc.silverBullet.SilverBulletApp</mainClass>
+          <mainClass>ca.ciccc.silverBullet.SilverBulletAppMenu</mainClass>
         </configuration>
       </plugin>
       <plugin>
