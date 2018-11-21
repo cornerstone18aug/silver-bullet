@@ -5,17 +5,12 @@ import ca.ciccc.silverBullet.gameBoard.GameScene;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A very simple Java FX Application used to demonstrate a couple of aspects of the Java 11
@@ -76,6 +71,3 @@ public class SilverBulletApplication extends Application {
   }
 
 }
-
-
-
