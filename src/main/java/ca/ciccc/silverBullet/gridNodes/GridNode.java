@@ -1,5 +1,6 @@
-package ca.ciccc.silverBullet;
+package ca.ciccc.silverBullet.gridNodes;
 
+import ca.ciccc.silverBullet.Player;
 import javafx.scene.Node;
 
 public abstract class GridNode {

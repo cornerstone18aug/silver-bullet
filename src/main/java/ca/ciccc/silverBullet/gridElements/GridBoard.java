@@ -1,6 +1,9 @@
-package ca.ciccc.silverBullet;
+package ca.ciccc.silverBullet.gridElements;
 
-import javafx.scene.Node;
+import ca.ciccc.silverBullet.Player;
+import ca.ciccc.silverBullet.gameplayEnums.Directions;
+import ca.ciccc.silverBullet.gridNodes.GridNode;
+import ca.ciccc.silverBullet.gridNodes.Space;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -10,11 +13,11 @@ import java.util.List;
 
 public class GridBoard {
     GridNode[][] grid;
-    GridPane gridBoard;
+    public GridPane gridBoard;
     static List<Player> players;
     int gridSizeX;
     int gridSizeY;
-    static GridBoard instance;
+    public static GridBoard instance;
 
     public GridBoard(int sizeX, int sizeY) {
         generateBoard(sizeX, sizeY);
@@ -27,27 +30,27 @@ public class GridBoard {
 
     public Move tryMovePlayer(Player playerToMove){
 
-        GridNode originGrid = grid[playerToMove.gridPositionY][playerToMove.gridPositionX];
+        GridNode originGrid = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
         int targetX = 0;
         int targetY = 0;
         GridNode targetNode;
         if (originGrid.hasPlayer()){
-            switch (originGrid.playerInSpace.facingDirection){
+            switch (originGrid.getPlayerInSpace().getFacingDirection()){
                 case NORTH:
-                    targetX = originGrid.gridX;
-                    targetY = originGrid.gridY - 1;
+                    targetX = originGrid.getGridX();
+                    targetY = originGrid.getGridY() - 1;
                     break;
                 case SOUTH:
-                    targetX = originGrid.gridX;
-                    targetY = originGrid.gridY + 1;
+                    targetX = originGrid.getGridX();
+                    targetY = originGrid.getGridY() + 1;
                     break;
                 case EAST:
-                    targetX = originGrid.gridX + 1;
-                    targetY = originGrid.gridY;
+                    targetX = originGrid.getGridX() + 1;
+                    targetY = originGrid.getGridY();
                     break;
                 case WEST:
-                    targetX = originGrid.gridX - 1;
-                    targetY = originGrid.gridY;
+                    targetX = originGrid.getGridX() - 1;
+                    targetY = originGrid.getGridY();
                     break;
             }
             if((targetX <0 || targetY < 0) || (targetX > gridSizeX || targetY > gridSizeY)){
@@ -68,18 +71,18 @@ public class GridBoard {
     }
 
     public void movePlayer(Player playerToMove){
-        if(playerToMove.targetMove != null){
-            GridNode targetNode = grid[playerToMove.targetMove.moveY][playerToMove.targetMove.moveX];
-            grid[playerToMove.gridPositionY][playerToMove.gridPositionX].playerInSpace = null;
-            targetNode.playerInSpace = playerToMove;
+        if(playerToMove.getTargetMove() != null){
+            GridNode targetNode = grid[playerToMove.getTargetMove().moveY][playerToMove.getTargetMove().moveX];
+            grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()].setPlayerInSpace(null);
+            targetNode.setPlayerInSpace(playerToMove);
 
-            playerToMove.gridPositionX = targetNode.gridX;
-            playerToMove.gridPositionY = targetNode.gridY;
+            playerToMove.setGridPositionX(targetNode.getGridX());
+            playerToMove.setGridPositionY(targetNode.getGridY());
 
-            playerToMove.playerNode.setTranslateX(targetNode.screenX + 30);
-            playerToMove.playerNode.setTranslateY(targetNode.screenY + 30);
+            playerToMove.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
+            playerToMove.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
 
-            playerToMove.targetMove = null;
+            playerToMove.setTargetMove(null);
         }
 
     }
@@ -96,16 +99,16 @@ public class GridBoard {
 
 
                 grid[i][j] = nodeToAdd;
-                nodeToAdd.gridX = j;
-                nodeToAdd.gridY = i;
+                nodeToAdd.setGridX(j);
+                nodeToAdd.setGridY(i);
             }
         }
         gridBoard.setTranslateX(50);
         gridBoard.setTranslateY(50);
         for(int i = 0; i < sizeY; i++){
             for(int j = 0; j<sizeX; j++) {
-                grid[j][i].screenX = (i*60) + 50;
-                grid[j][i].screenY = (j*60) + 50;
+                grid[j][i].setScreenX((i*60) + 50);
+                grid[j][i].setScreenY((j*60) + 50);
             }
         }
     }
@@ -115,26 +118,26 @@ public class GridBoard {
         if(targetNode.hasPlayer() == false){
             Player playerToAdd = new Player(true, 1, gridX, gridY, Directions.NORTH);
             players.add(playerToAdd);
-            targetNode.playerInSpace = playerToAdd;
-            playerToAdd.playerNode.setTranslateX(targetNode.screenX + 30);
-            playerToAdd.playerNode.setTranslateY(targetNode.screenY + 30);
+            targetNode.setPlayerInSpace(playerToAdd);
+            playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
+            playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
             return playerToAdd;
         }
         return null;
     }
 
     public boolean tryShoot (Player playerShooting){
-        if(playerShooting.hasShot){
-            GridNode playerStartingNode = grid[playerShooting.gridPositionY][playerShooting.gridPositionX];
+        if(playerShooting.isHasShot()){
+            GridNode playerStartingNode = grid[playerShooting.getGridPositionY()][playerShooting.getGridPositionX()];
             List<GridNode> nodesAffected = new ArrayList<>();
             GridNode currentTargetNode;
             int gridIterator = 1;
-            switch (playerShooting.facingDirection){
+            switch (playerShooting.getFacingDirection()){
                 case NORTH:
                     while (true){
-                        if(playerShooting.gridPositionY - gridIterator >= 0){
-                            currentTargetNode = grid[playerStartingNode.gridX][playerStartingNode.gridY-gridIterator];
-                            if(currentTargetNode.canMoveTo){
+                        if(playerShooting.getGridPositionY() - gridIterator >= 0){
+                            currentTargetNode = grid[playerStartingNode.getGridX()][playerStartingNode.getGridY()-gridIterator];
+                            if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
                                 break;
@@ -147,10 +150,10 @@ public class GridBoard {
                     }
                     break;
                 case SOUTH:
-                    while (playerShooting.gridPositionY + gridIterator <= gridSizeY){
+                    while (playerShooting.getGridPositionY() + gridIterator <= gridSizeY){
 
-                            currentTargetNode = grid[playerStartingNode.gridX][playerStartingNode.gridY+gridIterator];
-                            if(currentTargetNode.canMoveTo){
+                            currentTargetNode = grid[playerStartingNode.getGridX()][playerStartingNode.getGridY()+gridIterator];
+                            if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
                                 break;
@@ -161,10 +164,10 @@ public class GridBoard {
                     }
                     break;
                 case EAST:
-                    while (playerShooting.gridPositionX + gridIterator <= gridSizeX){
+                    while (playerShooting.getGridPositionX() + gridIterator <= gridSizeX){
 
-                            currentTargetNode = grid[playerStartingNode.gridX+gridIterator][playerStartingNode.gridY];
-                            if(currentTargetNode.canMoveTo){
+                            currentTargetNode = grid[playerStartingNode.getGridX()+gridIterator][playerStartingNode.getGridY()];
+                            if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
                                 break;
@@ -175,10 +178,10 @@ public class GridBoard {
                     }
                     break;
                 case WEST:
-                    while (playerShooting.gridPositionX - gridIterator >= 0){
+                    while (playerShooting.getGridPositionX() - gridIterator >= 0){
 
-                            currentTargetNode = grid[playerStartingNode.gridX-gridIterator][playerStartingNode.gridY];
-                            if(currentTargetNode.canMoveTo){
+                            currentTargetNode = grid[playerStartingNode.getGridX()-gridIterator][playerStartingNode.getGridY()];
+                            if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
                                 break;
@@ -190,7 +193,7 @@ public class GridBoard {
             nodesAffected.forEach((o ->{
                 ((Rectangle)o.squareNode).setFill(Color.ORANGE);
                 if(o.hasPlayer()){
-                    o.playerInSpace.Die();
+                    o.getPlayerInSpace().Die();
                 }
             }));
             //playerShooting.hasShot = false;

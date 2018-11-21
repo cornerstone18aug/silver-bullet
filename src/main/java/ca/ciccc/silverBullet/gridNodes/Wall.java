@@ -1,4 +1,4 @@
-package ca.ciccc.silverBullet;
+package ca.ciccc.silverBullet.gridNodes;
 
 public class Wall extends GridNode {
 

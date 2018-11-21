@@ -1,5 +1,7 @@
 package ca.ciccc.silverBullet;
 
+import ca.ciccc.silverBullet.gameplayEnums.PlayerAction;
+import ca.ciccc.silverBullet.gridElements.GridBoard;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
