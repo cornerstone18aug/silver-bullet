@@ -1,6 +1,9 @@
 package ca.ciccc.silverBullet.enums;
 
+import ca.ciccc.silverBullet.components.menus.MenuItem;
+import ca.ciccc.silverBullet.utils.ConstUtil;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,6 +21,16 @@ public enum Menu {
 
   Menu(List<SubMenu> subMenus) {
     this.subMenus = subMenus;
+  }
+
+  public String get() {
+    return ConstUtil.getRbString(this.name().toLowerCase());
+  }
+
+  public static MenuItem[] createMenuItems() {
+    return Arrays.stream(Menu.values()).map(menu ->
+       new MenuItem(menu.get())
+    ).toArray(MenuItem[]::new);
   }
 
 }
