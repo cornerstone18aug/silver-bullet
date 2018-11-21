@@ -43,14 +43,13 @@ public class SilverBulletAppMenu extends Application {
     root.setPrefSize(DisplaySizeEnum.EXTERNAL_FRAME_W.get(),
         DisplaySizeEnum.EXTERNAL_FRAME_H.get());
 
-    try (InputStream is = Files.newInputStream(Paths.get("res/conan.png"))) {
-      ImageView img = new ImageView(new Image(is));
-      img.setFitWidth(DisplaySizeEnum.EXTERNAL_FRAME_W.get());
-      img.setFitHeight(DisplaySizeEnum.EXTERNAL_FRAME_H.get());
-      root.getChildren().add(img);
-    } catch (IOException e) {
-      System.out.println("Couldn't load image");
-    }
+    ImageView img = new ImageView("res/conan.png");
+    img.setFitWidth(DisplaySizeEnum.MENU_IMAGE_W.get());
+    img.setFitHeight(DisplaySizeEnum.MENU_IMAGE_H.get());
+    // Plus margin
+    img.setX(DisplaySizeEnum.EXTERNAL_FRAME_W.get() - (img.getFitWidth() + 30));
+    img.setY(DisplaySizeEnum.EXTERNAL_FRAME_H.get() - (img.getFitHeight() + 5));
+    root.getChildren().add(img);
 
     root.getChildren().addAll(
         new Title(),
