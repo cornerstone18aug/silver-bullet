@@ -5,11 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.Collections;
@@ -30,6 +26,9 @@ public class SilverBulletApplication extends Application {
 
   GridBoard gameBoard;
   Player testFirstPlayer;
+  double t = 0;
+  boolean isExecuting;
+  int currentActionNumber = 0;
 
   @Override
   public void start(Stage stage) {
@@ -38,18 +37,20 @@ public class SilverBulletApplication extends Application {
     scene.setOnKeyPressed(e -> {
       switch (e.getCode()) {
         case Q:
-          testFirstPlayer.rotatePlayer(Orientation.LEFT);
+          testFirstPlayer.addAction(PlayerAction.TURN_LEFT);
           break;
         case W:
-          testFirstPlayer.targetMove = gameBoard.tryMovePlayer(testFirstPlayer);
-
-          gameBoard.movePlayer(testFirstPlayer);
+          testFirstPlayer.addAction(PlayerAction.MOVE);
           break;
         case E:
-          testFirstPlayer.rotatePlayer(Orientation.RIGHT);
+          testFirstPlayer.addAction(PlayerAction.TURN_RIGHT);
+          break;
+        case R:
+          testFirstPlayer.addAction(PlayerAction.SHOOT);
           break;
         case SPACE:
-          gameBoard.tryShoot(testFirstPlayer);
+          currentActionNumber  = 0;
+          isExecuting = true;
           break;
       }
     });
@@ -63,7 +64,7 @@ public class SilverBulletApplication extends Application {
   private Parent createContent() {
     this.root.setPrefSize(700, 700);
 
-    gameBoard = new GridBoard(6, 6);
+    gameBoard = new GridBoard(9, 9);
     root.getChildren().add(gameBoard.gridBoard);
     testFirstPlayer = gameBoard.addPlayer(1, 1);
     root.getChildren().add(testFirstPlayer.playerNode);
@@ -81,6 +82,18 @@ public class SilverBulletApplication extends Application {
   }
 
   public void update(){
+    if(isExecuting){
+      if(t <= 0){
+        t = .4;
+        testFirstPlayer.takeAction(currentActionNumber);
+        currentActionNumber++;
+        if(currentActionNumber>4){
+          isExecuting = false;
+        }
+      } else {
+        t -= 0.016;
+      }
+    }
 
   }
 
