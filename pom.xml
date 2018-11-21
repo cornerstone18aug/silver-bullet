@@ -109,7 +109,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>ca.ciccc.silverBullet.SilverBulletApplication</mainClass>
+          <mainClass>ca.ciccc.silverBullet.SilverBulletApp</mainClass>
         </configuration>
       </plugin>
       <plugin>
