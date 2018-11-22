@@ -60,5 +60,6 @@ public class MenuItem extends StackPane {
     this.setOnMousePressed(event -> backGround.setFill(Color.DARKVIOLET));
     this.setOnMouseReleased(event -> backGround.setFill(gradient));
 
+    this.setOnMouseClicked();
   }
 }

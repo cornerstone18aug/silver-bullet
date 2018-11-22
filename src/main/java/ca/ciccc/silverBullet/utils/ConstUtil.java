@@ -27,7 +27,11 @@ public class ConstUtil {
     TITLE_W(EXTERNAL_FRAME_W.get()),
     TITLE_H(80),
     MENU_ITEM_W(300),
-    MENU_ITEM_H(80);
+    MENU_ITEM_H(80),
+    MENU_IMAGE_W(180),
+    MENU_IMAGE_H(450),
+    MODAL_MIN_W(200),
+    MODAL_MIN_H(100);
 
     double size;
     DisplaySizeEnum(double size) {
