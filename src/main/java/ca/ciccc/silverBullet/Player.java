@@ -1,10 +1,10 @@
 package ca.ciccc.silverBullet;
 
-import ca.ciccc.silverBullet.gameplayEnums.Directions;
-import ca.ciccc.silverBullet.gameplayEnums.Orientation;
-import ca.ciccc.silverBullet.gameplayEnums.PlayerAction;
-import ca.ciccc.silverBullet.gridElements.GridBoard;
-import ca.ciccc.silverBullet.gridElements.Move;
+import ca.ciccc.silverBullet.enums.gameplay.Directions;
+import ca.ciccc.silverBullet.enums.gameplay.Orientation;
+import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
+import ca.ciccc.silverBullet.gameBoard.GridBoard;
+import ca.ciccc.silverBullet.gameBoard.Move;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -12,15 +12,17 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class Player {
-    boolean hasShot;
-    int playerNumber;
-    Directions facingDirection;
-    int gridPositionX;
-    int gridPositionY;
-    Move targetMove;
+
+    private boolean hasShot;
+    private int playerNumber;
+    private Directions facingDirection;
+    private int gridPositionX;
+    private int gridPositionY;
+    private Move targetMove;
     Node playerNode;
-    PlayerAction[] playerActions;
-    int currentAction = 0;
+    private PlayerAction[] playerActions;
+    private int currentAction = 0;
+    private ActionCounter playerActionCounter;
 
 
     public Player(boolean hasShot, int playerNumber, int gridX, int gridY, Directions facingDirection) {
@@ -34,6 +36,7 @@ public class Player {
         Image image = new Image("File:src/main/resources/left.png");
         ((Circle) playerNode).setFill(new ImagePattern(image));
         playerNode.setRotate(90);
+        playerActionCounter = new ActionCounter();
 
     }
 
@@ -89,6 +92,7 @@ public class Player {
         if(currentAction > 4){
             currentAction = 0;
         }
+        playerActionCounter.addAction();
     }
 
     public void takeAction(int actionNumber){
@@ -111,6 +115,12 @@ public class Player {
                 break;
         }
         playerActions[actionNumber] = PlayerAction.NONE;
+        playerActionCounter.removeAction();
+    }
+
+
+    public ActionCounter getPlayerActionCounter() {
+        return playerActionCounter;
     }
 
     public boolean isHasShot() {

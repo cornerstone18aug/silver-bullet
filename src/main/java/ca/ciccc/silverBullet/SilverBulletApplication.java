@@ -1,7 +1,7 @@
 package ca.ciccc.silverBullet;
 
-import ca.ciccc.silverBullet.gameplayEnums.PlayerAction;
-import ca.ciccc.silverBullet.gridElements.GridBoard;
+import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
+import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -71,6 +71,10 @@ public class SilverBulletApplication extends Application {
     testFirstPlayer = gameBoard.addPlayer(1, 1);
     root.getChildren().add(testFirstPlayer.playerNode);
 
+    root.getChildren().add(testFirstPlayer.getPlayerActionCounter());
+    testFirstPlayer.getPlayerActionCounter().setTranslateX(300);
+    testFirstPlayer.getPlayerActionCounter().setTranslateY(650);
+
     timer = new AnimationTimer() {
       @Override
       public void handle(long l) {
@@ -91,6 +95,7 @@ public class SilverBulletApplication extends Application {
         currentActionNumber++;
         if(currentActionNumber>4){
           isExecuting = false;
+          testFirstPlayer.getPlayerActionCounter().clearActions();
         }
       } else {
         t -= 0.016;
