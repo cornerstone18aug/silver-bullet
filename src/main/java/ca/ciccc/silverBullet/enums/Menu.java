@@ -3,15 +3,12 @@ package ca.ciccc.silverBullet.enums;
 import ca.ciccc.silverBullet.components.menus.MenuItem;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.ModalUtil;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 public enum Menu {
-  START(Collections.emptyList()) {
+  START {
     @Override
     public EventHandler<? super MouseEvent> event() {
       return mouseEvent -> {
@@ -19,7 +16,7 @@ public enum Menu {
       };
     }
   },
-  SETTINGS(null) {
+  HOW_TO_PLAY {
     @Override
     public EventHandler<? super MouseEvent> event() {
       return mouseEvent -> {
@@ -27,7 +24,7 @@ public enum Menu {
       };
     }
   },
-  QUIT(Collections.emptyList()) {
+  QUIT {
     @Override
     public EventHandler<? super MouseEvent> event() {
       return mouseEvent -> ModalUtil.confirm(this.getName(),
@@ -36,19 +33,16 @@ public enum Menu {
     }
   };
 
-  static {
-    SETTINGS.subMenus = new ArrayList<>();
-    SETTINGS.subMenus.add(SubMenu.BOARD_SIZE);
-  }
-
-  List<SubMenu> subMenus;
-
-  Menu(List<SubMenu> subMenus) {
-    this.subMenus = subMenus;
-  }
-
   public String getName() {
-    return ConstUtil.getRbString("menu." + this.name().toLowerCase());
+    String[] names = this.name().toLowerCase().split("_");
+    String name = names[0];
+    if (names.length > 2) {
+      for (int i=1; i< names.length; i++) {
+        name += names[i].substring(0, 1).toUpperCase() + names[i].substring(1);
+      }
+    }
+
+    return ConstUtil.getRbString("menu." + name);
   }
 
   abstract public EventHandler<? super MouseEvent> event();

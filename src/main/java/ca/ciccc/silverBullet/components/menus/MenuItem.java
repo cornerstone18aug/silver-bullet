@@ -1,9 +1,12 @@
 package ca.ciccc.silverBullet.components.menus;
 
+import ca.ciccc.silverBullet.enums.Menu;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.ConstUtil.DisplaySizeEnum;
 import ca.ciccc.silverBullet.utils.ConstUtil.FontSizeEnum;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -21,7 +24,7 @@ import javafx.scene.text.Text;
  */
 public class MenuItem extends StackPane {
 
-  public MenuItem(String name) {
+  public MenuItem(Menu name) {
     Stop[] stops = new Stop[]{
         new Stop(0, Color.DARKBLUE),
         new Stop(0.1, Color.BLACK),
@@ -41,7 +44,7 @@ public class MenuItem extends StackPane {
         DisplaySizeEnum.MENU_ITEM_H.get());
     backGround.setOpacity(0.4);
 
-    Text itemText = new Text(name);
+    Text itemText = new Text(name.getName());
     itemText.setFill(Color.DARKGREY);
     itemText.setFont(
         Font.font(ConstUtil.MENU_FONT, FontWeight.SEMI_BOLD, FontSizeEnum.MENU.get())
@@ -60,6 +63,6 @@ public class MenuItem extends StackPane {
     this.setOnMousePressed(event -> backGround.setFill(Color.DARKVIOLET));
     this.setOnMouseReleased(event -> backGround.setFill(gradient));
 
-    this.setOnMouseClicked();
+    this.setOnMouseClicked(name.event());
   }
 }
