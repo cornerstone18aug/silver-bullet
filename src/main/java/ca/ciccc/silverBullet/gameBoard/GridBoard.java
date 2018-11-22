@@ -1,7 +1,7 @@
-package ca.ciccc.silverBullet.gridElements;
+package ca.ciccc.silverBullet.gameBoard;
 
 import ca.ciccc.silverBullet.Player;
-import ca.ciccc.silverBullet.gameplayEnums.Directions;
+import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Space;
 import javafx.scene.layout.GridPane;
@@ -14,7 +14,7 @@ import java.util.List;
 public class GridBoard {
     GridNode[][] grid;
     public GridPane gridBoard;
-    static List<Player> players;
+    List<Player> players;
     int gridSizeX;
     int gridSizeY;
     public static GridBoard instance;
