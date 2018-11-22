@@ -1,16 +1,9 @@
 package ca.ciccc.silverBullet;
 
-import ca.ciccc.silverBullet.components.menus.MenuBox;
-import ca.ciccc.silverBullet.components.menus.Title;
-import ca.ciccc.silverBullet.enums.Menu;
+import ca.ciccc.silverBullet.components.menus.MenuScene;
 import ca.ciccc.silverBullet.utils.ConstUtil;
-import ca.ciccc.silverBullet.utils.ConstUtil.DisplaySizeEnum;
 import java.util.ResourceBundle;
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -27,32 +20,8 @@ public class SilverBulletAppMenu extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle(ConstUtil.APP_NAME);
-    primaryStage.setScene(createParentPane());
+    primaryStage.setScene(new MenuScene());
     primaryStage.show();
   }
-
-  private Scene createParentPane() {
-    Pane root = new Pane();
-
-    root.setPrefSize(DisplaySizeEnum.EXTERNAL_FRAME_W.get(),
-        DisplaySizeEnum.EXTERNAL_FRAME_H.get());
-
-    ImageView img = new ImageView("iamges/conan.png");
-    img.setFitWidth(DisplaySizeEnum.MENU_IMAGE_W.get());
-    img.setFitHeight(DisplaySizeEnum.MENU_IMAGE_H.get());
-    // Plus margin
-    img.setX(DisplaySizeEnum.EXTERNAL_FRAME_W.get() - (img.getFitWidth() + 30));
-    img.setY(DisplaySizeEnum.EXTERNAL_FRAME_H.get() - (img.getFitHeight() + 5));
-    root.getChildren().add(img);
-
-    root.getChildren().addAll(
-        new Title(),
-        new MenuBox(Menu.createMenuItems())
-    );
-
-    return new Scene(root);
-
-  }
-
 
 }

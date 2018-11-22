@@ -11,9 +11,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class Title extends StackPane {
+/**
+ * MenuTitle
+ *
+ * @author Masa
+ */
+public class MenuTitle extends StackPane {
 
-  public Title() {
+  public MenuTitle() {
     Rectangle bg = new Rectangle(
         DisplaySizeEnum.TITLE_W.get(),
         DisplaySizeEnum.TITLE_H.get()

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public enum Menu {
+public enum MenuItemEnum {
   START {
     @Override
     public EventHandler<? super MouseEvent> event() {
@@ -48,7 +48,7 @@ public enum Menu {
   abstract public EventHandler<? super MouseEvent> event();
 
   public static MenuItem[] createMenuItems() {
-    return Arrays.stream(Menu.values()).map(MenuItem::new).toArray(MenuItem[]::new);
+    return Arrays.stream(MenuItemEnum.values()).map(MenuItem::new).toArray(MenuItem[]::new);
   }
 
 }

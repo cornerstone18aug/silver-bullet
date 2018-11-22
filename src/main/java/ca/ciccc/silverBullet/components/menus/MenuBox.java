@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 /**
- * Container for Menu Item
+ * Container for MenuItemEnum Item
  *
  * @author Masa
  */

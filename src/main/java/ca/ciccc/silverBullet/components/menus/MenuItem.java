@@ -1,12 +1,10 @@
 package ca.ciccc.silverBullet.components.menus;
 
-import ca.ciccc.silverBullet.enums.Menu;
+import ca.ciccc.silverBullet.enums.MenuItemEnum;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.ConstUtil.DisplaySizeEnum;
 import ca.ciccc.silverBullet.utils.ConstUtil.FontSizeEnum;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -18,13 +16,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
- * Each Menu Item
+ * Each MenuItemEnum Item
  *
  * @author Masa
  */
 public class MenuItem extends StackPane {
 
-  public MenuItem(Menu name) {
+  public MenuItem(MenuItemEnum name) {
     Stop[] stops = new Stop[]{
         new Stop(0, Color.DARKBLUE),
         new Stop(0.1, Color.BLACK),
