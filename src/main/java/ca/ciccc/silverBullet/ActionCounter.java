@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class ActionCounter extends Pane {
@@ -12,10 +13,17 @@ public class ActionCounter extends Pane {
     Text playerNumberText;
     int nodesEnabled = 0;
 
-    public ActionCounter() {
+    public ActionCounter(int playerNumber) {
         actionNodes = new Circle[5];
         generateNodes();
-        playerNumberText = new Text("Player 1");
+        playerNumberText = new Text("Player " + playerNumber);
+        playerNumberText.setFill(Color.BLACK);
+        playerNumberText.setFont(
+                Font.font("Times New Roman", FontWeight.BOLD, 20)
+        );
+        playerNumberText.setTranslateX(15);
+        playerNumberText.setTranslateY(30);
+        this.getChildren().add(playerNumberText);
 
     }
 

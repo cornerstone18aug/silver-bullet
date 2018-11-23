@@ -28,9 +28,11 @@ public class SilverBulletApplication extends Application {
 
   GridBoard gameBoard;
   Player testFirstPlayer;
+  Player testSecondPlayer;
   double t = 0;
   boolean isExecuting;
   int currentActionNumber = 0;
+  int controllingPlayer = 0;
 
   @Override
   public void start(Stage stage) {
@@ -39,21 +41,41 @@ public class SilverBulletApplication extends Application {
     scene.setOnKeyPressed(e -> {
       switch (e.getCode()) {
         case Q:
-          testFirstPlayer.addAction(PlayerAction.TURN_LEFT);
+          if (controllingPlayer == 0){
+            testFirstPlayer.addAction(PlayerAction.TURN_LEFT);
+          } else{
+            testSecondPlayer.addAction(PlayerAction.TURN_LEFT);
+          }
           break;
         case W:
-          testFirstPlayer.addAction(PlayerAction.MOVE);
+          if (controllingPlayer == 0){
+            testFirstPlayer.addAction(PlayerAction.MOVE);
+          } else{
+            testSecondPlayer.addAction(PlayerAction.MOVE);
+          }
           break;
         case E:
-          testFirstPlayer.addAction(PlayerAction.TURN_RIGHT);
+          if (controllingPlayer == 0){
+            testFirstPlayer.addAction(PlayerAction.TURN_RIGHT);
+          } else{
+            testSecondPlayer.addAction(PlayerAction.TURN_RIGHT);
+          }
           break;
         case R:
-          testFirstPlayer.addAction(PlayerAction.SHOOT);
+          if (controllingPlayer == 0){
+            testFirstPlayer.addAction(PlayerAction.SHOOT);
+          } else{
+            testSecondPlayer.addAction(PlayerAction.SHOOT);
+          }
           break;
         case SPACE:
           currentActionNumber  = 0;
+          controllingPlayer = 0;
           isExecuting = true;
           break;
+      }
+      if(!testFirstPlayer.getPlayerActions()[4].equals(PlayerAction.NONE)){
+        controllingPlayer++;
       }
     });
 
@@ -68,12 +90,20 @@ public class SilverBulletApplication extends Application {
 
     gameBoard = new GridBoard(9, 9);
     root.getChildren().add(gameBoard.gridBoard);
-    testFirstPlayer = gameBoard.addPlayer(1, 1);
-    root.getChildren().add(testFirstPlayer.playerNode);
+    testFirstPlayer = gameBoard.addPlayer(1, 1, 1);
+    testSecondPlayer = gameBoard.addPlayer(5, 5, 2);
 
+    root.getChildren().add(testFirstPlayer.playerNode);
+    root.getChildren().add(testSecondPlayer.playerNode);
+
+    root.getChildren().add(testSecondPlayer.getPlayerActionCounter());
     root.getChildren().add(testFirstPlayer.getPlayerActionCounter());
-    testFirstPlayer.getPlayerActionCounter().setTranslateX(300);
-    testFirstPlayer.getPlayerActionCounter().setTranslateY(650);
+
+    testFirstPlayer.getPlayerActionCounter().setTranslateX(175);
+    testFirstPlayer.getPlayerActionCounter().setTranslateY(630);
+
+    testSecondPlayer.getPlayerActionCounter().setTranslateX(400);
+    testSecondPlayer.getPlayerActionCounter().setTranslateY(630);
 
     timer = new AnimationTimer() {
       @Override
@@ -92,10 +122,13 @@ public class SilverBulletApplication extends Application {
       if(t <= 0){
         t = .4;
         testFirstPlayer.takeAction(currentActionNumber);
+        testSecondPlayer.takeAction(currentActionNumber);
         currentActionNumber++;
         if(currentActionNumber>4){
           isExecuting = false;
           testFirstPlayer.getPlayerActionCounter().clearActions();
+          testSecondPlayer.getPlayerActionCounter().clearActions();
+          controllingPlayer = 0;
         }
       } else {
         t -= 0.016;

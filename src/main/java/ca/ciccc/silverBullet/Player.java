@@ -20,7 +20,7 @@ public class Player {
     private int gridPositionY;
     private Move targetMove;
     Node playerNode;
-    private PlayerAction[] playerActions;
+    private PlayerAction[] playerActions = {PlayerAction.NONE, PlayerAction.NONE,PlayerAction.NONE,PlayerAction.NONE,PlayerAction.NONE};;
     private int currentAction = 0;
     private ActionCounter playerActionCounter;
 
@@ -29,14 +29,13 @@ public class Player {
         this.hasShot = hasShot;
         this.playerNumber = playerNumber;
         this.facingDirection = facingDirection;
-        playerActions = new PlayerAction[5];
         gridPositionX = gridX;
         gridPositionY = gridY;
         playerNode = new Circle(30, Color.GREEN);
         Image image = new Image("File:src/main/resources/left.png");
         ((Circle) playerNode).setFill(new ImagePattern(image));
         playerNode.setRotate(90);
-        playerActionCounter = new ActionCounter();
+        playerActionCounter = new ActionCounter(playerNumber);
 
     }
 
@@ -95,7 +94,7 @@ public class Player {
         playerActionCounter.addAction();
     }
 
-    public void takeAction(int actionNumber){
+    public boolean takeAction(int actionNumber){
         switch (playerActions[actionNumber]){
             case MOVE:
                 this.targetMove = GridBoard.instance.tryMovePlayer(this);
@@ -116,8 +115,15 @@ public class Player {
         }
         playerActions[actionNumber] = PlayerAction.NONE;
         playerActionCounter.removeAction();
+        return true;
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        Player otherplayer = (Player)obj;
+        return playerNumber == otherplayer.getPlayerNumber();
+    }
 
     public ActionCounter getPlayerActionCounter() {
         return playerActionCounter;
