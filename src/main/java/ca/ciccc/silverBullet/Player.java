@@ -1,10 +1,10 @@
 package ca.ciccc.silverBullet;
 
-import ca.ciccc.silverBullet.gameplayEnums.Directions;
-import ca.ciccc.silverBullet.gameplayEnums.Orientation;
-import ca.ciccc.silverBullet.gameplayEnums.PlayerAction;
-import ca.ciccc.silverBullet.gridElements.GridBoard;
-import ca.ciccc.silverBullet.gridElements.Move;
+import ca.ciccc.silverBullet.enums.gameplay.Directions;
+import ca.ciccc.silverBullet.enums.gameplay.Orientation;
+import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
+import ca.ciccc.silverBullet.gameBoard.GridBoard;
+import ca.ciccc.silverBullet.gameBoard.Move;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -12,28 +12,30 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class Player {
-    boolean hasShot;
-    int playerNumber;
-    Directions facingDirection;
-    int gridPositionX;
-    int gridPositionY;
-    Move targetMove;
+
+    private boolean hasShot;
+    private int playerNumber;
+    private Directions facingDirection;
+    private int gridPositionX;
+    private int gridPositionY;
+    private Move targetMove;
     Node playerNode;
-    PlayerAction[] playerActions;
-    int currentAction = 0;
+    private PlayerAction[] playerActions = {PlayerAction.NONE, PlayerAction.NONE,PlayerAction.NONE,PlayerAction.NONE,PlayerAction.NONE};;
+    private int currentAction = 0;
+    private ActionCounter playerActionCounter;
 
 
     public Player(boolean hasShot, int playerNumber, int gridX, int gridY, Directions facingDirection) {
         this.hasShot = hasShot;
         this.playerNumber = playerNumber;
         this.facingDirection = facingDirection;
-        playerActions = new PlayerAction[5];
         gridPositionX = gridX;
         gridPositionY = gridY;
         playerNode = new Circle(30, Color.GREEN);
         Image image = new Image("File:src/main/resources/left.png");
         ((Circle) playerNode).setFill(new ImagePattern(image));
         playerNode.setRotate(90);
+        playerActionCounter = new ActionCounter(playerNumber);
 
     }
 
@@ -89,9 +91,10 @@ public class Player {
         if(currentAction > 4){
             currentAction = 0;
         }
+        playerActionCounter.addAction();
     }
 
-    public void takeAction(int actionNumber){
+    public boolean takeAction(int actionNumber){
         switch (playerActions[actionNumber]){
             case MOVE:
                 this.targetMove = GridBoard.instance.tryMovePlayer(this);
@@ -111,6 +114,19 @@ public class Player {
                 break;
         }
         playerActions[actionNumber] = PlayerAction.NONE;
+        playerActionCounter.removeAction();
+        return true;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        Player otherplayer = (Player)obj;
+        return playerNumber == otherplayer.getPlayerNumber();
+    }
+
+    public ActionCounter getPlayerActionCounter() {
+        return playerActionCounter;
     }
 
     public boolean isHasShot() {
