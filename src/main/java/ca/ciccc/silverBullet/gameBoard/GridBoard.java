@@ -1,8 +1,8 @@
-package ca.ciccc.silverBullet.gridElements;
+package ca.ciccc.silverBullet.gameBoard;
 
 import FileInput.FileInput;
 import ca.ciccc.silverBullet.Player;
-import ca.ciccc.silverBullet.gameplayEnums.Directions;
+import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Space;
 import javafx.scene.image.Image;
@@ -17,7 +17,7 @@ import java.util.List;
 public class GridBoard {
     GridNode[][] grid;
     public GridPane gridBoard;
-    static List<Player> players;
+    public List<Player> players;
     int gridSizeX;
     int gridSizeY;
     public static GridBoard instance;
@@ -65,13 +65,24 @@ public class GridBoard {
             if (targetX < 0 || targetY < 0) {
                 return null;
             } else {
-                if(targetNode.isCanMoveTo()){
+                if(targetNode.isCanMoveTo() && checkOtherPlayerMoves(playerToMove)){
                     return new Move(targetX, targetY);
                 }
             }
         }
 
         return null;
+    }
+
+    public boolean checkOtherPlayerMoves(Player playerToMove){
+        for(Player p : players){
+            if(!p.equals(playerToMove)){
+                if(p.getTargetMove() != null && ((p.getTargetMove().moveX == playerToMove.getTargetMove().moveX)&&(p.getTargetMove().moveY == playerToMove.getTargetMove().moveY))){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void movePlayer(Player playerToMove){
@@ -125,10 +136,10 @@ public class GridBoard {
         }
     }
 
-    public Player addPlayer(int gridX, int gridY) {
+    public Player addPlayer(int gridX, int gridY, int playerNumber) {
         GridNode targetNode = grid[gridY][gridX];
         if(targetNode.hasPlayer() == false){
-            Player playerToAdd = new Player(true, 1, gridX, gridY, Directions.NORTH);
+            Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.NORTH);
             players.add(playerToAdd);
             targetNode.setPlayerInSpace(playerToAdd);
             playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);

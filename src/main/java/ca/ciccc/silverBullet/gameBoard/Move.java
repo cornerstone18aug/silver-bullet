@@ -1,4 +1,4 @@
-package ca.ciccc.silverBullet.gridElements;
+package ca.ciccc.silverBullet.gameBoard;
 
 public class Move{
     int moveX;
