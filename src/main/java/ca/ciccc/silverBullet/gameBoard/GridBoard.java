@@ -4,6 +4,8 @@ import ca.ciccc.silverBullet.Player;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Space;
+import ca.ciccc.silverBullet.gridNodes.Wall;
+import ca.ciccc.silverBullet.gridNodes.Water;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -19,8 +21,8 @@ public class GridBoard {
     int gridSizeY;
     public static GridBoard instance;
 
-    public GridBoard(int sizeX, int sizeY) {
-        generateBoard(sizeX, sizeY);
+    public GridBoard(int sizeX, int sizeY, int levelSelected) {
+        generateBoard(sizeX, sizeY, levelSelected);
         players = new ArrayList<>();
         gridSizeX = sizeX -1;
         gridSizeY = sizeY-1;
@@ -98,31 +100,56 @@ public class GridBoard {
 
     }
 
-    public void generateBoard(int sizeX, int sizeY){
-        grid = new GridNode[sizeY][sizeX];
-        gridBoard = new GridPane();
-        for(int i = 0; i < sizeY; i++){
-            for(int j = 0; j<sizeX; j++){
+  /**
+   *
+   * @param sizeX
+   * @param sizeY
+   * @param levelNumber
+   */
+  public void generateBoard(int sizeX, int sizeY, int levelNumber) {
+    grid = new GridNode[sizeY][sizeX];
+    gridBoard = new GridPane();
+    /*
+     * Instance to read the level and
+     * depend of it print another maps
+     * for the players.
+     */
+    ca.ciccc.silverBullet.FileReader.FileRead read = new ca.ciccc.silverBullet.FileReader.FileRead();
+    char[][] imageToPrint = read.getLevel(levelNumber);
 
-                GridNode nodeToAdd = new Space(i, j);
-                nodeToAdd.squareNode = new Rectangle(60, 60, (i+j) % 2 == 0 ? Color.PINK:Color.TEAL);
-                gridBoard.add(nodeToAdd.squareNode, i, j);
-
-
-                grid[i][j] = nodeToAdd;
-                nodeToAdd.setGridX(j);
-                nodeToAdd.setGridY(i);
-            }
+    for (int i = 0; i < sizeY; i++) {
+      for (int j = 0; j < sizeX; j++) {
+        if (imageToPrint[i][j] == 'S') {
+          GridNode nodeToAdd = new Space(i, j);
+          gridBoard.add(nodeToAdd.getImage(), j, i);
+          grid[i][j] = nodeToAdd;
+          nodeToAdd.setGridX(j);
+          nodeToAdd.setGridY(i);
+        } else if (imageToPrint[i][j] == 'W') {
+          GridNode nodeToAdd = new Wall(j, i);
+          gridBoard.add(nodeToAdd.getImage(), j, i);
+          grid[i][j] = nodeToAdd;
+          nodeToAdd.setGridX(j);
+          nodeToAdd.setGridY(i);
+        } else {
+          GridNode nodeToAdd = new Water(j, i);
+          gridBoard.add(nodeToAdd.getImage(), j, i);
+          grid[i][j] = nodeToAdd;
+          nodeToAdd.setGridX(j);
+          nodeToAdd.setGridY(i);
         }
-        gridBoard.setTranslateX(50);
-        gridBoard.setTranslateY(50);
-        for(int i = 0; i < sizeY; i++){
-            for(int j = 0; j<sizeX; j++) {
-                grid[j][i].setScreenX((i*60) + 50);
-                grid[j][i].setScreenY((j*60) + 50);
-            }
-        }
+      }
     }
+
+    gridBoard.setTranslateX(50);
+    gridBoard.setTranslateY(50);
+    for (int i = 0; i < sizeY; i++) {
+      for (int j = 0; j < sizeX; j++) {
+        grid[j][i].setScreenX((i * 60) + 50);
+        grid[j][i].setScreenY((j * 60) + 50);
+      }
+    }
+  }
 
     public Player addPlayer(int gridX, int gridY, int playerNumber) {
         GridNode targetNode = grid[gridY][gridX];

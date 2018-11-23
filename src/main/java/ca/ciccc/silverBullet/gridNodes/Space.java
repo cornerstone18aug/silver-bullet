@@ -13,7 +13,8 @@ public class Space extends GridNode {
     this.gridY = gridy;
     name = "Space";
     canMoveTo = true;
-    image = new Rectangle(50, 50);
+    canShoot = true;
+    image = new Rectangle(60, 60);
     ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tile1.png")));
   }
 }

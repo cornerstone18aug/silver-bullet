@@ -13,6 +13,8 @@ public abstract class GridNode {
 
     protected boolean canMoveTo;
 
+  protected boolean canShoot;
+
     protected Player playerInSpace = null;
 
     protected Node image;
@@ -85,4 +87,12 @@ public abstract class GridNode {
     public boolean isCanMoveTo() {
         return canMoveTo;
     }
+
+  public boolean isCanShoot() {
+    return canShoot;
+  }
+
+  public void setCanShoot(boolean canShoot) {
+    this.canShoot = canShoot;
+  }
 }
