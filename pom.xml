@@ -80,6 +80,8 @@
         <version>3.8.0</version>
         <configuration>
           <release>11</release>
+            <source>10</source>
+            <target>10</target>
         </configuration>
       </plugin>
       <plugin>
