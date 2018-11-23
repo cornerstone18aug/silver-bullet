@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class SilverBulletApplication extends Application {
 
-
-
   private Pane root = new Pane();
   List<Node> children = Collections.synchronizedList(this.root.getChildren());
   Stage primaryStage;
@@ -68,6 +66,8 @@ public class SilverBulletApplication extends Application {
 
     gameBoard = new GridBoard(9, 9);
     root.getChildren().add(gameBoard.gridBoard);
+
+
     testFirstPlayer = gameBoard.addPlayer(1, 1);
     root.getChildren().add(testFirstPlayer.playerNode);
 

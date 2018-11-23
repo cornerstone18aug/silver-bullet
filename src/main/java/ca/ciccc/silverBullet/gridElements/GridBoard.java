@@ -1,11 +1,14 @@
 package ca.ciccc.silverBullet.gridElements;
 
+import FileInput.FileInput;
 import ca.ciccc.silverBullet.Player;
 import ca.ciccc.silverBullet.gameplayEnums.Directions;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Space;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ public class GridBoard {
     int gridSizeX;
     int gridSizeY;
     public static GridBoard instance;
+    private FileInput fileInput = new FileInput();
 
     public GridBoard(int sizeX, int sizeY) {
         generateBoard(sizeX, sizeY);
@@ -95,9 +99,17 @@ public class GridBoard {
 
                 GridNode nodeToAdd = new Space(i, j);
                 nodeToAdd.squareNode = new Rectangle(60, 60, (i+j) % 2 == 0 ? Color.PINK:Color.TEAL);
+                int z = 0;
+                if(z == 0)
+                {
+                    ((Rectangle) nodeToAdd.squareNode).setFill(new ImagePattern(fileInput.image("file:src/main/resources/Test/Tile1.png")));
+                    z += 2;
+                }else
+                {
+                    ((Rectangle) nodeToAdd.squareNode).setFill(new ImagePattern(fileInput.image("file:src/main/resources/Test/Tile2.png")));
+                    z--;
+                }
                 gridBoard.add(nodeToAdd.squareNode, i, j);
-
-
                 grid[i][j] = nodeToAdd;
                 nodeToAdd.setGridX(j);
                 nodeToAdd.setGridY(i);
