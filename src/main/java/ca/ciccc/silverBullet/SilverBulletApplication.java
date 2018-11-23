@@ -64,7 +64,7 @@ public class SilverBulletApplication extends Application {
   private Parent createContent() {
     this.root.setPrefSize(700, 700);
 
-    gameBoard = new GridBoard(9, 9, 1);
+    gameBoard = new GridBoard(9, 9, 3);
     root.getChildren().add(gameBoard.gridBoard);
     testFirstPlayer = gameBoard.addPlayer(1, 1);
     root.getChildren().add(testFirstPlayer.playerNode);
