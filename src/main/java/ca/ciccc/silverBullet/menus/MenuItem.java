@@ -1,4 +1,4 @@
-package ca.ciccc.silverBullet.components.menus;
+package ca.ciccc.silverBullet.menus;
 
 import ca.ciccc.silverBullet.enums.MenuItemEnum;
 import ca.ciccc.silverBullet.utils.ConstUtil;
@@ -61,6 +61,6 @@ public class MenuItem extends StackPane {
     this.setOnMousePressed(event -> backGround.setFill(Color.DARKVIOLET));
     this.setOnMouseReleased(event -> backGround.setFill(gradient));
 
-    this.setOnMouseClicked(name.event());
+    this.setOnMouseClicked(name.getAction());
   }
 }

@@ -1,4 +1,4 @@
-package ca.ciccc.silverBullet.components.menus;
+package ca.ciccc.silverBullet.menus;
 
 import ca.ciccc.silverBullet.utils.ConstUtil.DisplaySizeEnum;
 import javafx.scene.layout.VBox;

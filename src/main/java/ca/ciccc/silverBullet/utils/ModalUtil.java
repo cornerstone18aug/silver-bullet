@@ -24,15 +24,8 @@ public class ModalUtil {
   }
 
   public static void confirm(String title, String message, EventHandler<ActionEvent> event) {
-    Stage modalStage = new Stage();
-
-    Pane parentPane = new Pane();
-    parentPane.setPrefSize(DisplaySizeEnum.MODAL_MIN_W.get(),
-        DisplaySizeEnum.MODAL_MIN_H.get());
-
-    /* We don't permit to press other this out of this window if we don't close first */
-    modalStage.initModality(Modality.APPLICATION_MODAL);
-    modalStage.setTitle(title);
+    Stage modalStage = ModalUtil.createModalStage(title);
+    Pane parentPane = ModalUtil.createModalPane();
 
     Label label = new Label();
     label.setText(message);
@@ -62,4 +55,52 @@ public class ModalUtil {
     modalStage.showAndWait();
 
   }
+
+  public static void alert(String title, String message) {
+    Stage modalStage = ModalUtil.createModalStage(title);
+    Pane parentPane = ModalUtil.createModalPane();
+
+    Label label = new Label();
+    label.setText(message);
+
+    Button okButton = new Button(ConstUtil.getRbString("modal.ok"));
+    okButton.setOnAction(e -> modalStage.close());
+
+    VBox textBox = new VBox(10);
+    textBox.setAlignment(Pos.CENTER);
+    textBox.getChildren().add(label);
+    textBox.setTranslateX(15);
+    textBox.setTranslateY(20);
+
+    HBox btnBox = new HBox(10);
+    btnBox.setAlignment(Pos.CENTER);
+    btnBox.setTranslateX(50);
+    btnBox.setTranslateY(50);
+    btnBox.getChildren().addAll(okButton);
+
+    parentPane.getChildren().addAll(textBox, btnBox);
+
+    modalStage.setScene(new Scene(parentPane));
+    /* Its need to be close before do other things out of the window */
+    modalStage.showAndWait();
+
+  }
+
+  private static Stage createModalStage(String title) {
+    Stage modalStage = new Stage();
+
+    /* We don't permit to press other this out of this window if we don't close first */
+    modalStage.initModality(Modality.APPLICATION_MODAL);
+    modalStage.setTitle(title);
+
+    return modalStage;
+  }
+
+  private static Pane createModalPane() {
+    Pane parentPane = new Pane();
+    parentPane.setPrefSize(DisplaySizeEnum.MODAL_MIN_W.get(),
+        DisplaySizeEnum.MODAL_MIN_H.get());
+    return parentPane;
+  }
+
 }

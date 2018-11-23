@@ -1,6 +1,6 @@
 package ca.ciccc.silverBullet;
 
-import ca.ciccc.silverBullet.components.menus.MenuScene;
+import ca.ciccc.silverBullet.menus.MenuScene;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import java.util.ResourceBundle;
 import javafx.application.Application;
