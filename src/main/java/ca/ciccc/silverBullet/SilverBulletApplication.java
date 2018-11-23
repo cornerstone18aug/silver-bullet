@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class SilverBulletApplication extends Application {
 
-
-
   private Pane root = new Pane();
   List<Node> children = Collections.synchronizedList(this.root.getChildren());
   Stage primaryStage;
@@ -51,7 +49,7 @@ public class SilverBulletApplication extends Application {
           testFirstPlayer.addAction(PlayerAction.SHOOT);
           break;
         case SPACE:
-          currentActionNumber  = 0;
+          currentActionNumber = 0;
           isExecuting = true;
           break;
       }
@@ -61,21 +59,12 @@ public class SilverBulletApplication extends Application {
 
     stage.setScene(scene);
     stage.show();
-  }*/
-
-  @Override
-  public void start(Stage stage) {
-    Board board = new Board();
-    Scene scene = new Scene(board.createContent());
-
-    stage.setScene(scene);
-    stage.show();
   }
 
   private Parent createContent() {
     this.root.setPrefSize(700, 700);
 
-    gameBoard = new GridBoard(9, 9);
+    gameBoard = new GridBoard(9, 9, 1);
     root.getChildren().add(gameBoard.gridBoard);
     testFirstPlayer = gameBoard.addPlayer(1, 1);
     root.getChildren().add(testFirstPlayer.playerNode);
@@ -92,28 +81,24 @@ public class SilverBulletApplication extends Application {
     return this.root;
   }
 
-  public void update(){
-    if(isExecuting){
-      if(t <= 0){
+  public void update() {
+    if (isExecuting) {
+      if (t <= 0) {
         t = .4;
         testFirstPlayer.takeAction(currentActionNumber);
         currentActionNumber++;
-        if(currentActionNumber>4){
+        if (currentActionNumber > 4) {
           isExecuting = false;
         }
       } else {
         t -= 0.016;
       }
     }
-
   }
-
 
   public static void main(String[] args) {
     launch();
   }
-
-
 
 }
 
