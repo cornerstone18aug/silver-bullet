@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GridBoard {
     GridNode[][] grid;
@@ -22,6 +23,7 @@ public class GridBoard {
     int gridSizeY;
     public static GridBoard instance;
     private FileInput fileInput = new FileInput();
+    Random random = new Random();
 
     public GridBoard(int sizeX, int sizeY) {
         generateBoard(sizeX, sizeY);
@@ -110,16 +112,9 @@ public class GridBoard {
 
                 GridNode nodeToAdd = new Space(i, j);
                 nodeToAdd.squareNode = new Rectangle(60, 60, (i+j) % 2 == 0 ? Color.PINK:Color.TEAL);
-                int z = 0;
-                if(z == 0)
-                {
-                    ((Rectangle) nodeToAdd.squareNode).setFill(new ImagePattern(fileInput.image("file:src/main/resources/Test/Tile1.png")));
-                    z += 2;
-                }else
-                {
-                    ((Rectangle) nodeToAdd.squareNode).setFill(new ImagePattern(fileInput.image("file:src/main/resources/Test/Tile2.png")));
-                    z--;
-                }
+                int n = random.nextInt(4) + 1;
+                ((Rectangle) nodeToAdd.squareNode).setFill(new ImagePattern(fileInput.image("file:src/main/resources/images/Tiles/Tile" + n + ".png")));
+
                 gridBoard.add(nodeToAdd.squareNode, i, j);
                 grid[i][j] = nodeToAdd;
                 nodeToAdd.setGridX(j);
