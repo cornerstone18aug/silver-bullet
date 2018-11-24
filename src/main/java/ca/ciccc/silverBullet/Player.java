@@ -19,11 +19,25 @@ public class Player {
     private int gridPositionX;
     private int gridPositionY;
     private Move targetMove;
-    Node playerNode;
+    private Node playerNode;
     private PlayerAction[] playerActions = {PlayerAction.NONE, PlayerAction.NONE,PlayerAction.NONE,PlayerAction.NONE,PlayerAction.NONE};;
     private int currentAction = 0;
     private ActionCounter playerActionCounter;
+    private boolean actionsFull;
 
+    private boolean isDead;
+
+    public void setActionsFull(boolean actionsFull) {
+        this.actionsFull = actionsFull;
+    }
+
+    public boolean isActionsFull() {
+        return actionsFull;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
 
     public Player(boolean hasShot, int playerNumber, int gridX, int gridY, Directions facingDirection) {
         this.hasShot = hasShot;
@@ -81,7 +95,8 @@ public class Player {
     }
 
     public void Die(){
-        playerNode.setDisable(true);
+        isDead = true;
+        GridBoard.instance.removePlayer(this);
         System.out.println("Player " + playerNumber + " was shot");
     }
 
@@ -90,6 +105,8 @@ public class Player {
         currentAction++;
         if(currentAction > 4){
             currentAction = 0;
+            actionsFull = true;
+
         }
         playerActionCounter.addAction();
     }
@@ -124,6 +141,13 @@ public class Player {
         Player otherplayer = (Player)obj;
         return playerNumber == otherplayer.getPlayerNumber();
     }
+
+    public void resetActions(){
+        for(int i = 0; i < 5; i++){
+            playerActions[i] = PlayerAction.NONE;
+        }
+    }
+
 
     public ActionCounter getPlayerActionCounter() {
         return playerActionCounter;

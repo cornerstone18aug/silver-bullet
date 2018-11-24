@@ -239,5 +239,9 @@ public class GridBoard {
         }
         return false;
     }
+
+    public void removePlayer(Player playerToRemove){
+        GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
+    }
 }
 
