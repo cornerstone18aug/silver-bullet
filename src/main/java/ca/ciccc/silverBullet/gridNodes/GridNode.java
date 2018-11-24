@@ -1,15 +1,8 @@
 package ca.ciccc.silverBullet.gridNodes;
 
 import ca.ciccc.silverBullet.playerElements.Player;
-import FileInput.FileInput;
-import ca.ciccc.silverBullet.Player;
 import java.util.Random;
-import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 public abstract class GridNode {
 

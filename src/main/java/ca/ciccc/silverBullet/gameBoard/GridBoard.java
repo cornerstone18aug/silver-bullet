@@ -260,26 +260,22 @@ public class GridBoard {
     GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
   }
 
-  public boolean areAllFull() {
-    for (Player p : players) {
-      if (!p.isActionsFull()) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   public void shootBullet(Player player) {
-    Bullet bullet = new Bullet(new Move(player.getGridPositionX(), player.getGridPositionY()), tryShoot(player), player);
-    gridBoard.getChildren().add(bullet);
+    Move finalLocation = tryShoot(player);
+    if (finalLocation != null) {
+      Bullet bullet = new Bullet(new Move(player.getGridPositionX(), player.getGridPositionY()),
+          finalLocation, player);
+      gridBoard.getChildren().add(bullet);
+    }
   }
 
 
-  public GridNode getNodeFromGrid(int x, int y){
+  public GridNode getNodeFromGrid(int x, int y) {
     return grid[y][x];
   }
-    public boolean areAllFull(){
-        return players.stream().allMatch(Player::isActionsFull);
-    }
+
+  public boolean areAllFull() {
+    return players.stream().allMatch(Player::isActionsFull);
+  }
 }
 
