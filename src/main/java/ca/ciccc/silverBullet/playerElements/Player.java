@@ -132,7 +132,6 @@ public class Player {
             case MOVE:
                 this.targetMove = GridBoard.instance.tryMovePlayer(this);
 
-                GridBoard.instance.movePlayer(this);
                 break;
             case TURN_LEFT:
                 this.rotatePlayer(Orientation.LEFT);

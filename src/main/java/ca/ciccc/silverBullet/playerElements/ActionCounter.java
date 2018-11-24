@@ -17,7 +17,7 @@ public class ActionCounter extends Pane {
         actionNodes = new Circle[5];
         generateNodes();
         playerNumberText = new Text("Player " + playerNumber);
-        playerNumberText.setFill(Color.BLACK);
+        playerNumberText.setFill(Color.WHITE);
         playerNumberText.setFont(
                 Font.font("Times New Roman", FontWeight.BOLD, 20)
         );
