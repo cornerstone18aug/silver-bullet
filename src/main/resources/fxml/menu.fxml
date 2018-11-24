@@ -12,7 +12,7 @@
    <children>
       <StackPane layoutY="30.0">
          <children>
-            <Text fill="#d01313" strokeType="OUTSIDE" strokeWidth="0.0" text="Silver Bullet">
+            <Text fill="#d01313" strokeType="OUTSIDE" strokeWidth="0.0" text="SILVER BULLET">
                <font>
                   <Font size="63.0" />
                </font>

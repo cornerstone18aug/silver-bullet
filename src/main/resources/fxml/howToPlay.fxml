@@ -12,7 +12,7 @@
    <children>
       <StackPane layoutY="30.0">
          <children>
-            <Text fill="#d01313" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
+            <Text fill="#d01313" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY">
                <font>
                   <Font size="63.0" />
                </font>

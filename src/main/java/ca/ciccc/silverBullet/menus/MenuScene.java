@@ -4,6 +4,7 @@ import ca.ciccc.silverBullet.enums.MenuItemEnum;
 import ca.ciccc.silverBullet.utils.ConstUtil.DisplaySizeEnum;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -14,13 +15,13 @@ import javafx.scene.layout.Pane;
 public class MenuScene extends Scene {
 
   public MenuScene() {
-    super(new Pane());
+    super(new AnchorPane());
     Pane root = (Pane) this.getRoot();
 
     root.setPrefSize(DisplaySizeEnum.EXTERNAL_FRAME_W.get(),
         DisplaySizeEnum.EXTERNAL_FRAME_H.get());
 
-    ImageView img = new ImageView("iamges/conan.png");
+    ImageView img = new ImageView("images/conan.png");
     img.setFitWidth(DisplaySizeEnum.MENU_IMAGE_W.get());
     img.setFitHeight(DisplaySizeEnum.MENU_IMAGE_H.get());
     // Plus margin
