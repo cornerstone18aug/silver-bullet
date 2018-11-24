@@ -58,36 +58,39 @@ public class GameScene extends Pane {
     }
 
     public void onKeyPressed(KeyCode key){
-        if(!gameBoard.areAllFull()){
+        if(!isExecuting){
 
-            switch (key) {
-                case Q:
-                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_LEFT);
-                    break;
-                case W:
-                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.MOVE);
-                    break;
-                case E:
-                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_RIGHT);
+            if(!gameBoard.areAllFull()){
 
-                    break;
-                case R:
-                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.SHOOT);
+                switch (key) {
+                    case Q:
+                        gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_LEFT);
+                        break;
+                    case W:
+                        gameBoard.players.get(controllingPlayer).addAction(PlayerAction.MOVE);
+                        break;
+                    case E:
+                        gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_RIGHT);
 
-                    break;
-                case T:
-                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.WAIT);
-                    break;
+                        break;
+                    case R:
+                        gameBoard.players.get(controllingPlayer).addAction(PlayerAction.SHOOT);
+
+                        break;
+                    case T:
+                        gameBoard.players.get(controllingPlayer).addAction(PlayerAction.WAIT);
+                        break;
+                }
             }
-        }
-        if(!gameBoard.areAllFull() && gameBoard.players.get(controllingPlayer).isActionsFull()){
-            controllingPlayer++;
-        }
-        if(KeyCode.SPACE.equals(key)){
-            currentActionNumber  = 0;
-            controllingPlayer = 0;
-            isExecuting = true;
+            if(!gameBoard.areAllFull() && gameBoard.players.get(controllingPlayer).isActionsFull()){
+                controllingPlayer++;
+            }
+            if(KeyCode.SPACE.equals(key)){
+                currentActionNumber  = 0;
+                controllingPlayer = 0;
+                isExecuting = true;
 
+            }
         }
     }
 
@@ -105,6 +108,9 @@ public class GameScene extends Pane {
             }
         }
 
+        executeMove();
+
+
     }
 
     public void actionEndStep(){
@@ -117,6 +123,22 @@ public class GameScene extends Pane {
         isExecuting = false;
         controllingPlayer = 0;
         currentActionNumber = 0;
+    }
+
+    private void executeMove(){
+        gameBoard.players.forEach(player -> {
+            if (gameBoard.players.stream().anyMatch(p->{
+                if(!p.equals(player) && player.getTargetMove()!= null){
+                   return  !(p.getTargetMove() != null && p.getTargetMove().equals(player.getTargetMove()));
+                } else if(player.getTargetMove() == null){
+                    return false;
+                }
+                return false;
+            })){
+                gameBoard.movePlayer(player);
+            }
+        });
+
     }
 
 
