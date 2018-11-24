@@ -12,8 +12,9 @@ public class Wall extends GridNode {
     this.gridY = gridy;
     name = "Wall";
     canMoveTo = false;
-    image = new Rectangle(50, 50);
-    ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/TileRock1.png")));
+    image = new Rectangle(60, 60);
+    int n = random.nextInt(3) + 1;
+    ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tiles/TileRock" + n + ".png")));
   }
 
 }

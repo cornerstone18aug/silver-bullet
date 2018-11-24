@@ -12,7 +12,7 @@ public class Water extends GridNode {
     this.gridY = gridy;
     name = "Water";
     canMoveTo = false;
-    image = new Rectangle(50, 50);
-    ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Water.jpg")));
+    image = new Rectangle(60, 60);
+    ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tiles/Water.jpg")));
   }
 }
