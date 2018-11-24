@@ -2,11 +2,7 @@ package ca.ciccc.silverBullet.gameBoard;
 
 import FileInput.FileInput;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
-import ca.ciccc.silverBullet.gridNodes.GridNode;
-import ca.ciccc.silverBullet.gridNodes.Hole;
-import ca.ciccc.silverBullet.gridNodes.Space;
-import ca.ciccc.silverBullet.gridNodes.Wall;
-import ca.ciccc.silverBullet.gridNodes.Water;
+import ca.ciccc.silverBullet.gridNodes.*;
 import ca.ciccc.silverBullet.playerElements.Bullet;
 import ca.ciccc.silverBullet.playerElements.Player;
 import java.util.ArrayList;
@@ -143,7 +139,7 @@ public class GridBoard {
           nodeToAdd.setGridX(j);
           nodeToAdd.setGridY(i);
         } else if (imageToPrint[i][j] == 'E') {
-          GridNode nodeToAdd = new Water(j, i);
+          GridNode nodeToAdd = new Edge(j, i);
           gridBoard.add(nodeToAdd.getImage(), j, i);
           grid[i][j] = nodeToAdd;
           nodeToAdd.setGridX(j);
