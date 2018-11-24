@@ -1,7 +1,7 @@
 package ca.ciccc.silverBullet.gameBoard;
 
 import FileInput.FileInput;
-import ca.ciccc.silverBullet.Player;
+import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Hole;
@@ -11,7 +11,6 @@ import ca.ciccc.silverBullet.gridNodes.Water;
 import ca.ciccc.silverBullet.playerElements.Bullet;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -279,5 +278,8 @@ public class GridBoard {
   public GridNode getNodeFromGrid(int x, int y){
     return grid[y][x];
   }
+    public boolean areAllFull(){
+        return players.stream().allMatch(Player::isActionsFull);
+    }
 }
 

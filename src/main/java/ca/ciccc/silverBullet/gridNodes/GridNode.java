@@ -1,5 +1,6 @@
 package ca.ciccc.silverBullet.gridNodes;
 
+import ca.ciccc.silverBullet.playerElements.Player;
 import FileInput.FileInput;
 import ca.ciccc.silverBullet.Player;
 import java.util.Random;
