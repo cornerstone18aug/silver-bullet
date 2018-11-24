@@ -1,16 +1,17 @@
 package ca.ciccc.silverBullet;
 
-import ca.ciccc.silverBullet.menus.MenuScene;
+import ca.ciccc.silverBullet.controller.MenuController;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * A very simple Java FX Application used to demonstrate a couple of aspects of the Java 11
- * ecosystem.
+ * SilverBulletApp
  */
-public class SilverBulletAppMenu extends Application {
+public class SilverBulletApp extends Application {
+
+  public static Stage primaryStage;
 
   public static void main(String[] args) {
     ConstUtil.setResourceBundle(ResourceBundle.getBundle("application"));
@@ -19,9 +20,14 @@ public class SilverBulletAppMenu extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    SilverBulletApp.primaryStage = primaryStage;
     primaryStage.setTitle(ConstUtil.APP_NAME);
-    primaryStage.setScene(new MenuScene());
+
+    // Start Menu
+    MenuController.getInstance().show();
+
     primaryStage.show();
+
   }
 
 }
