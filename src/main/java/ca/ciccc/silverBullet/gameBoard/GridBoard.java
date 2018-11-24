@@ -64,7 +64,7 @@ public class GridBoard {
 
       if (targetX < 0 || targetY < 0) {
         return null;
-      } else if(!targetNode.hasPlayer()) {
+      } else if(!targetNode.hasPlayer() && targetNode.isCanMoveTo()) {
         return new Move(targetX, targetY);
 
       }
