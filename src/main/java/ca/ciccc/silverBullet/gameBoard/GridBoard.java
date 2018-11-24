@@ -242,6 +242,7 @@ public class GridBoard {
           finalLocation, player);
       gridBoard.getChildren().add(bullet);
     }
+
   }
 
   public GridNode getNodeFromGrid(int x, int y) {
