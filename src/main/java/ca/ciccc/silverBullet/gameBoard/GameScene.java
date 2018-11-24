@@ -57,34 +57,36 @@ public class GameScene extends Pane {
     }
 
     public void onKeyPressed(KeyCode key){
-        switch (key) {
-            case Q:
-                gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_LEFT);
-                break;
-            case W:
-                gameBoard.players.get(controllingPlayer).addAction(PlayerAction.MOVE);
-                break;
-            case E:
-                gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_RIGHT);
+        if(!gameBoard.areAllFull()){
 
-                break;
-            case R:
-                gameBoard.players.get(controllingPlayer).addAction(PlayerAction.SHOOT);
+            switch (key) {
+                case Q:
+                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_LEFT);
+                    break;
+                case W:
+                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.MOVE);
+                    break;
+                case E:
+                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.TURN_RIGHT);
 
-                break;
-            case T:
-                gameBoard.players.get(controllingPlayer).addAction(PlayerAction.WAIT);
-                break;
-            case SPACE:
-                currentActionNumber  = 0;
-                controllingPlayer = 0;
-                isExecuting = true;
+                    break;
+                case R:
+                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.SHOOT);
 
-
-                break;
+                    break;
+                case T:
+                    gameBoard.players.get(controllingPlayer).addAction(PlayerAction.WAIT);
+                    break;
+            }
         }
-        if(gameBoard.players.get(controllingPlayer).isActionsFull()){
+        if(!gameBoard.areAllFull() && gameBoard.players.get(controllingPlayer).isActionsFull()){
             controllingPlayer++;
+        }
+        if(key.equals(KeyCode.SPACE)){
+            currentActionNumber  = 0;
+            controllingPlayer = 0;
+            isExecuting = true;
+
         }
     }
 
@@ -110,5 +112,6 @@ public class GameScene extends Pane {
         controllingPlayer = 0;
         currentActionNumber = 0;
     }
+
 
 }

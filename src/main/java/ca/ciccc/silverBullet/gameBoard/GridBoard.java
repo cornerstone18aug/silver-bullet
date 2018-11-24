@@ -252,5 +252,14 @@ public class GridBoard {
     public void removePlayer(Player playerToRemove){
         GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
     }
+
+    public boolean areAllFull(){
+        for (Player p : players){
+            if(!p.isActionsFull()){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
