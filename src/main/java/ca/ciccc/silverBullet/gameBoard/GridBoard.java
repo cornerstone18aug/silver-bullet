@@ -34,21 +34,43 @@ public class GridBoard {
 
   public Move tryMovePlayer(Player playerToMove) {
 
-            if (targetX < 0 || targetY < 0) {
-                return null;
-            } else if(!targetNode.hasPlayer()) {
-                return new Move(targetX, targetY);
-
-            }
-        }
+    GridNode originGrid = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
+    int targetX = 0;
+    int targetY = 0;
+    GridNode targetNode;
+    if (originGrid.hasPlayer()){
+      switch (originGrid.getPlayerInSpace().getFacingDirection()){
+        case NORTH:
+          targetX = originGrid.getGridX();
+          targetY = originGrid.getGridY() - 1;
+          break;
+        case SOUTH:
+          targetX = originGrid.getGridX();
+          targetY = originGrid.getGridY() + 1;
+          break;
+        case EAST:
+          targetX = originGrid.getGridX() + 1;
+          targetY = originGrid.getGridY();
+          break;
+        case WEST:
+          targetX = originGrid.getGridX() - 1;
+          targetY = originGrid.getGridY();
+          break;
+      }
+      if((targetX <0 || targetY < 0) || (targetX > gridSizeX || targetY > gridSizeY)){
+        return null;
+      }
+      targetNode = grid[targetY][targetX];
 
       if (targetX < 0 || targetY < 0) {
         return null;
-      } else {
-        if (targetNode.isCanMoveTo() && checkOtherPlayerMoves(playerToMove)) {
-          return new Move(targetX, targetY);
-        }
+      } else if(!targetNode.hasPlayer()) {
+        return new Move(targetX, targetY);
+
       }
+    }
+
+    return null;
     }
     
 
@@ -105,33 +127,29 @@ public class GridBoard {
         }
       }
     }
+    gridBoard.setTranslateX(50);
+    gridBoard.setTranslateY(50);
+    for (int i = 0; i < sizeY; i++) {
+      for (int j = 0; j < sizeX; j++) {
+        grid[j][i].setScreenX((i * 60) + 50);
+        grid[j][i].setScreenY((j * 60) + 50);
+      }
+    }
+  }
 
     public Player addPlayer(int gridX, int gridY, int playerNumber) {
-        GridNode targetNode = grid[gridY][gridX];
-        if(!targetNode.hasPlayer()){
-            Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.SOUTH);
-            players.add(playerToAdd);
-            targetNode.setPlayerInSpace(playerToAdd);
-            playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
-            playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
-            return playerToAdd;
-        }
-        return null;
-    }
+      GridNode targetNode = grid[gridY][gridX];
+      if(!targetNode.hasPlayer()){
+        Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.SOUTH);
+        players.add(playerToAdd);
+        targetNode.setPlayerInSpace(playerToAdd);
+        playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
+        playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
+        return playerToAdd;
+      }
+      return null;
   }
 
-  public Player addPlayer(int gridX, int gridY, int playerNumber) {
-    GridNode targetNode = grid[gridY][gridX];
-    if (targetNode.hasPlayer() == false) {
-      Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.SOUTH);
-      players.add(playerToAdd);
-      targetNode.setPlayerInSpace(playerToAdd);
-      playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
-      playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
-      return playerToAdd;
-    }
-    return null;
-  }
 
   public Move tryShoot(Player playerShooting) {
 
