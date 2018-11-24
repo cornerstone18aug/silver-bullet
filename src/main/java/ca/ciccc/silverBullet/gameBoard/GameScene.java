@@ -14,6 +14,26 @@ public class GameScene extends Pane {
     private int controllingPlayer = 0;
     static GameScene instance;
 
+    public GameScene(int lvl) {
+        gameBoard = new GridBoard(9, 9,lvl);
+        instance = this;
+
+        this.getChildren().add(gameBoard.gridBoard);
+
+        gameBoard.addPlayer(1, 1, 1);
+        gameBoard.addPlayer(5, 5, 2);
+
+        for (int i = 0; i < gameBoard.players.size(); i++){
+
+            gameBoard.players.get(i).getPlayerActionCounter().setTranslateX(175 + 200 * i);
+            gameBoard.players.get(i).getPlayerActionCounter().setTranslateY(630);
+
+            this.getChildren().addAll(gameBoard.players.get(i).getPlayerNode(),
+                    gameBoard.players.get(i).getPlayerActionCounter());
+        }
+
+
+    }
 
     public GameScene() {
         gameBoard = new GridBoard(9, 9,3);

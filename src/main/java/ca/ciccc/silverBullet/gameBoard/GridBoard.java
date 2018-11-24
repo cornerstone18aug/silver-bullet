@@ -2,11 +2,7 @@ package ca.ciccc.silverBullet.gameBoard;
 
 import FileInput.FileInput;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
-import ca.ciccc.silverBullet.gridNodes.GridNode;
-import ca.ciccc.silverBullet.gridNodes.Hole;
-import ca.ciccc.silverBullet.gridNodes.Space;
-import ca.ciccc.silverBullet.gridNodes.Wall;
-import ca.ciccc.silverBullet.gridNodes.Water;
+import ca.ciccc.silverBullet.gridNodes.*;
 import ca.ciccc.silverBullet.playerElements.Bullet;
 import ca.ciccc.silverBullet.playerElements.Player;
 import java.util.ArrayList;
@@ -97,6 +93,36 @@ public class GridBoard {
     gridBoard = new GridPane();
     ca.ciccc.silverBullet.FileReader.FileRead read = new ca.ciccc.silverBullet.FileReader.FileRead();
     char[][] imageToPrint = read.getLevel(levelNumber);
+        for (int i = 0; i < sizeY; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (imageToPrint[i][j] == 'S') {
+                    GridNode nodeToAdd = new Space(j, i);
+                    gridBoard.add(nodeToAdd.getImage(), j, i);
+                    grid[i][j] = nodeToAdd;
+                    nodeToAdd.setGridX(j);
+                    nodeToAdd.setGridY(i);
+                } else if (imageToPrint[i][j] == 'W') {
+                    GridNode nodeToAdd = new Wall(j, i);
+                    gridBoard.add(nodeToAdd.getImage(), j, i);
+                    grid[i][j] = nodeToAdd;
+                    nodeToAdd.setGridX(j);
+                    nodeToAdd.setGridY(i);
+                } else if(imageToPrint[i][j] == 'T'){
+                    GridNode nodeToAdd = new Water(j, i);
+                    gridBoard.add(nodeToAdd.getImage(), j, i);
+                    grid[i][j] = nodeToAdd;
+                    nodeToAdd.setGridX(j);
+                    nodeToAdd.setGridY(i);
+                }
+                else if(imageToPrint[i][j] == 'E'){
+                    GridNode nodeToAdd = new Edge(j, i);
+                    gridBoard.add(nodeToAdd.getImage(), j, i);
+                    grid[i][j] = nodeToAdd;
+                    nodeToAdd.setGridX(j);
+                    nodeToAdd.setGridY(i);
+                }
+            }
+        }
 
     for (int i = 0; i < sizeY; i++) {
       for (int j = 0; j < sizeX; j++) {
@@ -113,7 +139,7 @@ public class GridBoard {
           nodeToAdd.setGridX(j);
           nodeToAdd.setGridY(i);
         } else if (imageToPrint[i][j] == 'E') {
-          GridNode nodeToAdd = new Water(j, i);
+          GridNode nodeToAdd = new Edge(j, i);
           gridBoard.add(nodeToAdd.getImage(), j, i);
           grid[i][j] = nodeToAdd;
           nodeToAdd.setGridX(j);
