@@ -8,18 +8,20 @@ import javafx.scene.layout.Pane;
 
 public class GameScene extends Pane {
 
-    GridBoard gameBoard;
-    Player testFirstPlayer;
-    Player testSecondPlayer;
-    double t = 0;
-    boolean isExecuting;
-    int currentActionNumber = 0;
-    int controllingPlayer = 0;
+    private GridBoard gameBoard;
+    private Player testFirstPlayer;
+    private Player testSecondPlayer;
+    private double t = 0;
+    private boolean isExecuting;
+    private int currentActionNumber = 0;
+    private int controllingPlayer = 0;
     AnimationTimer testTimer;
+    static GameScene instance;
 
 
     public GameScene() {
         gameBoard = new GridBoard(9, 9);
+        instance = this;
         testFirstPlayer = gameBoard.addPlayer(1, 1, 1);
         testSecondPlayer = gameBoard.addPlayer(5, 5, 2);
 
@@ -48,7 +50,10 @@ public class GameScene extends Pane {
                     isExecuting = false;
                     testFirstPlayer.getPlayerActionCounter().clearActions();
                     testSecondPlayer.getPlayerActionCounter().clearActions();
+                    currentActionNumber = 0;
                     controllingPlayer = 0;
+                    testFirstPlayer.resetActions();
+                    testSecondPlayer.resetActions();
                 }
             } else {
                 t -= 0.016;
@@ -87,13 +92,23 @@ public class GameScene extends Pane {
                     testSecondPlayer.addAction(PlayerAction.SHOOT);
                 }
                 break;
+            case T:
+                if (controllingPlayer == 0){
+                    testFirstPlayer.addAction(PlayerAction.WAIT);
+                } else{
+                    testSecondPlayer.addAction(PlayerAction.WAIT);
+                }
+                break;
             case SPACE:
                 currentActionNumber  = 0;
                 controllingPlayer = 0;
                 isExecuting = true;
+                testFirstPlayer.setActionsFull(false);
+                testSecondPlayer.setActionsFull(false);
+
                 break;
         }
-        if(!testFirstPlayer.getPlayerActions()[4].equals(PlayerAction.NONE)){
+        if(testFirstPlayer.isActionsFull()){
             controllingPlayer++;
         }
     }

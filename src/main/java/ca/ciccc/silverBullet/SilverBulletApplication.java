@@ -8,7 +8,10 @@ import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.Collections;
@@ -38,6 +41,7 @@ public class SilverBulletApplication extends Application {
 
     scene.setOnKeyPressed(e -> {
       game.onKeyPressed(e.getCode());
+
     });
 
     stage.setTitle("Silver Bullet");
@@ -48,6 +52,9 @@ public class SilverBulletApplication extends Application {
 
   private Parent createContent() {
     this.game.setPrefSize(700, 700);
+    this.root.setPrefSize(800, 800);
+
+    root.getChildren().add(new Rectangle(100, 100, Color.BLACK));
 
     timer = new AnimationTimer() {
       @Override
