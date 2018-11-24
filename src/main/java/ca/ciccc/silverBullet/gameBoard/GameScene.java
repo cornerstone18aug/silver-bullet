@@ -81,9 +81,9 @@ public class GameScene extends Pane {
                         gameBoard.players.get(controllingPlayer).addAction(PlayerAction.WAIT);
                         break;
                 }
-            }
-            if(!gameBoard.areAllFull() && gameBoard.players.get(controllingPlayer).isActionsFull()){
-                controllingPlayer++;
+                if(gameBoard.players.get(controllingPlayer).isActionsFull()){
+                    controllingPlayer++;
+                }
             }
             if(KeyCode.SPACE.equals(key)){
                 currentActionNumber  = 0;
