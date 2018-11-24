@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -20,7 +23,32 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" opacity="0.4" stroke="WHITE" strokeType="INSIDE" width="900.0" />
          </children>
       </StackPane>
-      <VBox alignment="CENTER" layoutX="300.0" layoutY="240.0">
+      <VBox alignment="CENTER" layoutX="131.0" layoutY="203.0">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <HBox prefHeight="30.0">
+               <children>
+                  <Label prefWidth="400.0" text="Players" />
+                  <ComboBox prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="30.0">
+               <children>
+                  <Label prefWidth="400.0" text="Sizse of Game Board" />
+                  <ComboBox prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="30.0">
+               <children>
+                  <Label prefWidth="400.0" text="Stage Level" />
+                  <ComboBox prefWidth="150.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox layoutX="223.0" layoutY="491.0">
          <children>
             <StackPane onMouseClicked="#onStartClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
                <children>
@@ -43,9 +71,6 @@
                </children>
             </StackPane>
          </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>
