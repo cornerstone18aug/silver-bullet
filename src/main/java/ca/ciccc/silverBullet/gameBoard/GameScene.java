@@ -20,7 +20,7 @@ public class GameScene extends Pane {
 
 
     public GameScene() {
-        gameBoard = new GridBoard(9, 9);
+        gameBoard = new GridBoard(9, 9,3);
         instance = this;
         testFirstPlayer = gameBoard.addPlayer(1, 1, 1);
         testSecondPlayer = gameBoard.addPlayer(5, 5, 2);

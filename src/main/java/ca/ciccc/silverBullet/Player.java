@@ -1,5 +1,6 @@
 package ca.ciccc.silverBullet;
 
+import FileInput.FileInput;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.enums.gameplay.Orientation;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
@@ -14,6 +15,7 @@ import javafx.scene.shape.Circle;
 public class Player {
 
     private boolean hasShot;
+    private FileInput fileInput = new FileInput();
     private int playerNumber;
     private Directions facingDirection;
     private int gridPositionX;
@@ -46,49 +48,63 @@ public class Player {
         gridPositionX = gridX;
         gridPositionY = gridY;
         playerNode = new Circle(30, Color.GREEN);
-        Image image = new Image("File:src/main/resources/left.png");
+        Image image = null;
+        if(playerNumber == 1)
+        {
+            image = fileInput.image("File:src/main/resources/images/Character/Fire/Fire.png");
+        }else if(playerNumber == 2)
+        {
+            image = fileInput.image("File:src/main/resources/images/Character/Rock/Rock.png");
+        }
         ((Circle) playerNode).setFill(new ImagePattern(image));
-        playerNode.setRotate(90);
         playerActionCounter = new ActionCounter(playerNumber);
 
     }
 
     public void rotatePlayer(Orientation move){
+
         switch (facingDirection){
             case NORTH:
                 if(move == Orientation.LEFT){
                     facingDirection = Directions.WEST;
-                    playerNode.setRotate(0);
+                    this.setimage();
                 } else {
                     facingDirection = Directions.EAST;
-                    playerNode.setRotate(180);
+                    this.setimage();
+
                 }
                 break;
             case SOUTH:
                 if(move == Orientation.LEFT){
                     facingDirection = Directions.EAST;
-                    playerNode.setRotate(180);
+                    this.setimage();
+
                 } else {
                     facingDirection = Directions.WEST;
-                    playerNode.setRotate(0);
+                    this.setimage();
+
                 }
                 break;
             case EAST:
                 if(move == Orientation.LEFT){
                     facingDirection = Directions.NORTH;
-                    playerNode.setRotate(90);
+                    this.setimage();
+
                 } else {
                     facingDirection = Directions.SOUTH;
-                    playerNode.setRotate(-90);
+                    this.setimage();
+
                 }
                 break;
             case WEST:
                 if(move == Orientation.LEFT){
                     facingDirection = Directions.SOUTH;
-                    playerNode.setRotate(-90);
+                    this.setimage();
+
                 } else {
                     facingDirection = Directions.NORTH;
-                    playerNode.setRotate(90);
+                    this.setimage();
+
                 }
                 break;
         }
@@ -224,5 +240,50 @@ public class Player {
 
     public void setCurrentAction(int currentAction) {
         this.currentAction = currentAction;
+    }
+
+    private void setimage()
+    {
+        int playerNum = this.playerNumber;
+        String playerelement = null;
+        String dirction = null;
+
+        if(this.getFacingDirection() == Directions.SOUTH)
+        {
+            dirction = "";
+        }
+        else if(this.getFacingDirection() == Directions.NORTH)
+        {
+            dirction = "Up";
+        }
+        else if(this.getFacingDirection() == Directions.WEST)
+        {
+            dirction = "L";
+        }
+        else if(this.getFacingDirection() == Directions.EAST)
+        {
+            dirction = "R";
+        }
+
+        if(playerNum == 1)
+        {
+            playerelement = "Fire";
+        }
+        else if(playerNum == 2)
+        {
+            playerelement = "Rock";
+        }
+        else if(playerNum == 3)
+        {
+            playerelement = "Water";
+        }
+        else if(playerNum == 4)
+        {
+            playerelement = "Wind";
+        }
+
+        String path = "File:src/main/resources/images/Character/" + playerelement +"/" + playerelement + dirction +".png";
+        Image img = fileInput.image(path);
+        ((Circle) this.playerNode).setFill(new ImagePattern(img));
     }
 }

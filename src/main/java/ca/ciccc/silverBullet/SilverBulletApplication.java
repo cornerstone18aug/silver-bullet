@@ -23,8 +23,6 @@ import java.util.List;
  */
 public class SilverBulletApplication extends Application {
 
-
-
   private Pane root = new Pane();
   private GameScene game = new GameScene();
   List<Node> children = Collections.synchronizedList(this.root.getChildren());
@@ -72,12 +70,9 @@ public class SilverBulletApplication extends Application {
     game.boardUpdate();
   }
 
-
   public static void main(String[] args) {
     launch();
   }
-
-
 
 }
 
