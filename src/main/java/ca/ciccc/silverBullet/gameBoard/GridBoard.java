@@ -1,7 +1,6 @@
 package ca.ciccc.silverBullet.gameBoard;
 
 import FileInput.FileInput;
-import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Hole;
@@ -9,13 +8,10 @@ import ca.ciccc.silverBullet.gridNodes.Space;
 import ca.ciccc.silverBullet.gridNodes.Wall;
 import ca.ciccc.silverBullet.gridNodes.Water;
 import ca.ciccc.silverBullet.playerElements.Bullet;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
+import ca.ciccc.silverBullet.playerElements.Player;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import javafx.scene.layout.GridPane;
 
 public class GridBoard {
 
@@ -113,11 +109,6 @@ public class GridBoard {
   public void generateBoard(int sizeX, int sizeY, int levelNumber) {
     grid = new GridNode[sizeY][sizeX];
     gridBoard = new GridPane();
-    /*
-     * Instance to read the level and
-     * depend of it print another maps
-     * for the players.
-     */
     ca.ciccc.silverBullet.FileReader.FileRead read = new ca.ciccc.silverBullet.FileReader.FileRead();
     char[][] imageToPrint = read.getLevel(levelNumber);
 
@@ -160,7 +151,6 @@ public class GridBoard {
       }
     }
   }
-
 
   public Player addPlayer(int gridX, int gridY, int playerNumber) {
     GridNode targetNode = grid[gridY][gridX];
@@ -255,7 +245,6 @@ public class GridBoard {
     return null;
   }
 
-
   public void removePlayer(Player playerToRemove) {
     GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
   }
@@ -268,7 +257,6 @@ public class GridBoard {
       gridBoard.getChildren().add(bullet);
     }
   }
-
 
   public GridNode getNodeFromGrid(int x, int y) {
     return grid[y][x];

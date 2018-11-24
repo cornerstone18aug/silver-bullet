@@ -18,24 +18,14 @@ public class Bullet extends Rectangle {
   public Bullet(Move startPosition, Move endPosition, Player player) {
       super(25, 25, 50, 50);
       GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
-
-
       GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
       setTranslateX(startNode.getScreenX());
       setTranslateY(startNode.getScreenY() - 50);
       shootMovement(startNode, endNode, player);
-
-
-    /**
-    setTranslateX(startNode.getScreenX());
-    setTranslateY(startNode.getScreenY() - 50);
-    shootMovement(startNode, endNode, player);
-     */
   }
 
   public void shootMovement(GridNode startPos, GridNode endPos, Player player) {
     FileInput fInput = new FileInput();
-
     TranslateTransition transition = new TranslateTransition();
 
     switch (player.getPlayerNumber()) {
