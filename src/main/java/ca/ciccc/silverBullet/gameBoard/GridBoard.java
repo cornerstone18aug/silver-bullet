@@ -11,7 +11,11 @@ import ca.ciccc.silverBullet.playerElements.Bullet;
 import ca.ciccc.silverBullet.playerElements.Player;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 public class GridBoard {
 
@@ -75,18 +79,35 @@ public class GridBoard {
 
     public void movePlayer(Player playerToMove){
         if(playerToMove.getTargetMove() != null){
+
+            TranslateTransition moveTransition = new TranslateTransition();
+
+            GridNode startNode = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
             GridNode targetNode = grid[playerToMove.getTargetMove().moveY][playerToMove.getTargetMove().moveX];
+
             grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()].setPlayerInSpace(null);
             targetNode.setPlayerInSpace(playerToMove);
 
-      playerToMove.setGridPositionX(targetNode.getGridX());
-      playerToMove.setGridPositionY(targetNode.getGridY());
+            playerToMove.setGridPositionX(targetNode.getGridX());
+            playerToMove.setGridPositionY(targetNode.getGridY());
 
-      playerToMove.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
-      playerToMove.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
-      System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
+            moveTransition.setFromX(startNode.getScreenX() + 30);
+            moveTransition.setFromY(startNode.getScreenY() + 30);
 
-      playerToMove.setTargetMove(null);
+            moveTransition.setToX(targetNode.getScreenX() + 30);
+            moveTransition.setToY(targetNode.getScreenY() + 30);
+
+            moveTransition.setDuration(Duration.seconds(.3));
+
+            moveTransition.setInterpolator(Interpolator.EASE_OUT);
+
+            moveTransition.setNode(playerToMove.getPlayerNode());
+
+            moveTransition.play();
+
+            System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
+
+            playerToMove.setTargetMove(null);
     }
 
   }
