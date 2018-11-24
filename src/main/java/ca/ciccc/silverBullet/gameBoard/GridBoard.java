@@ -127,7 +127,7 @@ public class GridBoard {
         for (int i = 0; i < sizeY; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (imageToPrint[i][j] == 'S') {
-                    GridNode nodeToAdd = new Space(i, j);
+                    GridNode nodeToAdd = new Space(j, i);
                     gridBoard.add(nodeToAdd.getImage(), j, i);
                     grid[i][j] = nodeToAdd;
                     nodeToAdd.setGridX(j);
