@@ -66,26 +66,15 @@ public class GridBoard {
 
             if (targetX < 0 || targetY < 0) {
                 return null;
-            } else {
-                if(targetNode.isCanMoveTo() && checkOtherPlayerMoves(playerToMove)){
-                    return new Move(targetX, targetY);
-                }
+            } else if(!targetNode.hasPlayer()) {
+                return new Move(targetX, targetY);
+
             }
         }
 
         return null;
     }
-
-    public boolean checkOtherPlayerMoves(Player playerToMove){
-        for(Player p : players){
-            if(!p.equals(playerToMove)){
-                if(p.getTargetMove() != null && ((p.getTargetMove().moveX == playerToMove.getTargetMove().moveX)&&(p.getTargetMove().moveY == playerToMove.getTargetMove().moveY))){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+    
 
     public void movePlayer(Player playerToMove){
         if(playerToMove.getTargetMove() != null){
@@ -158,7 +147,7 @@ public class GridBoard {
 
     public Player addPlayer(int gridX, int gridY, int playerNumber) {
         GridNode targetNode = grid[gridY][gridX];
-        if(targetNode.hasPlayer() == false){
+        if(!targetNode.hasPlayer()){
             Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.SOUTH);
             players.add(playerToAdd);
             targetNode.setPlayerInSpace(playerToAdd);

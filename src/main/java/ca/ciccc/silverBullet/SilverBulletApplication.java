@@ -51,6 +51,7 @@ public class SilverBulletApplication extends Application {
   private Parent createContent() {
     this.game.setPrefSize(700, 700);
     this.root.setPrefSize(800, 800);
+    game.setStyle("-fx-background-color: #000000");
 
     root.getChildren().add(new Rectangle(100, 100, Color.BLACK));
 
