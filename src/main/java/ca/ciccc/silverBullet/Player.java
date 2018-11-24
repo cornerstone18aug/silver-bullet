@@ -141,7 +141,7 @@ public class Player {
                 this.rotatePlayer(Orientation.RIGHT);
                 break;
             case SHOOT:
-                GridBoard.instance.tryShoot(this);
+                GridBoard.instance.shootBullet(this);
                 break;
             case WAIT:
                 break;
