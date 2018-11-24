@@ -19,47 +19,45 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>11</version>
+      <version>12-ea+2</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>11</version>
+      <version>12-ea+2</version>
     </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>11</version>
+      <version>12-ea+2</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-base</artifactId>
-      <version>11</version>
+      <version>12-ea+2</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-web</artifactId>
-      <version>11</version>
+      <version>12-ea+2</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-swing</artifactId>
-      <version>11</version>
+      <version>12-ea+2</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-media</artifactId>
-      <version>11</version>
+      <version>12-ea+2</version>
     </dependency>
-
   </dependencies>
-
-
   <build>
     <resources>
       <!--In order to use jlink in a OS independent way with a config file
@@ -71,6 +69,10 @@
         </includes>
         <filtering>true</filtering>
         <targetPath>${project.build.directory}</targetPath>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
       </resource>
     </resources>
     <plugins>
@@ -109,7 +111,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>ca.ciccc.silverBullet.SilverBulletApplication</mainClass>
+          <mainClass>ca.ciccc.silverBullet.SilverBulletApp</mainClass>
         </configuration>
       </plugin>
       <plugin>
