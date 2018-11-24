@@ -59,7 +59,7 @@ public class GridBoard {
       }
       targetNode = grid[targetY][targetX];
 
-      } if(!targetNode.hasPlayer() && targetNode.isCanMoveTo()) {
+      if(!targetNode.hasPlayer() && targetNode.isCanMoveTo()) {
         return new Move(targetX, targetY);
       }
     }
