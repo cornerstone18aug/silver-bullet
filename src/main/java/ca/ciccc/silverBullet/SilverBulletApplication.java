@@ -11,6 +11,7 @@ import javafx.stage.Stage;
  * A very simple Java FX Application used to demonstrate a couple of aspects of the Java 11
  * ecosystem.
  */
+@Deprecated
 public class SilverBulletApplication extends Application {
 
   private GameScene game = new GameScene();
