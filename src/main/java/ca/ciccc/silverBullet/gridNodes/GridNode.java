@@ -3,6 +3,8 @@ package ca.ciccc.silverBullet.gridNodes;
 import ca.ciccc.silverBullet.Player;
 import javafx.scene.Node;
 
+import java.util.Random;
+
 public abstract class GridNode {
     protected int gridX;
     protected int gridY;
@@ -16,6 +18,8 @@ public abstract class GridNode {
   protected boolean canShoot;
 
     protected Player playerInSpace = null;
+
+    protected Random random = new Random();
 
     protected Node image;
     public Node squareNode;

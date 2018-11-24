@@ -1,17 +1,18 @@
 package ca.ciccc.silverBullet.gameBoard;
 
+import FileInput.FileInput;
 import ca.ciccc.silverBullet.Player;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Space;
-import ca.ciccc.silverBullet.gridNodes.Wall;
-import ca.ciccc.silverBullet.gridNodes.Water;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GridBoard {
     GridNode[][] grid;
@@ -20,9 +21,11 @@ public class GridBoard {
     int gridSizeX;
     int gridSizeY;
     public static GridBoard instance;
+    private FileInput fileInput = new FileInput();
+    Random random = new Random();
 
-    public GridBoard(int sizeX, int sizeY, int levelSelected) {
-        generateBoard(sizeX, sizeY, levelSelected);
+    public GridBoard(int sizeX, int sizeY, int level) {
+        generateBoard(sizeX, sizeY, level);
         players = new ArrayList<>();
         gridSizeX = sizeX -1;
         gridSizeY = sizeY-1;
@@ -94,51 +97,49 @@ public class GridBoard {
 
             playerToMove.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
             playerToMove.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
+            System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
 
             playerToMove.setTargetMove(null);
         }
 
     }
 
-  /**
-   *
-   * @param sizeX
-   * @param sizeY
-   * @param levelNumber
-   */
-  public void generateBoard(int sizeX, int sizeY, int levelNumber) {
-    grid = new GridNode[sizeY][sizeX];
-    gridBoard = new GridPane();
-    /*
-     * Instance to read the level and
-     * depend of it print another maps
-     * for the players.
+    /**
+     *
+     * @param sizeX
+     * @param sizeY
+     * @param levelNumber
      */
-    ca.ciccc.silverBullet.FileReader.FileRead read = new ca.ciccc.silverBullet.FileReader.FileRead();
-    char[][] imageToPrint = read.getLevel(levelNumber);
+    public void generateBoard(int sizeX, int sizeY, int levelNumber) {
+        grid = new GridNode[sizeY][sizeX];
+        gridBoard = new GridPane();
+        /*
+         * Instance to read the level and
+         * depend of it print another maps
+         * for the players.
+         */
+        ca.ciccc.silverBullet.FileReader.FileRead read = new ca.ciccc.silverBullet.FileReader.FileRead();
+        char[][] imageToPrint = read.getLevel(levelNumber);
 
-    for (int i = 0; i < sizeY; i++) {
-      for (int j = 0; j < sizeX; j++) {
-        if (imageToPrint[i][j] == 'S') {
-          GridNode nodeToAdd = new Space(i, j);
-          gridBoard.add(nodeToAdd.getImage(), j, i);
-          grid[i][j] = nodeToAdd;
-          nodeToAdd.setGridX(j);
-          nodeToAdd.setGridY(i);
-        } else if (imageToPrint[i][j] == 'W') {
-          GridNode nodeToAdd = new Wall(j, i);
-          gridBoard.add(nodeToAdd.getImage(), j, i);
-          grid[i][j] = nodeToAdd;
-          nodeToAdd.setGridX(j);
-          nodeToAdd.setGridY(i);
-        } else {
-          GridNode nodeToAdd = new Water(j, i);
-          gridBoard.add(nodeToAdd.getImage(), j, i);
-          grid[i][j] = nodeToAdd;
-          nodeToAdd.setGridX(j);
-          nodeToAdd.setGridY(i);
+                GridNode nodeToAdd = new Space(i, j);
+                nodeToAdd.squareNode = new Rectangle(60, 60, (i+j) % 2 == 0 ? Color.PINK:Color.TEAL);
+                gridBoard.add(nodeToAdd.squareNode, i, j);
+
+
+                grid[i][j] = nodeToAdd;
+                nodeToAdd.setGridX(j);
+                nodeToAdd.setGridY(i);
+            }
         }
-      }
+
+        gridBoard.setTranslateX(50);
+        gridBoard.setTranslateY(50);
+        for (int i = 0; i < sizeY; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                grid[j][i].setScreenX((i * 60) + 50);
+                grid[j][i].setScreenY((j * 60) + 50);
+            }
+        }
     }
 
     gridBoard.setTranslateX(50);
@@ -154,7 +155,7 @@ public class GridBoard {
     public Player addPlayer(int gridX, int gridY, int playerNumber) {
         GridNode targetNode = grid[gridY][gridX];
         if(targetNode.hasPlayer() == false){
-            Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.NORTH);
+            Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.SOUTH);
             players.add(playerToAdd);
             targetNode.setPlayerInSpace(playerToAdd);
             playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
@@ -170,11 +171,12 @@ public class GridBoard {
             List<GridNode> nodesAffected = new ArrayList<>();
             GridNode currentTargetNode;
             int gridIterator = 1;
+            System.out.println(playerShooting.getFacingDirection().name());
             switch (playerShooting.getFacingDirection()){
                 case NORTH:
                     while (true){
                         if(playerShooting.getGridPositionY() - gridIterator >= 0){
-                            currentTargetNode = grid[playerStartingNode.getGridX()][playerStartingNode.getGridY()-gridIterator];
+                            currentTargetNode = grid[playerStartingNode.getGridY() - gridIterator][playerStartingNode.getGridX()];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -190,7 +192,7 @@ public class GridBoard {
                 case SOUTH:
                     while (playerShooting.getGridPositionY() + gridIterator <= gridSizeY){
 
-                            currentTargetNode = grid[playerStartingNode.getGridX()][playerStartingNode.getGridY()+gridIterator];
+                            currentTargetNode = grid[playerStartingNode.getGridY() + gridIterator][playerStartingNode.getGridX()];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -204,7 +206,7 @@ public class GridBoard {
                 case EAST:
                     while (playerShooting.getGridPositionX() + gridIterator <= gridSizeX){
 
-                            currentTargetNode = grid[playerStartingNode.getGridX()+gridIterator][playerStartingNode.getGridY()];
+                            currentTargetNode = grid[playerStartingNode.getGridY()][playerStartingNode.getGridX() + gridIterator];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -218,7 +220,7 @@ public class GridBoard {
                 case WEST:
                     while (playerShooting.getGridPositionX() - gridIterator >= 0){
 
-                            currentTargetNode = grid[playerStartingNode.getGridX()-gridIterator][playerStartingNode.getGridY()];
+                            currentTargetNode = grid[playerStartingNode.getGridY()][playerStartingNode.getGridX() -gridIterator];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -229,7 +231,8 @@ public class GridBoard {
 
             }
             nodesAffected.forEach((o ->{
-                ((Rectangle)o.squareNode).setFill(Color.ORANGE);
+                ((Rectangle)o.getImage()).setFill(Color.ORANGE);
+                System.out.println(o.getGridX() + ", " + o.getGridY());
                 if(o.hasPlayer()){
                     o.getPlayerInSpace().Die();
                 }
@@ -242,6 +245,15 @@ public class GridBoard {
 
     public void removePlayer(Player playerToRemove){
         GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
+    }
+
+    public boolean areAllFull(){
+        for (Player p : players){
+            if(!p.isActionsFull()){
+                return false;
+            }
+        }
+        return true;
     }
 }
 
