@@ -1,4 +1,4 @@
-package ca.ciccc.silverBullet;
+package ca.ciccc.silverBullet.playerElements;
 
 import FileInput.FileInput;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;

@@ -1,8 +1,7 @@
 package ca.ciccc.silverBullet.gameBoard;
 
-import ca.ciccc.silverBullet.Player;
+import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
-import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
@@ -13,7 +12,6 @@ public class GameScene extends Pane {
     private boolean isExecuting;
     private int currentActionNumber = 0;
     private int controllingPlayer = 0;
-    AnimationTimer testTimer;
     static GameScene instance;
 
 
@@ -22,12 +20,15 @@ public class GameScene extends Pane {
         instance = this;
 
         this.getChildren().add(gameBoard.gridBoard);
+
         gameBoard.addPlayer(1, 1, 1);
         gameBoard.addPlayer(5, 5, 2);
 
         for (int i = 0; i < gameBoard.players.size(); i++){
+
             gameBoard.players.get(i).getPlayerActionCounter().setTranslateX(175 + 200 * i);
             gameBoard.players.get(i).getPlayerActionCounter().setTranslateY(630);
+
             this.getChildren().addAll(gameBoard.players.get(i).getPlayerNode(),
                     gameBoard.players.get(i).getPlayerActionCounter());
         }
@@ -82,7 +83,7 @@ public class GameScene extends Pane {
         if(!gameBoard.areAllFull() && gameBoard.players.get(controllingPlayer).isActionsFull()){
             controllingPlayer++;
         }
-        if(key.equals(KeyCode.SPACE)){
+        if(KeyCode.SPACE.equals(key)){
             currentActionNumber  = 0;
             controllingPlayer = 0;
             isExecuting = true;
@@ -91,23 +92,28 @@ public class GameScene extends Pane {
     }
 
     public void executePlayerActions(){
+
         for(Player p : gameBoard.players){
             if(p.getPlayerActions()[currentActionNumber].equals(PlayerAction.SHOOT)){
                 p.takeAction(currentActionNumber);
             }
         }
+
         for(Player p : gameBoard.players){
             if(!p.getPlayerActions()[currentActionNumber].equals(PlayerAction.SHOOT)){
                 p.takeAction(currentActionNumber);
             }
         }
+
     }
 
     public void actionEndStep(){
+
         for(Player p : gameBoard.players){
             p.getPlayerActionCounter().clearActions();
             p.resetActions();
         }
+
         isExecuting = false;
         controllingPlayer = 0;
         currentActionNumber = 0;
