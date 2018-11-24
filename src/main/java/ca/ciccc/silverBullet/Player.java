@@ -146,6 +146,7 @@ public class Player {
         for(int i = 0; i < 5; i++){
             playerActions[i] = PlayerAction.NONE;
         }
+        actionsFull = false;
     }
 
 
