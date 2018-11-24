@@ -5,6 +5,7 @@ import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.gameBoard.Move;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
+import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.paint.ImagePattern;
@@ -12,6 +13,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class Bullet extends Rectangle {
+
+  AnimationTimer timer;
+  Player playerShooting;
 
   public Bullet(Move startPosition, Move endPosition, Player player) {
     super(25, 25, 50, 50);
@@ -62,6 +66,15 @@ public class Bullet extends Rectangle {
     transition.setToY(endPos.getScreenY() - 50);
     transition.setNode(this);
     transition.play();
+  }
+
+  public void checkOverlap(){
+    for(Player p : GridBoard.instance.players)
+      if(!p.equals(playerShooting) && getBoundsInParent().intersects(p.getPlayerNode().getBoundsInParent())){
+        p.Die();
+        timer.stop();
+        onBulletStop();
+      }
   }
 
   public void onBulletStop() {
