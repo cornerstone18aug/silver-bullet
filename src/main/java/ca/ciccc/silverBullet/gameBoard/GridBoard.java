@@ -100,6 +100,7 @@ public class GridBoard {
 
             playerToMove.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
             playerToMove.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
+            System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
 
             playerToMove.setTargetMove(null);
         }
@@ -176,11 +177,12 @@ public class GridBoard {
             List<GridNode> nodesAffected = new ArrayList<>();
             GridNode currentTargetNode;
             int gridIterator = 1;
+            System.out.println(playerShooting.getFacingDirection().name());
             switch (playerShooting.getFacingDirection()){
                 case NORTH:
                     while (true){
                         if(playerShooting.getGridPositionY() - gridIterator >= 0){
-                            currentTargetNode = grid[playerStartingNode.getGridX()][playerStartingNode.getGridY()-gridIterator];
+                            currentTargetNode = grid[playerStartingNode.getGridY() - gridIterator][playerStartingNode.getGridX()];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -196,7 +198,7 @@ public class GridBoard {
                 case SOUTH:
                     while (playerShooting.getGridPositionY() + gridIterator <= gridSizeY){
 
-                            currentTargetNode = grid[playerStartingNode.getGridX()][playerStartingNode.getGridY()+gridIterator];
+                            currentTargetNode = grid[playerStartingNode.getGridY() + gridIterator][playerStartingNode.getGridX()];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -210,7 +212,7 @@ public class GridBoard {
                 case EAST:
                     while (playerShooting.getGridPositionX() + gridIterator <= gridSizeX){
 
-                            currentTargetNode = grid[playerStartingNode.getGridX()+gridIterator][playerStartingNode.getGridY()];
+                            currentTargetNode = grid[playerStartingNode.getGridY()][playerStartingNode.getGridX() + gridIterator];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -224,7 +226,7 @@ public class GridBoard {
                 case WEST:
                     while (playerShooting.getGridPositionX() - gridIterator >= 0){
 
-                            currentTargetNode = grid[playerStartingNode.getGridX()-gridIterator][playerStartingNode.getGridY()];
+                            currentTargetNode = grid[playerStartingNode.getGridY()][playerStartingNode.getGridX() -gridIterator];
                             if(currentTargetNode.isCanMoveTo()){
                                 nodesAffected.add(currentTargetNode);
                             } else {
@@ -236,6 +238,7 @@ public class GridBoard {
             }
             nodesAffected.forEach((o ->{
                 ((Rectangle)o.squareNode).setFill(Color.ORANGE);
+                System.out.println(o.getGridX() + ", " + o.getGridY());
                 if(o.hasPlayer()){
                     o.getPlayerInSpace().Die();
                 }
@@ -244,6 +247,10 @@ public class GridBoard {
             return true;
         }
         return false;
+    }
+
+    public void removePlayer(Player playerToRemove){
+        GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
     }
 }
 
