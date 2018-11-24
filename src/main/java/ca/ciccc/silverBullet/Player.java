@@ -146,7 +146,6 @@ public class Player {
             case WAIT:
                 break;
         }
-        playerActions[actionNumber] = PlayerAction.NONE;
         playerActionCounter.removeAction();
         return true;
     }

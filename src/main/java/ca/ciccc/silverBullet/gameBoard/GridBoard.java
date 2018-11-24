@@ -237,7 +237,7 @@ public class GridBoard {
 
             }
             nodesAffected.forEach((o ->{
-                ((Rectangle)o.squareNode).setFill(Color.ORANGE);
+                ((Rectangle)o.getImage()).setFill(Color.ORANGE);
                 System.out.println(o.getGridX() + ", " + o.getGridY());
                 if(o.hasPlayer()){
                     o.getPlayerInSpace().Die();
