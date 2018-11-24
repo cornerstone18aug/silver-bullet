@@ -1,4 +1,4 @@
-package ca.ciccc.silverBullet;
+package ca.ciccc.silverBullet.playerElements;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;

@@ -1,6 +1,6 @@
 package ca.ciccc.silverBullet.gridNodes;
 
-import ca.ciccc.silverBullet.Player;
+import ca.ciccc.silverBullet.playerElements.Player;
 import javafx.scene.Node;
 
 import java.util.Random;

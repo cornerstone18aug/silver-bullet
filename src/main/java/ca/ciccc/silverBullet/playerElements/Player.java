@@ -1,4 +1,4 @@
-package ca.ciccc.silverBullet;
+package ca.ciccc.silverBullet.playerElements;
 
 import FileInput.FileInput;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
@@ -146,7 +146,6 @@ public class Player {
             case WAIT:
                 break;
         }
-        playerActions[actionNumber] = PlayerAction.NONE;
         playerActionCounter.removeAction();
         return true;
     }
@@ -162,6 +161,7 @@ public class Player {
         for(int i = 0; i < 5; i++){
             playerActions[i] = PlayerAction.NONE;
         }
+        actionsFull = false;
     }
 
 
