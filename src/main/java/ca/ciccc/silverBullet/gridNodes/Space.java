@@ -15,6 +15,7 @@ public class Space extends GridNode {
     this.gridY = gridy;
     name = "Space";
     canMoveTo = true;
+    canShoot = true;
     image = new Rectangle(60, 60);
     int n = random.nextInt(4) + 1;
     ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tiles/Tile" + n + ".png")));
