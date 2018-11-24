@@ -74,6 +74,7 @@ public class GridBoard {
     }
     
 
+
     public void movePlayer(Player playerToMove){
         if(playerToMove.getTargetMove() != null){
             GridNode targetNode = grid[playerToMove.getTargetMove().moveY][playerToMove.getTargetMove().moveX];
