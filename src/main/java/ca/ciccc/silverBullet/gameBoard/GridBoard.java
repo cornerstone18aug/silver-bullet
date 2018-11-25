@@ -103,11 +103,13 @@ public class GridBoard {
         nodeToAdd.setGridY(i);
       }
     }
-    gridBoard.setTranslateX(50);
+    //gridBoard.setTranslateX(50);
+    //gridBoard.setTranslateY(50);
+    gridBoard.setTranslateX(182);
     gridBoard.setTranslateY(50);
     for (int i = 0; i < sizeY; i++) {
       for (int j = 0; j < sizeX; j++) {
-        grid[j][i].setScreenX((i * 60) + 50);
+        grid[j][i].setScreenX((i * 60) + 182);
         grid[j][i].setScreenY((j * 60) + 50);
       }
     }

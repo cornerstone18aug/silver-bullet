@@ -27,7 +27,10 @@ public class GameScene extends Pane {
     for (int i = 0; i < gameBoard.players.size(); i++) {
       Player player = gameBoard.players.get(i);
       ActionCounter ac = player.getPlayerActionCounter();
-      ac.setTranslateX(175 + 200 * i);
+      //ac.setTranslateX(175 + 200 * i);
+      /* New value to center the board
+      and the movements of the player */
+      ac.setTranslateX(305 + 200 * i);
       ac.setTranslateY(630);
       this.getChildren().addAll(player.getPlayerNode(), ac);
     }
@@ -44,7 +47,7 @@ public class GameScene extends Pane {
     for (int i = 0; i < gameBoard.players.size(); i++) {
       Player player = gameBoard.players.get(i);
       ActionCounter ac = player.getPlayerActionCounter();
-      ac.setTranslateX(175 + 200 * i);
+      ac.setTranslateX(305 + 200 * i);
       ac.setTranslateY(630);
       this.getChildren().addAll(player.getPlayerNode(), ac);
     }
