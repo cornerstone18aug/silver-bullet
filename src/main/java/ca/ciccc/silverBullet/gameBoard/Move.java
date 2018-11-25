@@ -2,8 +2,8 @@ package ca.ciccc.silverBullet.gameBoard;
 
 public class Move{
 
-    int moveX;
-    int moveY;
+    private int moveX;
+    private int moveY;
 
     public Move(int moveX, int moveY) {
         this.moveX = moveX;
@@ -12,6 +12,9 @@ public class Move{
 
     @Override
     public boolean equals(Object obj) {
+        if (!(obj instanceof  Move)) {
+            return false;
+        }
         Move otherMove = (Move)obj;
         return (moveX == otherMove.moveX && moveY == otherMove.moveY);
     }
@@ -19,16 +22,7 @@ public class Move{
     public int getMoveX() {
         return moveX;
     }
-
-    public void setMoveX(int moveX) {
-        this.moveX = moveX;
-    }
-
     public int getMoveY() {
         return moveY;
-    }
-
-    public void setMoveY(int moveY) {
-        this.moveY = moveY;
     }
 }

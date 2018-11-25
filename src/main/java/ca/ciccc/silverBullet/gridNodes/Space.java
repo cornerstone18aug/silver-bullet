@@ -8,16 +8,17 @@ import javafx.scene.shape.Rectangle;
 import java.util.Random;
 
 public class Space extends GridNode {
+  private final static String FILE_PATH = "file:src/main/resources/images/Tiles/Tile%s.png";
 
-  public Space(int gridx, int gridy) {
+  public Space(int gridX, int gridY) {
     FileInput fInput = new FileInput();
-    this.gridX = gridx;
-    this.gridY = gridy;
+    this.gridX = gridX;
+    this.gridY = gridY;
     name = "Space";
     canMoveTo = true;
     canShoot = true;
-    image = new Rectangle(60, 60);
+    image = new Rectangle(WIDTH, HEIGHT);
     int n = random.nextInt(4) + 1;
-    ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tiles/Tile" + n + ".png")));
+    ((Rectangle) image).setFill(new ImagePattern(fInput.image(String.format(FILE_PATH, n))));
   }
 }
