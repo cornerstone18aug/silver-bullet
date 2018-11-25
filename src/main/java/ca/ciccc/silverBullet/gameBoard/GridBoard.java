@@ -95,7 +95,7 @@ public class GridBoard {
     char[][] imageToPrint = read.getLevel(levelNumber);
         for (int i = 0; i < sizeY; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (imageToPrint[i][j] == 'S') {
+              if (imageToPrint[i][j] == 'S') {
                     GridNode nodeToAdd = new Space(j, i);
                     gridBoard.add(nodeToAdd.getImage(), j, i);
                     grid[i][j] = nodeToAdd;
@@ -115,44 +115,52 @@ public class GridBoard {
                     nodeToAdd.setGridY(i);
                 }
                 else if(imageToPrint[i][j] == 'E'){
-                    GridNode nodeToAdd = new Edge(j, i);
-                    gridBoard.add(nodeToAdd.getImage(), j, i);
-                    grid[i][j] = nodeToAdd;
-                    nodeToAdd.setGridX(j);
-                    nodeToAdd.setGridY(i);
+                  GridNode nodeToAdd = new Edge(j,i);
+                  gridBoard.add(nodeToAdd.getImage(), j, i);
+                  grid[i][j] = nodeToAdd;
+                  nodeToAdd.setGridX(j);
+                  nodeToAdd.setGridY(i);
+                }
+                else if(imageToPrint[i][j] == 'A'){
+                  GridNode nodeToAdd = new Water(j, i);
+                  gridBoard.add(nodeToAdd.getImage(), j, i);
+                  grid[i][j] = nodeToAdd;
+                  nodeToAdd.setGridX(j);
+                  nodeToAdd.setGridY(i);
                 }
             }
+
         }
 
-    for (int i = 0; i < sizeY; i++) {
-      for (int j = 0; j < sizeX; j++) {
-        if (imageToPrint[i][j] == 'S') {
-          GridNode nodeToAdd = new Space(j, i);
-          gridBoard.add(nodeToAdd.getImage(), j, i);
-          grid[i][j] = nodeToAdd;
-          nodeToAdd.setGridX(j);
-          nodeToAdd.setGridY(i);
-        } else if (imageToPrint[i][j] == 'W') {
-          GridNode nodeToAdd = new Wall(j, i);
-          gridBoard.add(nodeToAdd.getImage(), j, i);
-          grid[i][j] = nodeToAdd;
-          nodeToAdd.setGridX(j);
-          nodeToAdd.setGridY(i);
-        } else if (imageToPrint[i][j] == 'E') {
-          GridNode nodeToAdd = new Edge(j, i);
-          gridBoard.add(nodeToAdd.getImage(), j, i);
-          grid[i][j] = nodeToAdd;
-          nodeToAdd.setGridX(j);
-          nodeToAdd.setGridY(i);
-        } else if (imageToPrint[i][j] == 'H') {
-          GridNode nodeToAdd = new Hole(j, i);
-          gridBoard.add(nodeToAdd.getImage(), j, i);
-          grid[i][j] = nodeToAdd;
-          nodeToAdd.setGridX(j);
-          nodeToAdd.setGridY(i);
-        }
-      }
-    }
+//    for (int i = 0; i < sizeY; i++) {/
+//      for (int j = 0; j < sizeX; j++) {
+//        if (imageToPrint[i][j] == 'S') {
+//          GridNode nodeToAdd = new Space(j, i);
+//          gridBoard.add(nodeToAdd.getImage(), j, i);
+//          grid[i][j] = nodeToAdd;
+//          nodeToAdd.setGridX(j);
+//          nodeToAdd.setGridY(i);
+//        } else if (imageToPrint[i][j] == 'W') {
+//          GridNode nodeToAdd = new Wall(j, i);
+//          gridBoard.add(nodeToAdd.getImage(), j, i);
+//          grid[i][j] = nodeToAdd;
+//          nodeToAdd.setGridX(j);
+//          nodeToAdd.setGridY(i);
+//        } else if (imageToPrint[i][j] == 'E') {
+//          GridNode nodeToAdd = new Edge(j, i,);
+//          gridBoard.add(nodeToAdd.getImage(), j, i);
+//          grid[i][j] = nodeToAdd;
+//          nodeToAdd.setGridX(j);
+//          nodeToAdd.setGridY(i);
+//        } else if (imageToPrint[i][j] == 'H') {
+//          GridNode nodeToAdd = new Hole(j, i);
+//          gridBoard.add(nodeToAdd.getImage(), j, i);
+//          grid[i][j] = nodeToAdd;
+//          nodeToAdd.setGridX(j);
+//          nodeToAdd.setGridY(i);
+//        }
+//      }
+//    }
     gridBoard.setTranslateX(50);
     gridBoard.setTranslateY(50);
     for (int i = 0; i < sizeY; i++) {

@@ -16,6 +16,7 @@ public class Wall extends GridNode {
     image = new Rectangle(60, 60);
 //    int n = random.nextInt(3) + 1;
     ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tiles/TileRock" + 1 + ".png")));
+
   }
 
 }

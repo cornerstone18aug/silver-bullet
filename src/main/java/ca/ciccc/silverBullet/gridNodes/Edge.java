@@ -11,6 +11,7 @@ public class Edge extends GridNode {
 
     public Edge(int gridx, int gridy) {
         FileInput fInput = new FileInput();
+
         this.gridX = gridx;
         this.gridY = gridy;
         name = "Edge";
