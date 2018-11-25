@@ -11,9 +11,11 @@ import javafx.scene.paint.Color;
 
 /**
  * MenuController
+ *
  * @author Masa
  */
 public class MenuController {
+
   private static MenuController instance;
   private static Scene SCENE;
 
@@ -35,6 +37,7 @@ public class MenuController {
 
   /**
    * Return singleton instance
+   *
    * @return instance
    */
   public static MenuController getInstance() {
@@ -62,9 +65,11 @@ public class MenuController {
 
   @FXML
   public void OnQuitClicked() {
-    ModalUtil.confirm("QUIT",
+    ModalUtil.confirm(
+        "QUIT",
         "Did you really want to quit?",
-        e -> System.exit(1));
+        () -> System.exit(1)
+    );
   }
 
   @FXML

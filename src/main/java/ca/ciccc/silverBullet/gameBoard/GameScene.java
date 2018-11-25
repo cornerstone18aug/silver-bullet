@@ -54,6 +54,33 @@ public class GameScene extends Pane {
 
   }
 
+  public static class Builder {
+    private int playerNumber;
+    private int boardSize;
+    private int level;
+
+    public Builder player(int playerNumber) {
+      this.playerNumber = playerNumber;
+      return this;
+    }
+
+    public Builder boardSize(int boardSize) {
+      this.boardSize = boardSize;
+      return this;
+    }
+
+    public Builder level(int level) {
+      this.level = level;
+      return this;
+    }
+
+    public GameScene build() {
+      GameScene gameScene = new GameScene(this.level);
+      return  gameScene;
+    }
+
+  }
+
   public void boardUpdate() {
     if (!isExecuting) {
       return;

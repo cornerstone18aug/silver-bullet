@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -12,40 +15,116 @@
    <children>
       <StackPane layoutY="30.0">
          <children>
-            <Text fill="#d01313" strokeType="OUTSIDE" strokeWidth="0.0" text="SETTINGS">
+            <Text fill="#151bcf" strokeType="OUTSIDE" strokeWidth="0.0" text="SETTINGS">
                <font>
-                  <Font size="63.0" />
+                  <Font size="55.0" />
                </font>
             </Text>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" opacity="0.4" stroke="WHITE" strokeType="INSIDE" width="900.0" />
          </children>
       </StackPane>
-      <VBox alignment="CENTER" layoutX="300.0" layoutY="240.0">
+      <VBox alignment="CENTER" layoutX="-5.0" layoutY="202.0" prefWidth="900.0" AnchorPane.bottomAnchor="276.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="202.0">
+         <effect>
+            <DropShadow />
+         </effect>
          <children>
-            <StackPane onMouseClicked="#onStartClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
+            <HBox prefHeight="150.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
-                  <Text fill="#5e5e5e" strokeType="OUTSIDE" strokeWidth="0.0" text="START">
+                  <StackPane alignment="TOP_LEFT" prefWidth="400.0">
+                     <children>
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- How many players">
+                           <font>
+                              <Font name="Helvetica" size="28.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
+                     <children>
+                        <ComboBox fx:id="howManyPlayersCombo" prefWidth="150.0" promptText="Select number" visibleRowCount="3" StackPane.alignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="150.0">
+               <children>
+                  <StackPane alignment="TOP_LEFT" prefWidth="400.0">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- Board Size">
+                           <font>
+                              <Font name="Helvetica" size="28.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
+                     <children>
+                        <ComboBox fx:id="boardSizeCombo" prefWidth="150.0" promptText="Select number" StackPane.alignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+            <HBox prefHeight="150.0">
+               <children>
+                  <StackPane alignment="TOP_LEFT" prefWidth="400.0">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- Level">
+                           <font>
+                              <Font name="Helvetica" size="28.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
+                     <children>
+                        <ComboBox fx:id="levelCombo" prefWidth="150.0" promptText="Select number" StackPane.alignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+      </VBox>
+      <HBox alignment="CENTER" layoutY="480.0" prefWidth="900.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="480.0">
+         <children>
+            <StackPane onMouseClicked="#onStartClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed" prefWidth="320.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4fd2f07c" height="50.0" stroke="BLACK" strokeType="INSIDE" width="300.0" StackPane.alignment="CENTER_LEFT" />
+                  <Text fill="#5e5e5e" strokeType="OUTSIDE" strokeWidth="0.0" text="START" textAlignment="CENTER" StackPane.alignment="CENTER">
                      <font>
-                        <Font name="STHeiti" size="40.0" />
+                        <Font name="STHeiti" size="30.0" />
                      </font>
                   </Text>
                </children>
             </StackPane>
-            <StackPane onMouseClicked="#onBackToMenuClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
+            <StackPane onMouseClicked="#onBackToMenuClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed" prefWidth="320.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
-                  <Text fill="#5e5e5e" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK TO MENU">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4fd2f07c" height="50.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
+                  <Text fill="#5e5e5e" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK TO MENU" textAlignment="CENTER">
                      <font>
-                        <Font name="STHeiti" size="40.0" />
+                        <Font name="STHeiti" size="30.0" />
                      </font>
                   </Text>
                </children>
             </StackPane>
          </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>
