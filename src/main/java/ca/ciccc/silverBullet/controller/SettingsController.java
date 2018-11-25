@@ -1,6 +1,7 @@
 package ca.ciccc.silverBullet.controller;
 
 import ca.ciccc.silverBullet.SilverBulletApp;
+import ca.ciccc.silverBullet.utils.ModalUtil;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +11,11 @@ import javafx.scene.paint.Color;
 
 /**
  * HowToPlayController
+ *
  * @author Masa
  */
 public class SettingsController {
+
   private static SettingsController instance;
   private static Scene SCENE;
 
@@ -34,6 +37,7 @@ public class SettingsController {
 
   /**
    * Return singleton instance
+   *
    * @return instance
    */
   public static SettingsController getInstance() {
@@ -51,12 +55,18 @@ public class SettingsController {
 
   @FXML
   public void onStartClicked() {
-    GameController.getInstance().show();
+    ModalUtil.confirm("START",
+        "Are you ready?",
+        () -> GameController.getInstance().show()
+    );
   }
 
   @FXML
   public void onBackToMenuClicked() {
-    MenuController.getInstance().show();
+    ModalUtil.confirm("BACK TO MENU",
+        "This settings will be reset, OK?",
+        () -> MenuController.getInstance().show()
+    );
   }
 
   @FXML

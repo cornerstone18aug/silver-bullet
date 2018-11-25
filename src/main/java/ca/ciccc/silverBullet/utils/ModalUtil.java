@@ -1,6 +1,8 @@
 package ca.ciccc.silverBullet.utils;
 
+import ca.ciccc.silverBullet.controller.MenuController;
 import ca.ciccc.silverBullet.utils.ConstUtil.DisplaySizeEnum;
+import java.util.function.Supplier;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,7 +25,7 @@ public class ModalUtil {
   private ModalUtil() {
   }
 
-  public static void confirm(String title, String message, EventHandler<ActionEvent> event) {
+  public static Stage confirm(String title, String message, Runnable action) {
     Stage modalStage = ModalUtil.createModalStage(title);
     Pane parentPane = ModalUtil.createModalPane();
 
@@ -31,7 +33,10 @@ public class ModalUtil {
     label.setText(message);
 
     Button executeButton = new Button(ConstUtil.getRbString("modal.ok"));
-    executeButton.setOnAction(event);
+    executeButton.setOnAction(e -> {
+      action.run();
+      modalStage.close();
+    });
 
     Button closeButton = new Button(ConstUtil.getRbString("modal.cancel"));
     closeButton.setOnAction(e -> modalStage.close());
@@ -54,6 +59,7 @@ public class ModalUtil {
     /* Its need to be close before do other things out of the window */
     modalStage.showAndWait();
 
+    return modalStage;
   }
 
   public static void alert(String title, String message) {

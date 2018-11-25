@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 
 /**
- * MenuController
+ * GameController
  * @author Masa
  */
 public class GameController {

@@ -43,7 +43,7 @@
             <HBox prefHeight="30.0">
                <children>
                   <Label prefWidth="400.0" text="Stage Level" />
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox prefWidth="150.0" visibleRowCount="3" />
                </children>
             </HBox>
          </children>
