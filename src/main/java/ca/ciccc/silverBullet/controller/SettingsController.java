@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
  * HowToPlayController
  * @author Masa
  */
-public class SettingsController {
+public class SettingsController extends GameManger {
   private static SettingsController instance;
   private static Scene SCENE;
 

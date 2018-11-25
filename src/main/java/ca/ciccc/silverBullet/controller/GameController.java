@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  * MenuController
  * @author Masa
  */
-public class GameController {
+public class GameController extends GameManger {
   private static GameController instance;
   private static Scene SCENE;
   private static GameScene game;
@@ -40,6 +40,7 @@ public class GameController {
   }
 
   public void show() {
+    menuClip.stop();
     AnimationTimer timer = new AnimationTimer() {
       @Override
       public void handle(long l) {

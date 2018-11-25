@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  * MenuController
  * @author Masa
  */
-public class MenuController {
+public class MenuController extends GameManger {
   private static MenuController instance;
   private static Scene SCENE;
 
@@ -48,6 +48,7 @@ public class MenuController {
 
   public void show() {
     SilverBulletApp.primaryStage.setScene(SCENE);
+    menuClip.play();
   }
 
   @FXML
