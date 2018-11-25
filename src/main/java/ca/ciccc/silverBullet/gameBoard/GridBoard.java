@@ -79,7 +79,7 @@ public class GridBoard {
             TranslateTransition moveTransition = new TranslateTransition();
 
             GridNode startNode = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
-            GridNode targetNode = grid[playerToMove.getTargetMove().moveY][playerToMove.getTargetMove().moveX];
+            GridNode targetNode = grid[playerToMove.getTargetMove().getMoveY()][playerToMove.getTargetMove().getMoveX()];
 
             grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()].setPlayerInSpace(null);
             targetNode.setPlayerInSpace(playerToMove);
