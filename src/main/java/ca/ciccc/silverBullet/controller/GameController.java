@@ -18,7 +18,8 @@ public class GameController {
   static {
     game = new GameScene(3);
     game.setStyle("-fx-background-color: #000000");
-    game.setPrefSize(700, 700);
+    //game.setPrefSize(700, 700);
+    game.setPrefSize(900, 700);
     Scene scene = new Scene(game);
     scene.setOnKeyPressed(e -> game.onKeyPressed(e.getCode()));
     scene.setFill(Color.TRANSPARENT);
