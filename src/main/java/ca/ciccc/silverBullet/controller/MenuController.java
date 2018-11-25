@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  * MenuController
  * @author Masa
  */
-public class MenuController extends GameManger {
+public class MenuController extends AbstractController {
   private static MenuController instance;
   private static Scene SCENE;
 
