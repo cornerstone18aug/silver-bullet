@@ -7,8 +7,6 @@ import ca.ciccc.silverBullet.gameBoard.Move;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -16,12 +14,14 @@ import javafx.util.Duration;
 public class Bullet extends Rectangle {
 
   public Bullet(Move startPosition, Move endPosition, Player player) {
-      super(25, 25, 50, 50);
-      GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
-      GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
-      setTranslateX(startNode.getScreenX());
-      setTranslateY(startNode.getScreenY() - 50);
-      shootMovement(startNode, endNode, player);
+    super(25, 25, 50, 50);
+    GridNode startNode = GridBoard.instance
+        .getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
+    GridNode endNode = GridBoard.instance
+        .getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
+    setTranslateX(startNode.getScreenX());
+    setTranslateY(startNode.getScreenY() - 50);
+    shootMovement(startNode, endNode, player);
   }
 
   public void shootMovement(GridNode startPos, GridNode endPos, Player player) {
@@ -56,12 +56,7 @@ public class Bullet extends Rectangle {
 
     transition.setFromY(startPos.getScreenY() - 50);
     transition.setInterpolator(Interpolator.EASE_IN);
-    transition.setOnFinished(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent actionEvent) {
-        onBulletStop();
-      }
-    });
+    transition.setOnFinished(e -> onBulletStop());
 
     transition.setDuration(Duration.seconds(.5));
     transition.setToY(endPos.getScreenY() - 50);

@@ -5,15 +5,16 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Hole extends GridNode {
+  private final static String FILE_PATH = "file:src/main/resources/images/Hole.png";
 
-  public Hole(int gridx, int gridy) {
+  public Hole(int gridX, int gridY) {
     FileInput fInput = new FileInput();
-    this.gridX = gridx;
-    this.gridY = gridy;
+    this.gridX = gridX;
+    this.gridY = gridY;
     name = "Hole";
     canMoveTo = false;
     canShoot = true;
-    image = new Rectangle(60, 60);
-    ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Hole.png")));
+    image = new Rectangle(WIDTH, HEIGHT);
+    ((Rectangle) image).setFill(new ImagePattern(fInput.image(FILE_PATH)));
   }
 }

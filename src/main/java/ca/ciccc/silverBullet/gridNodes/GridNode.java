@@ -6,6 +6,9 @@ import javafx.scene.Node;
 
 public abstract class GridNode {
 
+  protected static final int WIDTH = 60;
+  protected static final int HEIGHT = 60;
+
   protected int gridX;
   protected int gridY;
   protected String name;
@@ -25,10 +28,7 @@ public abstract class GridNode {
   public Node squareNode;
 
   public boolean hasPlayer() {
-    if (playerInSpace != null) {
-      return true;
-    }
-    return false;
+    return playerInSpace != null;
   }
 
   public Player getPlayerInSpace() {

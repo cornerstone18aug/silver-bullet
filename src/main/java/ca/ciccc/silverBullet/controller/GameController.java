@@ -16,7 +16,7 @@ public class GameController {
   private static GameScene game;
 
   static {
-    game = new GameScene();
+    game = new GameScene(3);
     game.setStyle("-fx-background-color: #000000");
     game.setPrefSize(700, 700);
     Scene scene = new Scene(game);
