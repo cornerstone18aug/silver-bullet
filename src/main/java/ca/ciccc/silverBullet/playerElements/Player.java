@@ -33,6 +33,8 @@ public class Player {
 
   private boolean isDead;
 
+  private int currentAmo;
+
   public void setActionsFull(boolean actionsFull) {
     this.actionsFull = actionsFull;
   }
@@ -50,6 +52,7 @@ public class Player {
     this.hasShot = hasShot;
     this.playerNumber = playerNumber;
     this.facingDirection = facingDirection;
+    this.currentAmo = 3;
     gridPositionX = gridX;
     gridPositionY = gridY;
     playerNode = new Circle(30, Color.GREEN);
@@ -263,6 +266,20 @@ public class Player {
 
   public void setCurrentAction(int currentAction) {
     this.currentAction = currentAction;
+  }
+
+  public int getCurrentAmo() {
+    if (currentAmo == 0 || isHasShot() == false) {
+      System.out.println("You don't have more Amo!!!");
+    } else {
+      System.out.println("You have " + currentAmo + " of Amo!!!");
+      currentAmo--;
+    }
+    return currentAmo;
+  }
+
+  public void setCurrentAmo(int currentAmo) {
+    this.currentAmo = currentAmo;
   }
 
   private void setimage() {
