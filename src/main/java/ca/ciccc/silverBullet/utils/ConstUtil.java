@@ -25,6 +25,10 @@ public class ConstUtil {
     double get();
   }
 
+  public interface hasIntSize {
+    int get();
+  }
+
   public enum DisplaySizeEnum implements hasDoubleSize {
     EXTERNAL_FRAME_W(900),
     EXTERNAL_FRAME_H(600),
@@ -59,6 +63,41 @@ public class ConstUtil {
     }
 
     public double get() {
+      return this.size;
+    }
+  }
+
+  public enum GridBoardVariables implements hasIntSize {
+    BOARD_POSITION_X(182),
+    BOARD_POSITION_Y(50),
+    TILE_SIZE(60),
+    SPACE_TARGET_NODE(30),
+    TILE_CORRECTION_PLAYER(1);
+
+    int size;
+
+    GridBoardVariables(int size) {
+      this.size = size;
+    }
+
+    public int get(){
+      return this.size;
+    }
+  }
+
+    public enum BulletVariables implements hasIntSize {
+      SHOOT_START_POS_X(45),
+      SHOOT_END_POS_X(45),
+      SHOOT_START_POS_Y(50),
+      SHOOT_END_POS_Y(50);
+
+      int size;
+
+      BulletVariables(int size) {
+        this.size = size;
+      }
+
+    public int get(){
       return this.size;
     }
   }
