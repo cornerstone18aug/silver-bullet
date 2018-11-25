@@ -15,30 +15,11 @@ public class GameScene extends Pane {
   private int controllingPlayer = 0;
   public static GameScene instance;
 
-    public GameScene(int lvl) {
-        gameBoard = new GridBoard(9, 9,lvl);
-        instance = this;
+  public GameScene(int lvl) {
+    gameBoard = new GridBoard(9, 9, lvl);
+    instance = this;
 
-        this.getChildren().add(gameBoard.gridBoard);
-
-        gameBoard.addPlayer(1, 1, 1);
-        gameBoard.addPlayer(5, 5, 2);
-
-        for (int i = 0; i < gameBoard.players.size(); i++){
-
-            gameBoard.players.get(i).getPlayerActionCounter().setTranslateX(175 + 200 * i);
-            gameBoard.players.get(i).getPlayerActionCounter().setTranslateY(630);
-
-            this.getChildren().addAll(gameBoard.players.get(i).getPlayerNode(),
-                    gameBoard.players.get(i).getPlayerActionCounter());
-        }
-
-
-    }
-
-    public GameScene() {
-        gameBoard = new GridBoard(9, 9,3);
-        instance = this;
+    this.getChildren().add(gameBoard.gridBoard);
 
     gameBoard.addPlayer(1, 1, 1);
     gameBoard.addPlayer(5, 5, 2);
@@ -51,6 +32,22 @@ public class GameScene extends Pane {
       this.getChildren().addAll(player.getPlayerNode(), ac);
     }
 
+  }
+
+  public GameScene() {
+    gameBoard = new GridBoard(9, 9, 3);
+    instance = this;
+
+    gameBoard.addPlayer(1, 1, 1);
+    gameBoard.addPlayer(5, 5, 2);
+
+    for (int i = 0; i < gameBoard.players.size(); i++) {
+      Player player = gameBoard.players.get(i);
+      ActionCounter ac = player.getPlayerActionCounter();
+      ac.setTranslateX(175 + 200 * i);
+      ac.setTranslateY(630);
+      this.getChildren().addAll(player.getPlayerNode(), ac);
+    }
 
   }
 
@@ -100,13 +97,13 @@ public class GameScene extends Pane {
   public void executePlayerActions() {
 
     for (Player p : gameBoard.players) {
-      if (p.getPlayerActions()[currentActionNumber].equals(PlayerAction.SHOOT)) {
+      if (PlayerAction.SHOOT.equals(p.getPlayerActions()[currentActionNumber])) {
         p.takeAction(currentActionNumber);
       }
     }
 
     for (Player p : gameBoard.players) {
-      if (!p.getPlayerActions()[currentActionNumber].equals(PlayerAction.SHOOT)) {
+      if (!PlayerAction.SHOOT.equals(p.getPlayerActions()[currentActionNumber])) {
         p.takeAction(currentActionNumber);
       }
     }

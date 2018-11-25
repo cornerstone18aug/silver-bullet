@@ -1,5 +1,6 @@
 package ca.ciccc.silverBullet.enums.gameplay;
 
+import ca.ciccc.silverBullet.gridNodes.Edge;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.gridNodes.Hole;
 import ca.ciccc.silverBullet.gridNodes.Space;
@@ -12,7 +13,7 @@ public enum GridElement {
   HOLE('H'),
   WALL('W'),
   SPACE('S'),
-  WATER('E');
+  EDGE('E');
 
   private char letter;
 
@@ -31,8 +32,8 @@ public enum GridElement {
         return new Wall(positionX, positionY);
       case SPACE:
         return new Space(positionX, positionY);
-      case WATER:
-        return new Water(positionX, positionY);
+      case EDGE:
+        return new Edge(positionX, positionY);
     }
     throw new IllegalStateException();
   }

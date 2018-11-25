@@ -51,7 +51,7 @@ public class Player {
     gridPositionX = gridX;
     gridPositionY = gridY;
     playerNode = new Circle(30, Color.GREEN);
-    Image image = null;
+    Image image = fileInput.image("File:src/main/resources/images/Character/Fire/Fire.png");
     if (playerNumber == 1) {
       image = fileInput.image("File:src/main/resources/images/Character/Fire/Fire.png");
     } else if (playerNumber == 2) {
@@ -129,6 +129,9 @@ public class Player {
   }
 
   public boolean takeAction(int actionNumber) {
+    if (playerActions[actionNumber] == null) {
+      return false;
+    }
     switch (playerActions[actionNumber]) {
       case MOVE:
         this.targetMove = GridBoard.instance.tryMovePlayer(this);

@@ -16,7 +16,7 @@ public class Wall extends GridNode {
     canShoot = false;
     image = new Rectangle(WIDTH, HEIGHT);
 //    int n = random.nextInt(3) + 1;
-    ((Rectangle) image).setFill(new ImagePattern(fInput.image(String.format(FILE_PATH, n))));
+    ((Rectangle) image).setFill(new ImagePattern(fInput.image(String.format(FILE_PATH, 1))));
   }
 
 }
