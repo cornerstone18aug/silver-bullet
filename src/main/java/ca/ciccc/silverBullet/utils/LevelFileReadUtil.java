@@ -22,6 +22,7 @@ public class LevelFileReadUtil {
       // W -> Wall
       // S -> Space
       // E -> Water
+      // H -> Hole
 
       // Read the next line of the file
       String line;
@@ -31,15 +32,6 @@ public class LevelFileReadUtil {
           level[i][j] = line.charAt(j);
         }
       }
-      /*while (line != null) {
-        String[] values = line.split("");
-        for (int i = 0; i < level.length; i++) {
-          // Get the first position of the array
-          char[cont][i] = values[i].charAt(0);
-        }
-        cont++;
-        line = br.readLine();
-        */
     } catch (IOException ioE) {
       ioE.printStackTrace();
       throw new RuntimeException(ioE);
