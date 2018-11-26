@@ -137,6 +137,29 @@ public class ConstUtil {
     }
   }
 
+  public enum GameSceneVariables implements hasIntSize {
+    SIZE_BOARD_X(305),
+    SIZE_BOARD_Y(630),
+    SIZE_BOARD_TILE(9),
+    POSITION_PLAYER_1_X(1),
+    POSITION_PLAYER_1_Y(1),
+    POSITION_PLAYER_2_X(5),
+    POSITION_PLAYER_2_Y(5),
+    LEVEL_SELECTED(3),
+    PLAYER_NUMBER_1(1),
+    PLAYER_NUMBER_2(2);
+
+    int size;
+
+    GameSceneVariables(int size) {
+      this.size = size;
+    }
+
+    public int get(){
+      return this.size;
+    }
+  }
+
   public static final String APP_NAME = "SILVER BULLET";
   public static final String TITLE_FONT = "Times New Roman";
   public static final String MENU_FONT = "Times New Roman";
