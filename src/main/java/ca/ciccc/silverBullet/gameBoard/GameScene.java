@@ -183,6 +183,7 @@ public class GameScene extends Pane {
             controllingPlayer = 0;
             currentActionNumber = 0;
             isPaused = true;
+            timerDisplay.setHighlight(controllingPlayer);
             ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", () -> isPaused = false);
         }
 
@@ -208,21 +209,23 @@ public class GameScene extends Pane {
             isPaused = true;
             if (!gameBoard.areAllFull()) {
 
-                ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", () -> {
-                    isPaused = false;
-                    turnTimer = 10;
-                });
-                controllingPlayer++;
-            } else {
-                ModalUtil.alertWithCallback("Execute", "Move to execution?", () -> {
-                    turnTimer = 10;
-                    currentActionNumber = 0;
-                    controllingPlayer = 0;
-                    isExecuting = true;
-                    isPaused = false;
-                });
-            }
-        }
+  private void turnEnd(){
+      gameBoard.players.get(controllingPlayer).passTurn();
+      isPaused = true;
+      if(!gameBoard.areAllFull()){
+          controllingPlayer++;
+          timerDisplay.setHighlight(controllingPlayer);
+          ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", ()->{isPaused=false; turnTimer = 10;});
 
-    }
+
+      } else{
+          timerDisplay.highlightAll();
+          ModalUtil.alertWithCallback("Execute", "Move to execution?", ()->{
+              turnTimer = 10;
+              currentActionNumber = 0;
+              controllingPlayer = 0;
+              isExecuting = true;
+              isPaused = false;});
+      }
+  }
 
