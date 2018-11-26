@@ -5,8 +5,7 @@ import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.gameBoard.Move;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
-import ca.ciccc.silverBullet.utils.ConstUtil.BulletVariables;
-import ca.ciccc.silverBullet.utils.ConstUtil.GridBoardVariables;
+import ca.ciccc.silverBullet.utils.ConstUtil.BulletCoordinatesEnum;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -61,20 +60,20 @@ public class Bullet extends Rectangle {
     if (player.getFacingDirection().equals(Directions.SOUTH) || player.getFacingDirection()
         .equals(Directions.NORTH)) {
 
-      transition.setFromX(startPos.getScreenX() - BulletVariables.SHOOT_START_POS_X.get());
-      transition.setToX(endPos.getScreenX() - BulletVariables.SHOOT_END_POS_X.get());
+      transition.setFromX(startPos.getScreenX() - BulletCoordinatesEnum.SHOOT_START_POS_X.get());
+      transition.setToX(endPos.getScreenX() - BulletCoordinatesEnum.SHOOT_END_POS_X.get());
 
     } else {
       transition.setFromX(startPos.getScreenX());
       transition.setToX(endPos.getScreenX());
     }
 
-    transition.setFromY(startPos.getScreenY() - BulletVariables.SHOOT_START_POS_Y.get());
+    transition.setFromY(startPos.getScreenY() - BulletCoordinatesEnum.SHOOT_START_POS_Y.get());
     transition.setInterpolator(Interpolator.EASE_IN);
     transition.setOnFinished(e -> onBulletStop());
 
     transition.setDuration(Duration.seconds(.5));
-    transition.setToY(endPos.getScreenY() - BulletVariables.SHOOT_END_POS_Y.get());
+    transition.setToY(endPos.getScreenY() - BulletCoordinatesEnum.SHOOT_END_POS_Y.get());
     transition.setNode(this);
     transition.play();
   }
