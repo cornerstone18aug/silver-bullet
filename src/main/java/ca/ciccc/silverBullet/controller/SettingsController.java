@@ -18,7 +18,6 @@ import javafx.scene.paint.Color;
  *
  * @author Masa
  */
-Hao-Tse/dev
 public class SettingsController extends AbstractController {
 
   private static SettingsController instance;

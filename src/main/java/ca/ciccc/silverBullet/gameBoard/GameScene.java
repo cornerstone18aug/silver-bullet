@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 
 public class GameScene extends Pane {
 
- Hao-Tse/dev
     private GridBoard gameBoard;
     private BackgroundGrid backgroundGrid;
     private double t = 0;
@@ -21,205 +20,209 @@ public class GameScene extends Pane {
     TimerDisplay timerDisplay;
     boolean isPaused;
 
-   public GameScene(int lvl) {
-    backgroundGrid = new BackgroundGrid();
-    gameBoard = new GridBoard(9, 9,lvl);
-    instance = this;
-
-    this.getChildren().add(backgroundGrid.gridBoard);
-    this.getChildren().add(gameBoard.gridBoard);
-
-    gameBoard.addPlayer(1, 1, 1);
-    gameBoard.addPlayer(5, 5, 2);
-
-    timerDisplay =  new TimerDisplay(gameBoard.players);
-    timerDisplay.setTranslateX(300);
-    timerDisplay.setTranslateY(20);
-
-    this.getChildren().add(timerDisplay);
-
-    for (int i = 0; i < gameBoard.players.size(); i++) {
-      Player player = gameBoard.players.get(i);
-      ActionCounter ac = player.getPlayerActionCounter();
-      //ac.setTranslateX(175 + 200 * i);
-      /* New value to center the board
-      and the movements of the player */
-      ac.setTranslateX(305 + 200 * i);
-      ac.setTranslateY(630);
-      this.getChildren().addAll(player.getPlayerNode(), ac);
-    }
-
- Hao-Tse/dev
-    public GameScene() {
-
-        gameBoard = new GridBoard(9, 9,3);
-        instance = this;
+    public GameScene(int lvl) {
         backgroundGrid = new BackgroundGrid();
+        gameBoard = new GridBoard(9, 9, lvl);
+        instance = this;
 
         this.getChildren().add(backgroundGrid.gridBoard);
         this.getChildren().add(gameBoard.gridBoard);
 
+        gameBoard.addPlayer(1, 1, 1);
+        gameBoard.addPlayer(5, 5, 2);
 
-    gameBoard.addPlayer(1, 1, 1);
-    gameBoard.addPlayer(5, 5, 2);
+        timerDisplay = new TimerDisplay(gameBoard.players);
+        timerDisplay.setTranslateX(300);
+        timerDisplay.setTranslateY(20);
 
-    for (int i = 0; i < gameBoard.players.size(); i++) {
-      Player player = gameBoard.players.get(i);
-      ActionCounter ac = player.getPlayerActionCounter();
-      ac.setTranslateX(305 + 200 * i);
-      ac.setTranslateY(630);
-      this.getChildren().addAll(player.getPlayerNode(), ac);
+        this.getChildren().add(timerDisplay);
+
+        for (int i = 0; i < gameBoard.players.size(); i++) {
+            Player player = gameBoard.players.get(i);
+            ActionCounter ac = player.getPlayerActionCounter();
+            //ac.setTranslateX(175 + 200 * i);
+      /* New value to center the board
+      and the movements of the player */
+            ac.setTranslateX(305 + 200 * i);
+            ac.setTranslateY(630);
+            this.getChildren().addAll(player.getPlayerNode(), ac);
+        }
     }
 
-  }
+    public GameScene() {
 
-  public static class Builder {
-    private int playerNumber;
-    private int boardSize;
-    private int level;
+            gameBoard = new GridBoard(9, 9, 3);
+            instance = this;
+            backgroundGrid = new BackgroundGrid();
 
-    public Builder player(int playerNumber) {
-      this.playerNumber = playerNumber;
-      return this;
-    }
-
-    public Builder boardSize(int boardSize) {
-      this.boardSize = boardSize;
-      return this;
-    }
-
-    public Builder level(int level) {
-      this.level = level;
-      return this;
-    }
-
-    public GameScene build() {
-      GameScene gameScene = new GameScene(this.level);
-      return  gameScene;
-    }
-
-  }
-
-  public void boardUpdate() {
+            this.getChildren().add(backgroundGrid.gridBoard);
+            this.getChildren().add(gameBoard.gridBoard);
 
 
-    if (!isExecuting && !isPaused) {
+            gameBoard.addPlayer(1, 1, 1);
+            gameBoard.addPlayer(5, 5, 2);
 
-        if(turnTimer<=0){
-            isPaused = true;
-            turnEnd();
-        } else {
-            turnTimer -= 0.016;
-            timerDisplay.timerUpdate(turnTimer);
+            for (int i = 0; i < gameBoard.players.size(); i++) {
+                Player player = gameBoard.players.get(i);
+                ActionCounter ac = player.getPlayerActionCounter();
+                ac.setTranslateX(305 + 200 * i);
+                ac.setTranslateY(630);
+                this.getChildren().addAll(player.getPlayerNode(), ac);
+            }
+
         }
 
-      return;
-    } else if(isExecuting){
+        public static class Builder {
+            private int playerNumber;
+            private int boardSize;
+            private int level;
 
-        if (t <= 0) {
-          t = .4;
-          executePlayerActions();
-          currentActionNumber++;
+            public Builder player(int playerNumber) {
+                this.playerNumber = playerNumber;
+                return this;
+            }
 
-          if (currentActionNumber > 4) {
-            actionEndStep();
-          }
-        } else {
-          t -= 0.016;
+            public Builder boardSize(int boardSize) {
+                this.boardSize = boardSize;
+                return this;
+            }
+
+            public Builder level(int level) {
+                this.level = level;
+                return this;
+            }
+
+            public GameScene build() {
+                GameScene gameScene = new GameScene(this.level);
+                return gameScene;
+            }
+
         }
 
-    }
+        public void boardUpdate () {
 
 
+            if (!isExecuting && !isPaused) {
 
-  }
+                if (turnTimer <= 0) {
+                    isPaused = true;
+                    turnEnd();
+                } else {
+                    turnTimer -= 0.016;
+                    timerDisplay.timerUpdate(turnTimer);
+                }
 
-  public void onKeyPressed(KeyCode key) {
-    if (isExecuting) {
-      return;
-    }
+                return;
+            } else if (isExecuting) {
 
-    if (!gameBoard.areAllFull()) {
-      gameBoard.players
-          .get(controllingPlayer)
-          .addAction(PlayerAction.getActionByKeyCode(key));
+                if (t <= 0) {
+                    t = .4;
+                    executePlayerActions();
+                    currentActionNumber++;
 
-    }
+                    if (currentActionNumber > 4) {
+                        actionEndStep();
+                    }
+                } else {
+                    t -= 0.016;
+                }
+
+            }
+
+
+        }
+
+        public void onKeyPressed (KeyCode key){
+            if (isExecuting) {
+                return;
+            }
+
+            if (!gameBoard.areAllFull()) {
+                gameBoard.players
+                        .get(controllingPlayer)
+                        .addAction(PlayerAction.getActionByKeyCode(key));
+
+            }
 
 //    if (!gameBoard.areAllFull() &&
 //        gameBoard.players.get(controllingPlayer).isActionsFull()) {
 //      controllingPlayer++;
 //    }
 
-    if (KeyCode.SPACE.equals(key)) {
-        turnEnd();
-    }
+            if (KeyCode.SPACE.equals(key)) {
+                turnEnd();
+            }
 
-  }
-
-  public void executePlayerActions() {
-
-    for (Player p : gameBoard.players) {
-      if (PlayerAction.SHOOT.equals(p.getPlayerActions()[currentActionNumber])) {
-        p.takeAction(currentActionNumber);
-      }
-    }
-
-    for (Player p : gameBoard.players) {
-      if (!PlayerAction.SHOOT.equals(p.getPlayerActions()[currentActionNumber])) {
-        p.takeAction(currentActionNumber);
-      }
-    }
-
-    executeMove();
-  }
-
-  public void actionEndStep() {
-
-    for (Player p : gameBoard.players) {
-      p.getPlayerActionCounter().clearActions();
-      p.resetActions();
-    }
-
-    isExecuting = false;
-    controllingPlayer = 0;
-    currentActionNumber = 0;
-    isPaused = true;
-    ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", ()->isPaused=false);
-  }
-
-  private void executeMove() {
-    gameBoard.players.forEach(player -> {
-      if (gameBoard.players.stream().anyMatch(p -> {
-        if (!p.equals(player) && player.getTargetMove() != null) {
-          return !(p.getTargetMove() != null
-              && p.getTargetMove().equals(player.getTargetMove()));
-        } else if (player.getTargetMove() == null) {
-          return false;
         }
-        return false;
-      })) {
-        gameBoard.movePlayer(player);
-      }
-    });
 
-  }
+        public void executePlayerActions () {
 
-  private void turnEnd(){
-      gameBoard.players.get(controllingPlayer).passTurn();
-      isPaused = true;
-      if(!gameBoard.areAllFull()){
+            for (Player p : gameBoard.players) {
+                if (PlayerAction.SHOOT.equals(p.getPlayerActions()[currentActionNumber])) {
+                    p.takeAction(currentActionNumber);
+                }
+            }
 
-          ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", ()->{isPaused=false; turnTimer = 10;});
-          controllingPlayer++;
-      } else{
-          ModalUtil.alertWithCallback("Execute", "Move to execution?", ()->{
-              turnTimer = 10;
-              currentActionNumber = 0;
-              controllingPlayer = 0;
-              isExecuting = true;
-              isPaused = false;});
-      }
-  }
+            for (Player p : gameBoard.players) {
+                if (!PlayerAction.SHOOT.equals(p.getPlayerActions()[currentActionNumber])) {
+                    p.takeAction(currentActionNumber);
+                }
+            }
 
-}
+            executeMove();
+        }
+
+        public void actionEndStep () {
+
+            for (Player p : gameBoard.players) {
+                p.getPlayerActionCounter().clearActions();
+                p.resetActions();
+            }
+
+            isExecuting = false;
+            controllingPlayer = 0;
+            currentActionNumber = 0;
+            isPaused = true;
+            ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", () -> isPaused = false);
+        }
+
+        private void executeMove () {
+            gameBoard.players.forEach(player -> {
+                if (gameBoard.players.stream().anyMatch(p -> {
+                    if (!p.equals(player) && player.getTargetMove() != null) {
+                        return !(p.getTargetMove() != null
+                                && p.getTargetMove().equals(player.getTargetMove()));
+                    } else if (player.getTargetMove() == null) {
+                        return false;
+                    }
+                    return false;
+                })) {
+                    gameBoard.movePlayer(player);
+                }
+            });
+
+        }
+
+        private void turnEnd () {
+            gameBoard.players.get(controllingPlayer).passTurn();
+            isPaused = true;
+            if (!gameBoard.areAllFull()) {
+
+                ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", () -> {
+                    isPaused = false;
+                    turnTimer = 10;
+                });
+                controllingPlayer++;
+            } else {
+                ModalUtil.alertWithCallback("Execute", "Move to execution?", () -> {
+                    turnTimer = 10;
+                    currentActionNumber = 0;
+                    controllingPlayer = 0;
+                    isExecuting = true;
+                    isPaused = false;
+                });
+            }
+        }
+
+    }
+

@@ -19,10 +19,10 @@ public class Water extends GridNode {
     int n = random.nextInt(3) + 1;
 // <<<<<<< Hao-Tse/dev
 // //    ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tiles/TileRock" + n + ".png")));
-//     ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/Test/Wave.gif")));
-
-
-// =======
-    ((Rectangle) image).setFill(new ImagePattern(fInput.image(String.format(FILE_PATH, n))));
+     ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/Test/Wave.gif")));
+//
+//
+//// =======
+//    ((Rectangle) image).setFill(new ImagePattern(fInput.image(String.format(FILE_PATH, n))));
   }
 }
