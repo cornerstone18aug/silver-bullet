@@ -8,7 +8,11 @@ import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.utils.LevelFileReadUtil;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 public class GridBoard {
 
@@ -59,7 +63,7 @@ public class GridBoard {
       }
       targetNode = grid[targetY][targetX];
 
-      if (!targetNode.hasPlayer()) {
+      if(!targetNode.hasPlayer() && targetNode.isCanMoveTo()) {
         return new Move(targetX, targetY);
       }
     }
@@ -72,18 +76,34 @@ public class GridBoard {
     if (playerToMove.getTargetMove() == null) {
       return;
     }
+            TranslateTransition moveTransition = new TranslateTransition();
 
-    GridNode targetNode = grid[playerToMove.getTargetMove().getMoveY()][playerToMove
-        .getTargetMove().getMoveX()];
-    grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()].setPlayerInSpace(null);
-    targetNode.setPlayerInSpace(playerToMove);
+            GridNode startNode = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
+            GridNode targetNode = grid[playerToMove.getTargetMove().getMoveY()][playerToMove.getTargetMove().getMoveX()];
 
-    playerToMove.setGridPositionX(targetNode.getGridX());
-    playerToMove.setGridPositionY(targetNode.getGridY());
+            grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()].setPlayerInSpace(null);
+            targetNode.setPlayerInSpace(playerToMove);
 
-    playerToMove.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
-    playerToMove.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
-    System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
+            playerToMove.setGridPositionX(targetNode.getGridX());
+            playerToMove.setGridPositionY(targetNode.getGridY());
+
+            moveTransition.setFromX(startNode.getScreenX() + 30);
+            moveTransition.setFromY(startNode.getScreenY() + 30);
+
+            moveTransition.setToX(targetNode.getScreenX() + 30);
+            moveTransition.setToY(targetNode.getScreenY() + 30);
+
+            moveTransition.setDuration(Duration.seconds(.3));
+
+            moveTransition.setInterpolator(Interpolator.EASE_OUT);
+
+            moveTransition.setNode(playerToMove.getPlayerNode());
+
+            moveTransition.play();
+
+            System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
+
+            playerToMove.setTargetMove(null);
 
     playerToMove.setTargetMove(null);
 

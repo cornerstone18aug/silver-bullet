@@ -118,14 +118,19 @@ public class Player {
   }
 
   public void addAction(PlayerAction actionToAdd) {
-    playerActions[currentAction] = actionToAdd;
-    currentAction++;
-    if (currentAction > 4) {
-      currentAction = 0;
-      actionsFull = true;
 
-    }
-    playerActionCounter.addAction();
+      if (!isActionsFull()){
+          playerActions[currentAction] = actionToAdd;
+          currentAction++;
+          if (currentAction > 4) {
+
+              currentAction = 0;
+              actionsFull = true;
+
+          }
+          System.out.println("Player actions counter: " + currentAction);
+          playerActionCounter.addAction();
+      }
   }
 
   public boolean takeAction(int actionNumber) {
@@ -153,6 +158,16 @@ public class Player {
     return true;
   }
 
+
+  public void passTurn(){
+      if(!isActionsFull()){
+          for(int i = 0; i<playerActions.length; i++){
+              if(playerActions[i] == PlayerAction.NONE){
+                  addAction(PlayerAction.WAIT);
+              }
+          }
+      }
+  }
 
   @Override
   public boolean equals(Object obj) {

@@ -3,6 +3,7 @@ package ca.ciccc.silverBullet.gameBoard;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
 import ca.ciccc.silverBullet.playerElements.Player;
+import ca.ciccc.silverBullet.utils.ModalUtil;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
@@ -14,6 +15,11 @@ public class GameScene extends Pane {
   private int currentActionNumber = 0;
   private int controllingPlayer = 0;
   public static GameScene instance;
+  private double turnTimer = 10;
+  TimerDisplay timerDisplay;
+  boolean isPaused;
+
+
 
   public GameScene(int lvl) {
     gameBoard = new GridBoard(9, 9, lvl);
@@ -23,6 +29,12 @@ public class GameScene extends Pane {
 
     gameBoard.addPlayer(1, 1, 1);
     gameBoard.addPlayer(5, 5, 2);
+
+    timerDisplay =  new TimerDisplay(gameBoard.players);
+    timerDisplay.setTranslateX(300);
+    timerDisplay.setTranslateY(20);
+
+    this.getChildren().add(timerDisplay);
 
     for (int i = 0; i < gameBoard.players.size(); i++) {
       Player player = gameBoard.players.get(i);
@@ -55,21 +67,36 @@ public class GameScene extends Pane {
   }
 
   public void boardUpdate() {
-    if (!isExecuting) {
+
+
+    if (!isExecuting && !isPaused) {
+
+        if(turnTimer<=0){
+            isPaused = true;
+            turnEnd();
+        } else {
+            turnTimer -= 0.016;
+            timerDisplay.timerUpdate(turnTimer);
+        }
+
       return;
+    } else if(isExecuting){
+
+        if (t <= 0) {
+          t = .4;
+          executePlayerActions();
+          currentActionNumber++;
+
+          if (currentActionNumber > 4) {
+            actionEndStep();
+          }
+        } else {
+          t -= 0.016;
+        }
+
     }
 
-    if (t <= 0) {
-      t = .4;
-      executePlayerActions();
-      currentActionNumber++;
 
-      if (currentActionNumber > 4) {
-        actionEndStep();
-      }
-    } else {
-      t -= 0.016;
-    }
 
   }
 
@@ -82,17 +109,16 @@ public class GameScene extends Pane {
       gameBoard.players
           .get(controllingPlayer)
           .addAction(PlayerAction.getActionByKeyCode(key));
+
     }
 
-    if (!gameBoard.areAllFull() &&
-        gameBoard.players.get(controllingPlayer).isActionsFull()) {
-      controllingPlayer++;
-    }
+//    if (!gameBoard.areAllFull() &&
+//        gameBoard.players.get(controllingPlayer).isActionsFull()) {
+//      controllingPlayer++;
+//    }
 
     if (KeyCode.SPACE.equals(key)) {
-      currentActionNumber = 0;
-      controllingPlayer = 0;
-      isExecuting = true;
+        turnEnd();
     }
 
   }
@@ -124,6 +150,8 @@ public class GameScene extends Pane {
     isExecuting = false;
     controllingPlayer = 0;
     currentActionNumber = 0;
+    isPaused = true;
+    ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", ()->isPaused=false);
   }
 
   private void executeMove() {
@@ -141,6 +169,23 @@ public class GameScene extends Pane {
       }
     });
 
+  }
+
+  private void turnEnd(){
+      gameBoard.players.get(controllingPlayer).passTurn();
+      isPaused = true;
+      if(!gameBoard.areAllFull()){
+
+          ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", ()->{isPaused=false; turnTimer = 10;});
+          controllingPlayer++;
+      } else{
+          ModalUtil.alertWithCallback("Execute", "Move to execution?", ()->{
+              turnTimer = 10;
+              currentActionNumber = 0;
+              controllingPlayer = 0;
+              isExecuting = true;
+              isPaused = false;});
+      }
   }
 
 }
