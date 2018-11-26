@@ -31,22 +31,24 @@ public class GameScene extends Pane {
         gameBoard.addPlayer(1, 1, 1);
         gameBoard.addPlayer(5, 5, 2);
 
-        timerDisplay = new TimerDisplay(gameBoard.players);
-        timerDisplay.setTranslateX(300);
-        timerDisplay.setTranslateY(20);
+
+    timerDisplay =  new TimerDisplay(gameBoard.players);
+    timerDisplay.setTranslateX(380);
+    timerDisplay.setTranslateY(10);
 
         this.getChildren().add(timerDisplay);
 
-        for (int i = 0; i < gameBoard.players.size(); i++) {
-            Player player = gameBoard.players.get(i);
-            ActionCounter ac = player.getPlayerActionCounter();
-            //ac.setTranslateX(175 + 200 * i);
+    timerDisplay.setHighlight(0);
+
+    for (int i = 0; i < gameBoard.players.size(); i++) {
+      Player player = gameBoard.players.get(i);
+      ActionCounter ac = player.getPlayerActionCounter();
+      //ac.setTranslateX(175 + 200 * i);
       /* New value to center the board
       and the movements of the player */
-            ac.setTranslateX(305 + 200 * i);
-            ac.setTranslateY(630);
-            this.getChildren().addAll(player.getPlayerNode(), ac);
-        }
+      ac.setTranslateX(50 + 400 * i);
+      ac.setTranslateY(590);
+      this.getChildren().addAll(player.getPlayerNode(), ac);
     }
 
     public GameScene() {
@@ -62,13 +64,14 @@ public class GameScene extends Pane {
             gameBoard.addPlayer(1, 1, 1);
             gameBoard.addPlayer(5, 5, 2);
 
-            for (int i = 0; i < gameBoard.players.size(); i++) {
-                Player player = gameBoard.players.get(i);
-                ActionCounter ac = player.getPlayerActionCounter();
-                ac.setTranslateX(305 + 200 * i);
-                ac.setTranslateY(630);
-                this.getChildren().addAll(player.getPlayerNode(), ac);
-            }
+
+    for (int i = 0; i < gameBoard.players.size(); i++) {
+      Player player = gameBoard.players.get(i);
+      ActionCounter ac = player.getPlayerActionCounter();
+      ac.setTranslateX(305 + 200 * i);
+      ac.setTranslateY(630);
+      this.getChildren().addAll(player.getPlayerNode(), ac);
+    }
 
         }
 
@@ -112,8 +115,7 @@ public class GameScene extends Pane {
                     timerDisplay.timerUpdate(turnTimer);
                 }
 
-                return;
-            } else if (isExecuting) {
+    } else if(isExecuting){
 
                 if (t <= 0) {
                     t = .4;
@@ -179,13 +181,13 @@ public class GameScene extends Pane {
                 p.resetActions();
             }
 
-            isExecuting = false;
-            controllingPlayer = 0;
-            currentActionNumber = 0;
-            isPaused = true;
-            timerDisplay.setHighlight(controllingPlayer);
-            ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", () -> isPaused = false);
-        }
+    isExecuting = false;
+    controllingPlayer = 0;
+    currentActionNumber = 0;
+    isPaused = true;
+    timerDisplay.setHighlight(controllingPlayer);
+    ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", ()->isPaused=false);
+  }
 
         private void executeMove () {
             gameBoard.players.forEach(player -> {
