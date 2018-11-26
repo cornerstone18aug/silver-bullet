@@ -290,52 +290,6 @@ public class Player {
       playerelement = "Wind";
     }
 
-// <<<<<<< Hao-Tse/dev
-//     private void setimage()
-//     {
-//         int playerNum = this.playerNumber;
-//         String playerelement = null;
-//         String dirction = null;
-
-//         if(this.getFacingDirection() == Directions.SOUTH)
-//         {
-//             dirction = "";
-//         }
-//         else if(this.getFacingDirection() == Directions.NORTH)
-//         {
-//             dirction = "Up";
-//         }
-//         else if(this.getFacingDirection() == Directions.WEST)
-//         {
-//             dirction = "L";
-//         }
-//         else if(this.getFacingDirection() == Directions.EAST)
-//         {
-//             dirction = "R";
-//         }
-
-//         if(playerNum == 1)
-//         {
-//             playerelement = "Fire";
-//         }
-//         else if(playerNum == 2)
-//         {
-//             playerelement = "Rock";
-//         }
-//         else if(playerNum == 3)
-//         {
-//             playerelement = "Water";
-//         }
-//         else if(playerNum == 4)
-//         {
-//             playerelement = "Wind";
-//         }
-
-//         String path = "File:src/main/resources/images/Character/" + playerelement +"/" + playerelement + dirction +".png";
-//         Image img = mediaUtil.image(path);
-//         ((Circle) this.playerNode).setFill(new ImagePattern(img));
-//     }
-// =======
     String path =
         "File:src/main/resources/images/Character/" + playerelement + "/" + playerelement + dirction
             + ".png";
