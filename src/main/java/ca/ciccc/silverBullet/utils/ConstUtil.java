@@ -102,16 +102,16 @@ public class ConstUtil {
     }
   }
 
-  public enum GridBoardVariables implements hasIntSize {
+  public enum GridBoardSizeEnum implements hasIntSize {
     BOARD_POSITION_X(182),
     BOARD_POSITION_Y(50),
     TILE_SIZE(60),
     SPACE_TARGET_NODE(30),
-    TILE_CORRECTION_PLAYER(1);
+    TILE_CORRECTION_COORDINATE(1);
 
     int size;
 
-    GridBoardVariables(int size) {
+    GridBoardSizeEnum(int size) {
       this.size = size;
     }
 
@@ -120,7 +120,7 @@ public class ConstUtil {
     }
   }
 
-    public enum BulletVariables implements hasIntSize {
+    public enum BulletCoordinatesEnum implements hasIntSize {
       SHOOT_START_POS_X(45),
       SHOOT_END_POS_X(45),
       SHOOT_START_POS_Y(50),
@@ -128,7 +128,7 @@ public class ConstUtil {
 
       int size;
 
-      BulletVariables(int size) {
+      BulletCoordinatesEnum(int size) {
         this.size = size;
       }
 
@@ -137,7 +137,7 @@ public class ConstUtil {
     }
   }
 
-  public enum GameSceneVariables implements hasIntSize {
+  public enum GameSceneCoordinatesEnum implements hasIntSize {
     SIZE_BOARD_X(305),
     SIZE_BOARD_Y(630),
     SIZE_BOARD_TILE(9),
@@ -151,7 +151,7 @@ public class ConstUtil {
 
     int size;
 
-    GameSceneVariables(int size) {
+    GameSceneCoordinatesEnum(int size) {
       this.size = size;
     }
 

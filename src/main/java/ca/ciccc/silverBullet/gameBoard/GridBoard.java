@@ -166,8 +166,8 @@
     players.add(playerToAdd);
     targetNode.setPlayerInSpace(playerToAdd);
 
-    playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + GridBoardVariables.SPACE_TARGET_NODE.get());
-    playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + GridBoardVariables.SPACE_TARGET_NODE.get());
+    playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
+    playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
 
     return playerToAdd;
 
