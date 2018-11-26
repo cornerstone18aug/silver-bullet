@@ -1,15 +1,15 @@
 package ca.ciccc.silverBullet.gameBoard;
 
-import ca.ciccc.silverBullet.gridNodes.*;
-import ca.ciccc.silverBullet.utils.MediaUtil;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.enums.gameplay.GridElement;
+import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.Bullet;
 import ca.ciccc.silverBullet.playerElements.Player;
+import ca.ciccc.silverBullet.utils.ConstUtil.GridBoardSizeEnum;
 import ca.ciccc.silverBullet.utils.LevelFileReadUtil;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.GridPane;
@@ -47,18 +47,18 @@ public class GridBoard {
       switch (originGrid.getPlayerInSpace().getFacingDirection()) {
         case NORTH:
           targetX = originGrid.getGridX();
-          targetY = originGrid.getGridY() - 1;
+          targetY = originGrid.getGridY() - GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
           break;
         case SOUTH:
           targetX = originGrid.getGridX();
-          targetY = originGrid.getGridY() + 1;
+          targetY = originGrid.getGridY() + GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
           break;
         case EAST:
-          targetX = originGrid.getGridX() + 1;
+          targetX = originGrid.getGridX() + GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
           targetY = originGrid.getGridY();
           break;
         case WEST:
-          targetX = originGrid.getGridX() - 1;
+          targetX = originGrid.getGridX() - GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
           targetY = originGrid.getGridY();
           break;
       }
@@ -80,35 +80,35 @@ public class GridBoard {
     if (playerToMove.getTargetMove() == null) {
       return;
     }
-            TranslateTransition moveTransition = new TranslateTransition();
+    TranslateTransition moveTransition = new TranslateTransition();
 
-            GridNode startNode = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
-            GridNode targetNode = grid[playerToMove.getTargetMove().getMoveY()][playerToMove.getTargetMove().getMoveX()];
+    GridNode startNode = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
+    GridNode targetNode = grid[playerToMove.getTargetMove().getMoveY()][playerToMove.getTargetMove().getMoveX()];
 
 
-            grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()].setPlayerInSpace(null);
-            targetNode.setPlayerInSpace(playerToMove);
+    grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()].setPlayerInSpace(null);
+    targetNode.setPlayerInSpace(playerToMove);
 
-            playerToMove.setGridPositionX(targetNode.getGridX());
-            playerToMove.setGridPositionY(targetNode.getGridY());
+    playerToMove.setGridPositionX(targetNode.getGridX());
+    playerToMove.setGridPositionY(targetNode.getGridY());
 
-            moveTransition.setFromX(startNode.getScreenX() + 30);
-            moveTransition.setFromY(startNode.getScreenY() + 30);
+    moveTransition.setFromX(startNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
+    moveTransition.setFromY(startNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
 
-            moveTransition.setToX(targetNode.getScreenX() + 30);
-            moveTransition.setToY(targetNode.getScreenY() + 30);
+    moveTransition.setToX(targetNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
+    moveTransition.setToY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
 
-            moveTransition.setDuration(Duration.seconds(.3));
+    moveTransition.setDuration(Duration.seconds(.3));
 
-            moveTransition.setInterpolator(Interpolator.EASE_OUT);
+    moveTransition.setInterpolator(Interpolator.EASE_OUT);
 
-            moveTransition.setNode(playerToMove.getPlayerNode());
+    moveTransition.setNode(playerToMove.getPlayerNode());
 
-            moveTransition.play();
+    moveTransition.play();
 
-            System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
+    System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
 
-            playerToMove.setTargetMove(null);
+    playerToMove.setTargetMove(null);
 
     playerToMove.setTargetMove(null);
 
@@ -117,126 +117,31 @@ public class GridBoard {
   public void generateBoard(int sizeX, int sizeY, int levelNumber) {
     grid = new GridNode[sizeY][sizeX];
     gridBoard = new GridPane();
-//    ca.ciccc.silverBullet.utils.LevelFileReadUtil read = new ca.ciccc.silverBullet.utils.LevelFileReadUtil();
-//    char[][] imageToPrint = read.getLevel(levelNumber);
-//        for (int i = 0; i < sizeY; i++) {
-//            for (int j = 0; j < sizeX; j++) {
-//              if (imageToPrint[i][j] == 'S') {
-//                    GridNode nodeToAdd = new Space(j, i);
-//                    gridBoard.add(nodeToAdd.getImage(), j, i);
-//                    grid[i][j] = nodeToAdd;
-//                    nodeToAdd.setGridX(j);
-//                    nodeToAdd.setGridY(i);
-//                } else if (imageToPrint[i][j] == 'W') {
-//                    GridNode nodeToAdd = new Wall(j, i);
-//                    gridBoard.add(nodeToAdd.getImage(), j, i);
-//                    grid[i][j] = nodeToAdd;
-//                    nodeToAdd.setGridX(j);
-//                    nodeToAdd.setGridY(i);
-//                } else if(imageToPrint[i][j] == 'T'){
-//                    GridNode nodeToAdd = new Water(j, i);
-//                    gridBoard.add(nodeToAdd.getImage(), j, i);
-//                    grid[i][j] = nodeToAdd;
-//                    nodeToAdd.setGridX(j);
-//                    nodeToAdd.setGridY(i);
-//                }
-//                else if(imageToPrint[i][j] == 'E'){
-//                  GridNode nodeToAdd = new Edge(j,i);
-//                  gridBoard.add(nodeToAdd.getImage(), j, i);
-//                  grid[i][j] = nodeToAdd;
-//                  nodeToAdd.setGridX(j);
-//                  nodeToAdd.setGridY(i);
-//                }
-//                else if(imageToPrint[i][j] == 'A'){
-//                  GridNode nodeToAdd = new Water(j, i);
-//                  gridBoard.add(nodeToAdd.getImage(), j, i);
-//                  grid[i][j] = nodeToAdd;
-//                  nodeToAdd.setGridX(j);
-//                  nodeToAdd.setGridY(i);
-//                }
-//            }
-//
-//        }
-//    gridBoard.setTranslateX(50);
-     char[][] imageToPrint = LevelFileReadUtil.getLevelMapAry(levelNumber);
+    char[][] imageToPrint = LevelFileReadUtil.getLevelMapAry(levelNumber);
 
-     for (int i = 0; i < sizeY; i++) {
-       for (int j = 0; j < sizeX; j++) {
-         GridNode nodeToAdd = GridElement.createGridNode(imageToPrint[i][j], j, i);
-         gridBoard.add(nodeToAdd.getImage(), j, i);
-         grid[i][j] = nodeToAdd;
-         nodeToAdd.setGridX(j);
-         nodeToAdd.setGridY(i);
-       }
-     }
-     //gridBoard.setTranslateX(50);
-     //gridBoard.setTranslateY(50);
-     gridBoard.setTranslateX(182);
-    gridBoard.setTranslateY(50);
     for (int i = 0; i < sizeY; i++) {
       for (int j = 0; j < sizeX; j++) {
-        grid[j][i].setScreenX((i * 60) + 182);
-        grid[j][i].setScreenY((j * 60) + 50);
+        GridNode nodeToAdd = GridElement.createGridNode(imageToPrint[i][j], j, i);
+        gridBoard.add(nodeToAdd.getImage(), j, i);
+        grid[i][j] = nodeToAdd;
+        nodeToAdd.setGridX(j);
+        nodeToAdd.setGridY(i);
+      }
+    }
+
+    gridBoard.setTranslateX(GridBoardSizeEnum.BOARD_POSITION_X.get());
+    gridBoard.setTranslateY(GridBoardSizeEnum.BOARD_POSITION_Y.get());
+    for (int i = 0; i < sizeY; i++) {
+      for (int j = 0; j < sizeX; j++) {
+        grid[j][i].setScreenX((i * GridBoardSizeEnum.TILE_SIZE.get()) + GridBoardSizeEnum.BOARD_POSITION_X.get());
+        grid[j][i].setScreenY((j * GridBoardSizeEnum.TILE_SIZE.get()) + GridBoardSizeEnum.BOARD_POSITION_Y.get());
       }
     }
   }
 
-// <<<<<<< Hao-Tse/dev
-//  public Move tryMovePlayer(Player playerToMove) {
-//
-//    GridNode originGrid = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
-//    int targetX = 0;
-//    int targetY = 0;
-//    GridNode targetNode;
-//    if (originGrid.hasPlayer()){
-//      switch (originGrid.getPlayerInSpace().getFacingDirection()){
-//        case NORTH:
-//          targetX = originGrid.getGridX();
-//          targetY = originGrid.getGridY() - 1;
-//          break;
-//        case SOUTH:
-//          targetX = originGrid.getGridX();
-//          targetY = originGrid.getGridY() + 1;
-//          break;
-//        case EAST:
-//          targetX = originGrid.getGridX() + 1;
-//          targetY = originGrid.getGridY();
-//          break;
-//        case WEST:
-//          targetX = originGrid.getGridX() - 1;
-//          targetY = originGrid.getGridY();
-//          break;
-//      }
-//      if((targetX <0 || targetY < 0) || (targetX > gridSizeX || targetY > gridSizeY)){
-//        return null;
-//      }
-//      targetNode = grid[targetY][targetX];
-//
-//      if (targetX < 0 || targetY < 0) {
-//        return null;
-//      } else if(!targetNode.hasPlayer()) {
-//        return new Move(targetX, targetY);
-//
-//      }
-//    }
-//
-//    return null;
-//  }
-
-//    public Player addPlayer(int gridX, int gridY, int playerNumber) {
-//      GridNode targetNode = grid[gridY][gridX];
-//      if (!targetNode.hasPlayer()) {
-//        Player playerToAdd = new Player(true, playerNumber, gridX, gridY, Directions.SOUTH);
-//        players.add(playerToAdd);
-//        targetNode.setPlayerInSpace(playerToAdd);
-//        playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
-//        playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
-//        return playerToAdd;
-//      }
-//    }
-   public Player addPlayer(int gridX, int gridY, int playerNumber) {
-     GridNode targetNode = grid[gridY][gridX];
-     if (targetNode.hasPlayer()) {
+  public Player addPlayer(int gridX, int gridY, int playerNumber) {
+    GridNode targetNode = grid[gridY][gridX];
+    if (targetNode.hasPlayer()) {
 
       return null;
     }
@@ -246,8 +151,8 @@ public class GridBoard {
     players.add(playerToAdd);
     targetNode.setPlayerInSpace(playerToAdd);
 
-    playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + 30);
-    playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + 30);
+    playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
+    playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
 
     return playerToAdd;
 
@@ -323,7 +228,6 @@ public class GridBoard {
           gridIterator++;
         }
     }
-    //playerShooting.hasShot = false;
 
     Move resultMove = null;
     if (!nodesAffected.isEmpty()) {
@@ -359,4 +263,3 @@ public class GridBoard {
     return players.stream().allMatch(Player::isActionsFull);
   }
 }
-
