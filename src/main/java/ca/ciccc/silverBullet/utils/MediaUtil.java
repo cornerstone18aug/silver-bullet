@@ -1,10 +1,10 @@
-package FileInput;
+package ca.ciccc.silverBullet.utils;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
-public class FileInput {
+public class MediaUtil {
 
 
     public ImageView imageView(Image image, double height, double width) {
