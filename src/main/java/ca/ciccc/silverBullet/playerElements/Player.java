@@ -60,7 +60,7 @@ public class Player {
       image = fileInput.image("File:src/main/resources/images/Character/Rock/Rock.png");
     }
     ((Circle) playerNode).setFill(new ImagePattern(image));
-    playerActionCounter = new ActionCounter(playerNumber);
+    playerActionCounter = new ActionCounter(this);
 
   }
 
