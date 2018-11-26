@@ -140,6 +140,10 @@ public class ConstUtil {
   public enum GameSceneCoordinatesEnum implements hasIntSize {
     SIZE_BOARD_X(305),
     SIZE_BOARD_Y(630),
+    SIZE_BOARD_X_MAIN(50),
+    SIZE_BOARD_Y_MAIN(590),
+    TIMER_DISPLAY_X(380),
+    TIMER_DISPLAY_Y(10),
     SIZE_BOARD_TILE(9),
     POSITION_PLAYER_1_X(1),
     POSITION_PLAYER_1_Y(1),
