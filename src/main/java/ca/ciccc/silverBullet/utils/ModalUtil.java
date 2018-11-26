@@ -1,6 +1,8 @@
 package ca.ciccc.silverBullet.utils;
 
+import ca.ciccc.silverBullet.controller.MenuController;
 import ca.ciccc.silverBullet.utils.ConstUtil.DisplaySizeEnum;
+import java.util.function.Supplier;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,7 +25,7 @@ public class ModalUtil {
   private ModalUtil() {
   }
 
-  public static void confirm(String title, String message, EventHandler<ActionEvent> event) {
+  public static void confirm(String title, String message, Runnable action) {
     Stage modalStage = ModalUtil.createModalStage(title);
     Pane parentPane = ModalUtil.createModalPane();
 
@@ -31,7 +33,10 @@ public class ModalUtil {
     label.setText(message);
 
     Button executeButton = new Button(ConstUtil.getRbString("modal.ok"));
-    executeButton.setOnAction(event);
+    executeButton.setOnAction(e -> {
+      action.run();
+      modalStage.close();
+    });
 
     Button closeButton = new Button(ConstUtil.getRbString("modal.cancel"));
     closeButton.setOnAction(e -> modalStage.close());
@@ -53,7 +58,6 @@ public class ModalUtil {
     modalStage.setScene(new Scene(parentPane));
     /* Its need to be close before do other things out of the window */
     modalStage.showAndWait();
-
   }
 
   public static void alert(String title, String message) {
@@ -85,6 +89,40 @@ public class ModalUtil {
     modalStage.showAndWait();
 
   }
+
+    public static void alertWithCallback(String title, String message, Runnable runnable) {
+        Stage modalStage = ModalUtil.createModalStage(title);
+        Pane parentPane = ModalUtil.createModalPane();
+
+        Label label = new Label();
+        label.setText(message);
+
+        Button okButton = new Button(ConstUtil.getRbString("modal.ok"));
+        okButton.setOnAction(e -> {
+            modalStage.close();
+            runnable.run();
+        });
+
+        VBox textBox = new VBox(10);
+        textBox.setAlignment(Pos.CENTER);
+        textBox.getChildren().add(label);
+        textBox.setTranslateX(15);
+        textBox.setTranslateY(20);
+
+        HBox btnBox = new HBox(10);
+        btnBox.setAlignment(Pos.CENTER);
+        btnBox.setTranslateX(50);
+        btnBox.setTranslateY(50);
+        btnBox.getChildren().addAll(okButton);
+
+        parentPane.getChildren().addAll(textBox, btnBox);
+
+        modalStage.setScene(new Scene(parentPane));
+        /* Its need to be close before do other things out of the window */
+        modalStage.show();
+
+    }
+
 
   private static Stage createModalStage(String title) {
     Stage modalStage = new Stage();

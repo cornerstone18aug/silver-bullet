@@ -1,6 +1,7 @@
 package ca.ciccc.silverBullet.gridNodes;
 
 import ca.ciccc.silverBullet.utils.MediaUtil;
+
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -50,8 +51,8 @@ public class Edge extends GridNode {
             ((Rectangle) image).setFill(new ImagePattern(fInput.image("file:src/main/resources/images/Tiles/Edges/TileEdgeRD.png")));
 
         }
-
-
-
     }
+
+
+  }
 }

@@ -3,7 +3,9 @@ package ca.ciccc.silverBullet.utils;
 import java.util.ResourceBundle;
 
 public class ConstUtil {
+
   private static ResourceBundle RESOURCE_BUNDLE = null;
+
   public static void setResourceBundle(ResourceBundle resourceBundle) {
     if (RESOURCE_BUNDLE != null) {
       throw new IllegalStateException("Already set");
@@ -11,13 +13,15 @@ public class ConstUtil {
     RESOURCE_BUNDLE = resourceBundle;
   }
 
-  private ConstUtil() {}
+  private ConstUtil() {
+  }
 
   public static String getRbString(String key) {
     return RESOURCE_BUNDLE.getString(key);
   }
 
   public interface hasDoubleSize {
+
     double get();
   }
 
@@ -34,11 +38,12 @@ public class ConstUtil {
     MODAL_MIN_H(100);
 
     double size;
+
     DisplaySizeEnum(double size) {
       this.size = size;
     }
 
-    public double get(){
+    public double get() {
       return this.size;
     }
   }
@@ -48,11 +53,12 @@ public class ConstUtil {
     MENU(DisplaySizeEnum.MENU_ITEM_H.get() / 2);
 
     double size;
+
     FontSizeEnum(double size) {
       this.size = size;
     }
 
-    public double get(){
+    public double get() {
       return this.size;
     }
   }
@@ -60,5 +66,9 @@ public class ConstUtil {
   public static final String APP_NAME = "SILVER BULLET";
   public static final String TITLE_FONT = "Times New Roman";
   public static final String MENU_FONT = "Times New Roman";
+  public static final int[] PLAYER_NUMBERS = new int[]{1, 2};
+  public static final int[] BOARD_SIZES = new int[]{6, 9, 12};
+  public static final int[] LEVEL_NUMBERS = new int[]{1, 2, 3};
+  public static final int DEFAULT_LEVEL = 3;
 
 }
