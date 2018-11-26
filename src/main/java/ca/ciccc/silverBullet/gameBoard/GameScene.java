@@ -3,40 +3,41 @@ package ca.ciccc.silverBullet.gameBoard;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
 import ca.ciccc.silverBullet.playerElements.Player;
+import ca.ciccc.silverBullet.utils.ConstUtil.GameSceneCoordinatesEnum;
 import ca.ciccc.silverBullet.utils.ModalUtil;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 public class GameScene extends Pane {
 
-    private GridBoard gameBoard;
-    private BackgroundGrid backgroundGrid;
-    private double t = 0;
-    private boolean isExecuting;
-    private int currentActionNumber = 0;
-    private int controllingPlayer = 0;
-    static GameScene instance;
-    private double turnTimer = 10;
-    TimerDisplay timerDisplay;
-    boolean isPaused;
+  private GridBoard gameBoard;
+  private BackgroundGrid backgroundGrid;
+  private double t = 0;
+  private boolean isExecuting;
+  private int currentActionNumber = 0;
+  private int controllingPlayer = 0;
+  static GameScene instance;
+  private double turnTimer = 10;
+  TimerDisplay timerDisplay;
+  boolean isPaused;
 
-    public GameScene(int lvl) {
-        backgroundGrid = new BackgroundGrid();
-        gameBoard = new GridBoard(9, 9, lvl);
-        instance = this;
+  public GameScene(int lvl) {
+    backgroundGrid = new BackgroundGrid();
+    gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), lvl);
+    instance = this;
 
-        this.getChildren().add(backgroundGrid.gridBoard);
-        this.getChildren().add(gameBoard.gridBoard);
+    this.getChildren().add(backgroundGrid.gridBoard);
+    this.getChildren().add(gameBoard.gridBoard);
 
-        gameBoard.addPlayer(1, 1, 1);
-        gameBoard.addPlayer(5, 5, 2);
+    gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_1_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_1_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_1.get());
+    gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_2_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_2_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_2.get());
 
 
         timerDisplay = new TimerDisplay(gameBoard.players);
         timerDisplay.setTranslateX(380);
         timerDisplay.setTranslateY(10);
 
-        this.getChildren().add(timerDisplay);
+    this.getChildren().add(timerDisplay);
 
         timerDisplay.setHighlight(0);
 
@@ -51,8 +52,12 @@ public class GameScene extends Pane {
             this.getChildren().addAll(player.getPlayerNode(), ac);
         }
     }
+  }
 
-    public GameScene() {
+  public GameScene() {
+    gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.LEVEL_SELECTED.get());
+    instance = this;
+    backgroundGrid = new BackgroundGrid();
 
         gameBoard = new GridBoard(9, 9, 3);
         instance = this;
@@ -61,6 +66,14 @@ public class GameScene extends Pane {
         this.getChildren().add(backgroundGrid.gridBoard);
         this.getChildren().add(gameBoard.gridBoard);
 
+    for (int i = 0; i < gameBoard.players.size(); i++) {
+      Player player = gameBoard.players.get(i);
+      ActionCounter ac = player.getPlayerActionCounter();
+      ac.setTranslateX(GameSceneCoordinatesEnum.SIZE_BOARD_X.get() + 200 * i);
+      ac.setTranslateY(GameSceneCoordinatesEnum.SIZE_BOARD_Y.get());
+      this.getChildren().addAll(player.getPlayerNode(), ac);
+    }
+  }
 
         gameBoard.addPlayer(1, 1, 1);
         gameBoard.addPlayer(5, 5, 2);
@@ -100,6 +113,11 @@ public class GameScene extends Pane {
             GameScene gameScene = new GameScene(this.level);
             return gameScene;
         }
+      } else {
+        t -= 0.016;
+      }
+    }
+  }
 
     }
 
@@ -139,6 +157,12 @@ public class GameScene extends Pane {
         if (isExecuting) {
             return;
         }
+        return false;
+      })) {
+        gameBoard.movePlayer(player);
+      }
+    });
+  }
 
         if (!gameBoard.areAllFull()) {
             gameBoard.players
@@ -231,5 +255,7 @@ public class GameScene extends Pane {
             });
         }
     }
+}
+
 }
 
