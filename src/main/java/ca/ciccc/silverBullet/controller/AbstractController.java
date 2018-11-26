@@ -5,5 +5,5 @@ import javafx.scene.media.AudioClip;
 
 public abstract class AbstractController {
     MediaUtil mediaUtil = new MediaUtil();
-    AudioClip menuClip = mediaUtil.clip("file:src/main/resources/Test/Menu.wav");
+    AudioClip menuClip = mediaUtil.clip("file:src/main/resources/Test/MenuMii.mp3");
 }

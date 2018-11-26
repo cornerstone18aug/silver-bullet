@@ -26,7 +26,6 @@ public class Player {
   private Node playerNode;
   private PlayerAction[] playerActions = {PlayerAction.NONE, PlayerAction.NONE, PlayerAction.NONE,
       PlayerAction.NONE, PlayerAction.NONE};
-
   private int currentAction = 0;
   private ActionCounter playerActionCounter;
   private boolean actionsFull;
