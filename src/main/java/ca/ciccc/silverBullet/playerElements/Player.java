@@ -17,6 +17,8 @@ public class Player {
 
   private MediaUtil mediaUtil = new MediaUtil();
 
+
+  int numberOfShots;
   private boolean hasShot;
   private int playerNumber;
   private Directions facingDirection;
@@ -46,9 +48,11 @@ public class Player {
     return isDead;
   }
 
-  public Player(boolean hasShot, int playerNumber, int gridX, int gridY,
+  public Player(int numberOfShots, int playerNumber, int gridX, int gridY,
       Directions facingDirection) {
-    this.hasShot = hasShot;
+
+     this.numberOfShots = numberOfShots;
+    this.hasShot = true;
     this.playerNumber = playerNumber;
     this.facingDirection = facingDirection;
     this.currentAmo = 3;
@@ -56,10 +60,21 @@ public class Player {
     gridPositionY = gridY;
     playerNode = new Circle(30, Color.GREEN);
     Image image = mediaUtil.image("File:src/main/resources/images/Character/Fire/Fire.png");
-    if (playerNumber == 1) {
-      image = mediaUtil.image("File:src/main/resources/images/Character/Fire/Fire.png");
-    } else if (playerNumber == 2) {
-      image = mediaUtil.image("File:src/main/resources/images/Character/Rock/Rock.png");
+    switch (playerNumber){
+
+      case 1:
+        image = mediaUtil.image("File:src/main/resources/images/Character/Fire/Fire.png");
+        break;
+      case 2:
+        image = mediaUtil.image("File:src/main/resources/images/Character/Rock/Rock.png");
+        break;
+      case 3:
+        image = mediaUtil.image("File:src/main/resources/images/Character/Water/Water.png");
+        break;
+      case 4:
+        image = mediaUtil.image("File:src/main/resources/images/Character/Wind/Wind.png");
+        break;
+
     }
     ((Circle) playerNode).setFill(new ImagePattern(image));
     playerActionCounter = new ActionCounter(this);
