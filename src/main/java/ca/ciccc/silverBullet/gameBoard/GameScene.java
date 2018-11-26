@@ -9,22 +9,24 @@ import javafx.scene.layout.Pane;
 
 public class GameScene extends Pane {
 
-  private GridBoard gameBoard;
-  private double t = 0;
-  private boolean isExecuting;
-  private int currentActionNumber = 0;
-  private int controllingPlayer = 0;
-  public static GameScene instance;
-  private double turnTimer = 10;
-  TimerDisplay timerDisplay;
-  boolean isPaused;
+ Hao-Tse/dev
+    private GridBoard gameBoard;
+    private BackgroundGrid backgroundGrid;
+    private double t = 0;
+    private boolean isExecuting;
+    private int currentActionNumber = 0;
+    private int controllingPlayer = 0;
+    static GameScene instance;
+    private double turnTimer = 10;
+    TimerDisplay timerDisplay;
+    boolean isPaused;
 
-
-
-  public GameScene(int lvl) {
-    gameBoard = new GridBoard(9, 9, lvl);
+   public GameScene(int lvl) {
+    backgroundGrid = new BackgroundGrid();
+    gameBoard = new GridBoard(9, 9,lvl);
     instance = this;
 
+    this.getChildren().add(backgroundGrid.gridBoard);
     this.getChildren().add(gameBoard.gridBoard);
 
     gameBoard.addPlayer(1, 1, 1);
@@ -47,11 +49,16 @@ public class GameScene extends Pane {
       this.getChildren().addAll(player.getPlayerNode(), ac);
     }
 
-  }
+ Hao-Tse/dev
+    public GameScene() {
 
-  public GameScene() {
-    gameBoard = new GridBoard(9, 9, 3);
-    instance = this;
+        gameBoard = new GridBoard(9, 9,3);
+        instance = this;
+        backgroundGrid = new BackgroundGrid();
+
+        this.getChildren().add(backgroundGrid.gridBoard);
+        this.getChildren().add(gameBoard.gridBoard);
+
 
     gameBoard.addPlayer(1, 1, 1);
     gameBoard.addPlayer(5, 5, 2);

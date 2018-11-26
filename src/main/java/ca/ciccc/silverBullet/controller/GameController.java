@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
  * GameController
  * @author Masa
  */
-public class GameController {
+public class GameController extends AbstractController {
   private static GameController instance;
   private static Scene SCENE;
   private static GameScene game;
@@ -33,7 +33,9 @@ public class GameController {
     }
   }
 
+  public void show() {
   public void show(int players, int boardSize, int level) {
+    menuClip.stop();
     game = new Builder()
         .player(players)
         .boardSize(boardSize)

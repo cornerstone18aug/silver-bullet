@@ -1,19 +1,16 @@
 package ca.ciccc.silverBullet.gridNodes;
 
-import FileInput.FileInput;
-import javafx.scene.paint.Color;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-
-import java.util.Random;
 
 public class Space extends GridNode {
   private final static String FILE_PATH = "file:src/main/resources/images/Tiles/Tile%s.png";
 
-  public Space(int gridX, int gridY) {
-    FileInput fInput = new FileInput();
-    this.gridX = gridX;
-    this.gridY = gridY;
+  public Space(int gridx, int gridy) {
+    MediaUtil fInput = new MediaUtil();
+    this.gridX = gridx;
+    this.gridY = gridy;
     name = "Space";
     canMoveTo = true;
     canShoot = true;
