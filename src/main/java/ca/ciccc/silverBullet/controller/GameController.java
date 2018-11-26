@@ -33,7 +33,6 @@ public class GameController extends AbstractController {
     }
   }
 
-  public void show() {
   public void show(int players, int boardSize, int level) {
     menuClip.stop();
     game = new Builder()

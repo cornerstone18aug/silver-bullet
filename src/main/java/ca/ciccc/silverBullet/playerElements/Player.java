@@ -53,11 +53,11 @@ public class Player {
     gridPositionX = gridX;
     gridPositionY = gridY;
     playerNode = new Circle(30, Color.GREEN);
-    Image image = fileInput.image("File:src/main/resources/images/Character/Fire/Fire.png");
+    Image image = mediaUtil.image("File:src/main/resources/images/Character/Fire/Fire.png");
     if (playerNumber == 1) {
-      image = fileInput.image("File:src/main/resources/images/Character/Fire/Fire.png");
+      image = mediaUtil.image("File:src/main/resources/images/Character/Fire/Fire.png");
     } else if (playerNumber == 2) {
-      image = fileInput.image("File:src/main/resources/images/Character/Rock/Rock.png");
+      image = mediaUtil.image("File:src/main/resources/images/Character/Rock/Rock.png");
     }
     ((Circle) playerNode).setFill(new ImagePattern(image));
     playerActionCounter = new ActionCounter(playerNumber);
@@ -339,7 +339,7 @@ public class Player {
     String path =
         "File:src/main/resources/images/Character/" + playerelement + "/" + playerelement + dirction
             + ".png";
-    Image img = fileInput.image(path);
+    Image img = mediaUtil.image(path);
     ((Circle) this.playerNode).setFill(new ImagePattern(img));
   }
 
