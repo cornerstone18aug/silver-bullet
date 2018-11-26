@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 public class GameScene extends Pane {
 
     private GridBoard gameBoard;
+    private BackgroundGrid backgroundGrid;
     private double t = 0;
     private boolean isExecuting;
     private int currentActionNumber = 0;
@@ -15,9 +16,11 @@ public class GameScene extends Pane {
     static GameScene instance;
 
     public GameScene(int lvl) {
+        backgroundGrid = new BackgroundGrid();
         gameBoard = new GridBoard(9, 9,lvl);
         instance = this;
 
+        this.getChildren().add(backgroundGrid.gridBoard);
         this.getChildren().add(gameBoard.gridBoard);
 
         gameBoard.addPlayer(1, 1, 1);
@@ -36,9 +39,12 @@ public class GameScene extends Pane {
     }
 
     public GameScene() {
+
         gameBoard = new GridBoard(9, 9,3);
         instance = this;
+        backgroundGrid = new BackgroundGrid();
 
+        this.getChildren().add(backgroundGrid.gridBoard);
         this.getChildren().add(gameBoard.gridBoard);
 
         gameBoard.addPlayer(1, 1, 1);

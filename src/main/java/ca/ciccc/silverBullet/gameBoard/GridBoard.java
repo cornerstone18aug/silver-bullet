@@ -28,47 +28,6 @@ public class GridBoard {
 
   }
 
-  public Move tryMovePlayer(Player playerToMove) {
-
-    GridNode originGrid = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
-    int targetX = 0;
-    int targetY = 0;
-    GridNode targetNode;
-    if (originGrid.hasPlayer()){
-      switch (originGrid.getPlayerInSpace().getFacingDirection()){
-        case NORTH:
-          targetX = originGrid.getGridX();
-          targetY = originGrid.getGridY() - 1;
-          break;
-        case SOUTH:
-          targetX = originGrid.getGridX();
-          targetY = originGrid.getGridY() + 1;
-          break;
-        case EAST:
-          targetX = originGrid.getGridX() + 1;
-          targetY = originGrid.getGridY();
-          break;
-        case WEST:
-          targetX = originGrid.getGridX() - 1;
-          targetY = originGrid.getGridY();
-          break;
-      }
-      if((targetX <0 || targetY < 0) || (targetX > gridSizeX || targetY > gridSizeY)){
-        return null;
-      }
-      targetNode = grid[targetY][targetX];
-
-      if (targetX < 0 || targetY < 0) {
-        return null;
-      } else if(!targetNode.hasPlayer()) {
-        return new Move(targetX, targetY);
-
-      }
-    }
-
-    return null;
-    }
-    
 
     public void movePlayer(Player playerToMove){
         if(playerToMove.getTargetMove() != null){
@@ -131,36 +90,6 @@ public class GridBoard {
             }
 
         }
-
-//    for (int i = 0; i < sizeY; i++) {/
-//      for (int j = 0; j < sizeX; j++) {
-//        if (imageToPrint[i][j] == 'S') {
-//          GridNode nodeToAdd = new Space(j, i);
-//          gridBoard.add(nodeToAdd.getImage(), j, i);
-//          grid[i][j] = nodeToAdd;
-//          nodeToAdd.setGridX(j);
-//          nodeToAdd.setGridY(i);
-//        } else if (imageToPrint[i][j] == 'W') {
-//          GridNode nodeToAdd = new Wall(j, i);
-//          gridBoard.add(nodeToAdd.getImage(), j, i);
-//          grid[i][j] = nodeToAdd;
-//          nodeToAdd.setGridX(j);
-//          nodeToAdd.setGridY(i);
-//        } else if (imageToPrint[i][j] == 'E') {
-//          GridNode nodeToAdd = new Edge(j, i,);
-//          gridBoard.add(nodeToAdd.getImage(), j, i);
-//          grid[i][j] = nodeToAdd;
-//          nodeToAdd.setGridX(j);
-//          nodeToAdd.setGridY(i);
-//        } else if (imageToPrint[i][j] == 'H') {
-//          GridNode nodeToAdd = new Hole(j, i);
-//          gridBoard.add(nodeToAdd.getImage(), j, i);
-//          grid[i][j] = nodeToAdd;
-//          nodeToAdd.setGridX(j);
-//          nodeToAdd.setGridY(i);
-//        }
-//      }
-//    }
     gridBoard.setTranslateX(50);
     gridBoard.setTranslateY(50);
     for (int i = 0; i < sizeY; i++) {
@@ -169,6 +98,47 @@ public class GridBoard {
         grid[j][i].setScreenY((j * 60) + 50);
       }
     }
+  }
+
+  public Move tryMovePlayer(Player playerToMove) {
+
+    GridNode originGrid = grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
+    int targetX = 0;
+    int targetY = 0;
+    GridNode targetNode;
+    if (originGrid.hasPlayer()){
+      switch (originGrid.getPlayerInSpace().getFacingDirection()){
+        case NORTH:
+          targetX = originGrid.getGridX();
+          targetY = originGrid.getGridY() - 1;
+          break;
+        case SOUTH:
+          targetX = originGrid.getGridX();
+          targetY = originGrid.getGridY() + 1;
+          break;
+        case EAST:
+          targetX = originGrid.getGridX() + 1;
+          targetY = originGrid.getGridY();
+          break;
+        case WEST:
+          targetX = originGrid.getGridX() - 1;
+          targetY = originGrid.getGridY();
+          break;
+      }
+      if((targetX <0 || targetY < 0) || (targetX > gridSizeX || targetY > gridSizeY)){
+        return null;
+      }
+      targetNode = grid[targetY][targetX];
+
+      if (targetX < 0 || targetY < 0) {
+        return null;
+      } else if(!targetNode.hasPlayer()) {
+        return new Move(targetX, targetY);
+
+      }
+    }
+
+    return null;
   }
 
     public Player addPlayer(int gridX, int gridY, int playerNumber) {
