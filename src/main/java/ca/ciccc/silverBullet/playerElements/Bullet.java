@@ -1,6 +1,6 @@
 package ca.ciccc.silverBullet.playerElements;
 
-import FileInput.FileInput;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.gameBoard.Move;
@@ -25,7 +25,7 @@ public class Bullet extends Rectangle {
   }
 
   public void shootMovement(GridNode startPos, GridNode endPos, Player player) {
-    FileInput fInput = new FileInput();
+    MediaUtil fInput = new MediaUtil();
     TranslateTransition transition = new TranslateTransition();
 
     switch (player.getPlayerNumber()) {

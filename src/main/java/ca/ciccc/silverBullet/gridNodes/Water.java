@@ -1,13 +1,13 @@
 package ca.ciccc.silverBullet.gridNodes;
 
-import FileInput.FileInput;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Water extends GridNode {
 
   public Water(int gridx, int gridy) {
-    FileInput fInput = new FileInput();
+    MediaUtil fInput = new MediaUtil();
     this.gridX = gridx;
     this.gridY = gridy;
     name = "Water";

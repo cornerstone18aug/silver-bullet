@@ -1,6 +1,6 @@
 package ca.ciccc.silverBullet.gameBoard;
 
-import FileInput.FileInput;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gridNodes.*;
 import ca.ciccc.silverBullet.playerElements.Bullet;
@@ -17,7 +17,7 @@ public class GridBoard {
   int gridSizeX;
   int gridSizeY;
   public static GridBoard instance;
-  private FileInput fileInput = new FileInput();
+  private MediaUtil mediaUtil = new MediaUtil();
 
   public GridBoard(int sizeX, int sizeY, int level) {
     generateBoard(sizeX, sizeY, level);

@@ -1,9 +1,9 @@
 package ca.ciccc.silverBullet.controller;
 
-import FileInput.FileInput;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.scene.media.AudioClip;
 
 public abstract class AbstractController {
-    FileInput fileInput = new FileInput();
-    AudioClip menuClip = fileInput.clip("file:src/main/resources/Test/Menu.wav");
+    MediaUtil mediaUtil = new MediaUtil();
+    AudioClip menuClip = mediaUtil.clip("file:src/main/resources/Test/Menu.wav");
 }
