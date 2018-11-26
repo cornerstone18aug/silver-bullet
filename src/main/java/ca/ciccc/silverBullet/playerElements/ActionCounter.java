@@ -58,7 +58,7 @@ public class ActionCounter extends Pane {
       manaText.setTranslateY(35);
       this.getChildren().add(manaText);
 
-    this.setPrefSize(380, 100);
+    this.setPrefSize(380, 100 );
 
     actionsText.setTranslateX(70);
     actionsText.setTranslateY(65);

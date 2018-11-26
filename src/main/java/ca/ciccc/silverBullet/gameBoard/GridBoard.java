@@ -145,7 +145,7 @@ public class GridBoard {
     }
 
     Player playerToAdd =
-        new Player(true, playerNumber, gridX, gridY, Directions.SOUTH);
+        new Player(3, playerNumber, gridX, gridY, Directions.SOUTH);
     players.add(playerToAdd);
     targetNode.setPlayerInSpace(playerToAdd);
 
