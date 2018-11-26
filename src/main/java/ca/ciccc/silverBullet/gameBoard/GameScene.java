@@ -30,11 +30,14 @@ public class GameScene extends Pane {
     gameBoard.addPlayer(1, 1, 1);
     gameBoard.addPlayer(5, 5, 2);
 
+
     timerDisplay =  new TimerDisplay(gameBoard.players);
-    timerDisplay.setTranslateX(300);
-    timerDisplay.setTranslateY(20);
+    timerDisplay.setTranslateX(380);
+    timerDisplay.setTranslateY(10);
 
     this.getChildren().add(timerDisplay);
+
+    timerDisplay.setHighlight(0);
 
     for (int i = 0; i < gameBoard.players.size(); i++) {
       Player player = gameBoard.players.get(i);
@@ -42,8 +45,8 @@ public class GameScene extends Pane {
       //ac.setTranslateX(175 + 200 * i);
       /* New value to center the board
       and the movements of the player */
-      ac.setTranslateX(305 + 200 * i);
-      ac.setTranslateY(630);
+      ac.setTranslateX(50 + 400 * i);
+      ac.setTranslateY(590);
       this.getChildren().addAll(player.getPlayerNode(), ac);
     }
 
@@ -55,6 +58,7 @@ public class GameScene extends Pane {
 
     gameBoard.addPlayer(1, 1, 1);
     gameBoard.addPlayer(5, 5, 2);
+
 
     for (int i = 0; i < gameBoard.players.size(); i++) {
       Player player = gameBoard.players.get(i);
@@ -79,7 +83,6 @@ public class GameScene extends Pane {
             timerDisplay.timerUpdate(turnTimer);
         }
 
-      return;
     } else if(isExecuting){
 
         if (t <= 0) {
@@ -151,6 +154,7 @@ public class GameScene extends Pane {
     controllingPlayer = 0;
     currentActionNumber = 0;
     isPaused = true;
+    timerDisplay.setHighlight(controllingPlayer);
     ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", ()->isPaused=false);
   }
 
@@ -175,10 +179,13 @@ public class GameScene extends Pane {
       gameBoard.players.get(controllingPlayer).passTurn();
       isPaused = true;
       if(!gameBoard.areAllFull()){
-
-          ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", ()->{isPaused=false; turnTimer = 10;});
           controllingPlayer++;
+          timerDisplay.setHighlight(controllingPlayer);
+          ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", ()->{isPaused=false; turnTimer = 10;});
+
+
       } else{
+          timerDisplay.highlightAll();
           ModalUtil.alertWithCallback("Execute", "Move to execution?", ()->{
               turnTimer = 10;
               currentActionNumber = 0;
