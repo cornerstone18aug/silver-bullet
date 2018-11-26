@@ -12,9 +12,9 @@
    <children>
       <StackPane layoutY="30.0">
          <children>
-            <Text fill="#d01313" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY">
+            <Text fill="#2acf15" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY">
                <font>
-                  <Font size="63.0" />
+                  <Font size="55.0" />
                </font>
             </Text>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" opacity="0.4" stroke="WHITE" strokeType="INSIDE" width="900.0" />
@@ -27,10 +27,10 @@
          <children>
             <StackPane onMouseClicked="#onBackToMenuClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="50.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
                   <Text fill="#5e5e5e" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK TO MENU">
                      <font>
-                        <Font name="STHeiti" size="40.0" />
+                        <Font name="STHeiti" size="30.0" />
                      </font>
                   </Text>
                </children>

@@ -1,18 +1,24 @@
 package ca.ciccc.silverBullet.controller;
 
 import ca.ciccc.silverBullet.SilverBulletApp;
+import ca.ciccc.silverBullet.utils.ConstUtil;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
 
 /**
  * HowToPlayController
+ *
  * @author Masa
  */
 public class HowToPlayController {
+
   private static HowToPlayController instance;
   private static Scene SCENE;
 
@@ -34,6 +40,7 @@ public class HowToPlayController {
 
   /**
    * Return singleton instance
+   *
    * @return instance
    */
   public static HowToPlayController getInstance() {
