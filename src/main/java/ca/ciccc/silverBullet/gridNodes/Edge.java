@@ -7,12 +7,13 @@ import javafx.scene.shape.Rectangle;
 
 public class Edge extends GridNode {
 
-    public Edge(int gridx, int gridy) {
+    public Edge(int gridx, int gridy, boolean hasPickup) {
 
     this.gridX = gridx;
     this.gridY = gridy;
     name = "Edge";
     canMoveTo = true;
+    this.hasPickup = hasPickup;
     image = new Rectangle(60, 60);
     if (gridx == 0 && gridy != 0 && gridy != 8)
     {

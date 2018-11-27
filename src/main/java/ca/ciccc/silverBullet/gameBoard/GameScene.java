@@ -32,7 +32,6 @@ public class GameScene extends Pane {
 
     gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_1_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_1_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_1.get());
     gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_2_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_2_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_2.get());
-    gameBoard.addPlayer(5,3,3);
 
 
 

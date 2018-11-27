@@ -205,7 +205,9 @@ public class Player {
 
   public void addShot(){
     numberOfShots++;
+
     if (numberOfShots>3){numberOfShots = 3;}
+
     playerActionCounter.addShot();
   }
 
@@ -281,6 +283,10 @@ public class Player {
 
   public int getCurrentAction() {
     return currentAction;
+  }
+
+  public int getNumberOfShots() {
+    return numberOfShots;
   }
 
   public void setCurrentAction(int currentAction) {
