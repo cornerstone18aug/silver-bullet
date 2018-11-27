@@ -1,6 +1,7 @@
 package ca.ciccc.silverBullet.gameBoard;
 
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
+import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
 import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.utils.ConstUtil.GameSceneCoordinatesEnum;
@@ -22,7 +23,7 @@ public class GameScene extends Pane {
   TimerDisplay timerDisplay;
   boolean isPaused;
 
-  public GameScene(int lvl) {
+  public GameScene(int lvl, int numberOfPlayers) {
     backgroundGrid = new BackgroundGrid();
     gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), lvl);
     instance = this;
@@ -30,8 +31,13 @@ public class GameScene extends Pane {
     this.getChildren().add(backgroundGrid.gridBoard);
     this.getChildren().add(gameBoard.gridBoard);
 
-    gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_1_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_1_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_1.get());
-    gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_2_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_2_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_2.get());
+
+    for(int i = 1; i < numberOfPlayers+1; i++){
+      GridNode playerNode = gameBoard.getPlayerStartLocation()[i-1];
+
+      gameBoard.addPlayer(playerNode.getGridX(), playerNode.getGridY(), i);
+    }
+
 
 
 
@@ -100,7 +106,7 @@ public class GameScene extends Pane {
     }
 
     public GameScene build() {
-      GameScene gameScene = new GameScene(this.level);
+      GameScene gameScene = new GameScene(this.level, playerNumber);
       return gameScene;
     }
 

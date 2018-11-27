@@ -25,12 +25,16 @@ public class GridBoard {
   public GridNode[][] grid;
   public GridPane gridBoard;
   public List<Player> players;
+
+  public GridNode[] playerStartLocation;
+
   int gridSizeX;
   int gridSizeY;
   public static GridBoard instance;
 
   public GridBoard(int sizeX, int sizeY, int level) {
     generateBoard(sizeX, sizeY, level);
+
     players = new ArrayList<>();
     gridSizeX = sizeX - 1;
     gridSizeY = sizeY - 1;
@@ -126,6 +130,7 @@ public class GridBoard {
 
   public void generateBoard(int sizeX, int sizeY, int levelNumber) {
     grid = new GridNode[sizeY][sizeX];
+    playerStartLocation = new GridNode[4];
     gridBoard = new GridPane();
     char[][] imageToPrint = LevelFileReadUtil.getLevelMapAry(levelNumber);
 
@@ -133,7 +138,9 @@ public class GridBoard {
       for (int j = 0; j < sizeX; j++) {
         GridNode nodeToAdd = GridElement.createGridNode(imageToPrint[i][j], j, i);
         gridBoard.add(nodeToAdd.getImage(), j, i);
-
+        if(nodeToAdd.getPlayerStartPosition() > 0){
+          playerStartLocation[nodeToAdd.getPlayerStartPosition()-1] = nodeToAdd;
+        }
         grid[i][j] = nodeToAdd;
         nodeToAdd.setGridX(j);
         nodeToAdd.setGridY(i);
@@ -279,6 +286,10 @@ public class GridBoard {
         finalLocation,
         player
     ));
+  }
+
+  public GridNode[] getPlayerStartLocation() {
+    return playerStartLocation;
   }
 
   public GridNode getNodeFromGrid(int x, int y) {

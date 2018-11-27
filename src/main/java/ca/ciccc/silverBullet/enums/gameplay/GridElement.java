@@ -13,7 +13,12 @@ public enum GridElement {
   HOLE('H'),
   WALL('W'),
   SPACE('S'),
-  EDGE('E');
+  EDGE('E'),
+  PICKUP('P'),
+  ONE('1'),
+  TWO('2'),
+  THREE('3'),
+  FOUR('4');
 
   private char letter;
 
@@ -31,9 +36,16 @@ public enum GridElement {
       case WALL:
         return new Wall(positionX, positionY);
       case SPACE:
-        return new Space(positionX, positionY, false);
+        return new Space(positionX, positionY, false, 0);
+      case PICKUP:
+        return new Space(positionX,positionY, true, 0);
       case EDGE:
         return new Edge(positionX, positionY, false);
+      case ONE:
+      case TWO:
+      case THREE:
+      case FOUR:
+        return new Space(positionX, positionY, false, Character.getNumericValue(letter));
     }
     throw new IllegalStateException();
   }
