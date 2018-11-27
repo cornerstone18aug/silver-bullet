@@ -1,6 +1,8 @@
 package ca.ciccc.silverBullet.playerElements;
 
+import ca.ciccc.silverBullet.gameBoard.GameScene;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
+import ca.ciccc.silverBullet.utils.ConstUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.Background;
@@ -22,8 +24,10 @@ public class ActionCounter extends Pane {
   private int nodesEnabled = 0;
   private Circle playerImage;
   private Text playerText;
+  int manaEnabled;
 
   public ActionCounter(Player parentPlayer) {
+    manaEnabled = 3;
 
     actionNodes = new Circle[5];
     generateNodes();
@@ -58,7 +62,7 @@ public class ActionCounter extends Pane {
       manaText.setTranslateY(35);
       this.getChildren().add(manaText);
 
-    this.setPrefSize(380, 100);
+    this.setPrefSize(380, 100 );
 
     actionsText.setTranslateX(70);
     actionsText.setTranslateY(65);
@@ -85,7 +89,7 @@ public class ActionCounter extends Pane {
 
   private void generateMana(){
       for (int i = 0; i < 3; i++) {
-          manaNodes[i] = new Circle(10, Color.GRAY);
+          manaNodes[i] = new Circle(10, Color.BLUE);
           manaNodes[i].setTranslateX((i * 25) + 150);
           manaNodes[i].setTranslateY(30);
           this.getChildren().add(manaNodes[i]);
@@ -120,9 +124,88 @@ public class ActionCounter extends Pane {
     }
   }
 
+  public void addShot(){
+    manaEnabled++;
+    if (nodesEnabled > 3) {
+      nodesEnabled = 3;
+    }
+    for (int i = 0; i < 3; i++) {
+      if (i < manaEnabled) {
+        manaNodes[i].setFill(Color.BLUE);
+      } else {
+        manaNodes[i].setFill(Color.GRAY);
+      }
+    }
+  }
+
+  public void removeShot(){
+    manaEnabled--;
+    if (nodesEnabled < 0) {
+      nodesEnabled = 0;
+    }
+    for (int i = 0; i < 3; i++) {
+      if (i >= 3- manaEnabled) {
+        manaNodes[i].setFill(Color.BLUE);
+      } else {
+        manaNodes[i].setFill(Color.GRAY);
+      }
+    }
+  }
+
   public void clearActions() {
     for (int i = 0; i < 5; i++) {
       actionNodes[i].setFill(Color.GRAY);
+    }
+  }
+
+
+  public void adjustManaNodes(int adjustment){
+    for(Circle c : manaNodes){
+      c.setTranslateX(c.getTranslateX() - adjustment);
+    }
+  }
+
+  public void adjustActionNodes(int adjustments){
+    for(Circle c : actionNodes){
+      c.setTranslateX(c.getTranslateX() - adjustments);
+    }
+  }
+
+  public Text getActionsText() {
+    return actionsText;
+  }
+
+  public Text getManaText() {
+    return manaText;
+  }
+
+  public Circle getPlayerImage() {
+    return playerImage;
+  }
+
+  public Text getPlayerText() {
+    return playerText;
+  }
+
+  public void adjustActionCounter(int numberOfPlayers, int i){
+    if(numberOfPlayers > 2){
+      this.setPrefSize(400 - (44 * numberOfPlayers), 100);
+
+      this.getActionsText().setTranslateX(70 - (12 * numberOfPlayers));
+      this.getManaText().setTranslateX(75 - (12 * numberOfPlayers));
+
+      this.adjustActionNodes(12*numberOfPlayers);
+      this.adjustManaNodes(12*numberOfPlayers);
+
+      this.getPlayerImage().setTranslateX(this.getPlayerImage().getTranslateX() - (20 * numberOfPlayers));
+      this.getPlayerText().setTranslateX(this.getPlayerText().getTranslateX() - (20 * numberOfPlayers));
+      this.setTranslateX(ConstUtil.GameSceneCoordinatesEnum.SIZE_BOARD_X_MAIN.get() - (numberOfPlayers==4?48:0)  + (this.getPrefWidth() * i));
+
+      this.getChildren().remove(playerImage);
+      this.getChildren().remove(playerText);
+
+    } else{
+      this.setTranslateX(ConstUtil.GameSceneCoordinatesEnum.SIZE_BOARD_X_MAIN.get() +  20 + (this.getPrefWidth() * i));
     }
   }
 }

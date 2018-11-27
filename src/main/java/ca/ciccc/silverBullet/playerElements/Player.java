@@ -8,13 +8,16 @@ import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.gameBoard.Move;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class Player {
 
-  private boolean hasShot;
+
+  private int numberOfShots;
+
   private int playerNumber;
   private Directions facingDirection;
   private int gridPositionX;
@@ -43,9 +46,10 @@ public class Player {
     return isDead;
   }
 
-  public Player(boolean hasShot, int playerNumber, int gridX, int gridY,
+  public Player(int numberOfShots, int playerNumber, int gridX, int gridY,
       Directions facingDirection) {
-    this.hasShot = hasShot;
+
+     this.numberOfShots = numberOfShots;
     this.playerNumber = playerNumber;
     this.facingDirection = facingDirection;
     this.currentAmo = 3;
@@ -53,10 +57,21 @@ public class Player {
     gridPositionY = gridY;
     playerNode = new Circle(30, Color.GREEN);
     Image image = MediaUtil.createImage("File:src/main/resources/images/Character/Fire/Fire.png");
-    if (playerNumber == 1) {
-      image = MediaUtil.createImage("File:src/main/resources/images/Character/Fire/Fire.png");
-    } else if (playerNumber == 2) {
-      image = MediaUtil.createImage("File:src/main/resources/images/Character/Rock/Rock.png");
+    switch (playerNumber){
+
+      case 1:
+        image =MediaUtil.createImage("File:src/main/resources/images/Character/Fire/Fire.png");
+        break;
+      case 2:
+        image = MediaUtil.createImage("File:src/main/resources/images/Character/Rock/Rock.png");
+        break;
+      case 3:
+        image = MediaUtil.createImage("File:src/main/resources/images/Character/Water/Water.png");
+        break;
+      case 4:
+        image = MediaUtil.createImage("File:src/main/resources/images/Character/Wind/Wind.png");
+        break;
+
     }
     ((Circle) playerNode).setFill(new ImagePattern(image));
     playerActionCounter = new ActionCounter(this);
@@ -152,6 +167,7 @@ public class Player {
         break;
       case SHOOT:
         GridBoard.instance.shootBullet(this);
+        removeShot();
         break;
       case WAIT:
         break;
@@ -187,17 +203,24 @@ public class Player {
     actionsFull = false;
   }
 
+  public void addShot(){
+    numberOfShots++;
+    if (numberOfShots>3){numberOfShots = 3;}
+    playerActionCounter.addShot();
+  }
+
+  public void removeShot(){
+    numberOfShots --;
+    if(numberOfShots< 0){ numberOfShots = 0;}
+    playerActionCounter.removeShot();
+  }
 
   public ActionCounter getPlayerActionCounter() {
     return playerActionCounter;
   }
 
   public boolean isHasShot() {
-    return hasShot;
-  }
-
-  public void setHasShot(boolean hasShot) {
-    this.hasShot = hasShot;
+    return numberOfShots > 0;
   }
 
   public int getPlayerNumber() {
