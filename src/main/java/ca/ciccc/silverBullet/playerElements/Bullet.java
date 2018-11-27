@@ -39,21 +39,20 @@ public class Bullet extends Rectangle {
   }
 
   public void shootMovement(GridNode startPos, GridNode endPos, Player player) {
-    MediaUtil fInput = new MediaUtil();
     TranslateTransition transition = new TranslateTransition();
 
     switch (player.getPlayerNumber()) {
       case 1:
         this.setFill(new ImagePattern(
-            fInput.image("file:src/main/resources/images/Character/Fire/FireAttack.png")));
+            MediaUtil.createImage("file:src/main/resources/images/Character/Fire/FireAttack.png")));
         break;
       case 2:
         this.setFill(new ImagePattern(
-            fInput.image("file:src/main/resources/images/Character/Rock/RockAttack.png")));
+            MediaUtil.createImage("file:src/main/resources/images/Character/Rock/RockAttack.png")));
         break;
       default:
         this.setFill(new ImagePattern(
-            fInput.image("file:src/main/resources/images/Character/Fire/FireAttack.png")));
+            MediaUtil.createImage("file:src/main/resources/images/Character/Fire/FireAttack.png")));
         break;
     }
 

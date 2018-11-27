@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
  *
  * @author Masa
  */
-public class SettingsController extends AbstractController {
+public class SettingsController extends AbstractMenuController {
 
   private static SettingsController instance;
   private static Scene SCENE;
@@ -26,9 +26,7 @@ public class SettingsController extends AbstractController {
   @FXML
   private ComboBox<Integer> howManyPlayersCombo;
   @FXML
-  private ComboBox<Integer> boardSizeCombo;
-  @FXML
-  private ComboBox<Integer> levelCombo;
+  private ComboBox<Integer> gameLevelCombo;
 
   static {
     FXMLLoader fxmlLoader = new FXMLLoader();
@@ -69,18 +67,16 @@ public class SettingsController extends AbstractController {
                   .boxed()
                   .collect(Collectors.toList())
           );
-      this.boardSizeCombo.getItems()
+      this.gameLevelCombo.getItems()
           .addAll(
-              Arrays.stream(ConstUtil.BOARD_SIZES)
+              Arrays.stream(ConstUtil.GAME_LEVEL_NUMBERS)
                   .boxed()
                   .collect(Collectors.toList())
           );
-      this.levelCombo.getItems()
-          .addAll(
-              Arrays.stream(ConstUtil.LEVEL_NUMBERS)
-                  .boxed()
-                  .collect(Collectors.toList())
-          );
+
+      // Set default value
+      this.howManyPlayersCombo.getSelectionModel().select(ConstUtil.DEFAULT_PLAYER_NUMBER_INDEX);
+      this.gameLevelCombo.getSelectionModel().select(ConstUtil.DEFAULT_GAME_LEVEL_INDEX);
 
     }
     SilverBulletApp.primaryStage.setScene(SCENE);
@@ -88,8 +84,7 @@ public class SettingsController extends AbstractController {
 
   private boolean validate() {
     return !this.howManyPlayersCombo.getSelectionModel().isEmpty()
-        && !this.boardSizeCombo.getSelectionModel().isEmpty()
-        && !this.levelCombo.getSelectionModel().isEmpty();
+        && !this.gameLevelCombo.getSelectionModel().isEmpty();
   }
 
   @FXML
@@ -102,11 +97,16 @@ public class SettingsController extends AbstractController {
     } else {
       ModalUtil.confirm("START",
           "Are you ready?",
-          () -> GameController.getInstance().show(
-              this.howManyPlayersCombo.getSelectionModel().getSelectedItem(),
-              this.boardSizeCombo.getSelectionModel().getSelectedItem(),
-              this.levelCombo.getSelectionModel().getSelectedItem()
-          )
+          () -> {
+            GameController.getInstance().show(
+                this.howManyPlayersCombo.getSelectionModel().getSelectedItem(),
+                0,
+                this.gameLevelCombo.getSelectionModel().getSelectedItem()
+            );
+            if (AbstractMenuController.MENU_CLIP.isPlaying()) {
+              AbstractMenuController.MENU_CLIP.stop();
+            }
+          }
       );
     }
   }

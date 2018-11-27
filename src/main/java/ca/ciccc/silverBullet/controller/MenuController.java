@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  *
  * @author Masa
  */
-public class MenuController extends AbstractController {
+public class MenuController extends AbstractMenuController {
   private static MenuController instance;
   private static Scene SCENE;
 
@@ -49,8 +49,11 @@ public class MenuController extends AbstractController {
   }
 
   public void show() {
+    if (!AbstractMenuController.MENU_CLIP.isPlaying()) {
+      MENU_CLIP.setCycleCount(Integer.MAX_VALUE);
+      AbstractMenuController.MENU_CLIP.play();
+    }
     SilverBulletApp.primaryStage.setScene(SCENE);
-    menuClip.play();
   }
 
   @FXML

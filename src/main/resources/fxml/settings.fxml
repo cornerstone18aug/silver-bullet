@@ -30,9 +30,9 @@
          <children>
             <HBox prefHeight="150.0">
                <children>
-                  <StackPane alignment="TOP_LEFT" prefWidth="400.0">
+                  <StackPane alignment="CENTER_LEFT" prefWidth="400.0">
                      <children>
-                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- How many players">
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- How many players?">
                            <font>
                               <Font name="Helvetica" size="28.0" />
                            </font>
@@ -59,7 +59,7 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                      <children>
-                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- Board Size">
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- Choose Game Level" StackPane.alignment="CENTER_LEFT">
                            <font>
                               <Font name="Helvetica" size="28.0" />
                            </font>
@@ -68,28 +68,7 @@
                   </StackPane>
                   <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
                      <children>
-                        <ComboBox fx:id="boardSizeCombo" prefWidth="150.0" promptText="Select number" StackPane.alignment="CENTER" />
-                     </children>
-                  </StackPane>
-               </children>
-            </HBox>
-            <HBox prefHeight="150.0">
-               <children>
-                  <StackPane alignment="TOP_LEFT" prefWidth="400.0">
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                     <children>
-                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- Level">
-                           <font>
-                              <Font name="Helvetica" size="28.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
-                     <children>
-                        <ComboBox fx:id="levelCombo" prefWidth="150.0" promptText="Select number" StackPane.alignment="CENTER" />
+                        <ComboBox fx:id="gameLevelCombo" prefWidth="150.0" promptText="Select number" StackPane.alignment="CENTER" />
                      </children>
                   </StackPane>
                </children>
