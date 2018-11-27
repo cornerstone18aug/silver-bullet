@@ -1,5 +1,6 @@
 package ca.ciccc.silverBullet.playerElements;
 
+import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.MediaUtil;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
@@ -33,13 +34,14 @@ public class Bullet extends Rectangle {
 
       GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
       GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
-      setTranslateX(startNode.getScreenX());
-      setTranslateY(startNode.getScreenY() - 50);
+      setTranslateX(startNode.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
+      setTranslateY(startNode.getScreenY() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_Y.get());
       shootMovement(startNode, endNode, player);
   }
 
   public void shootMovement(GridNode startPos, GridNode endPos, Player player) {
     TranslateTransition transition = new TranslateTransition();
+
 
     switch (player.getPlayerNumber()) {
       case 1:
@@ -59,20 +61,20 @@ public class Bullet extends Rectangle {
     if (player.getFacingDirection().equals(Directions.SOUTH) || player.getFacingDirection()
         .equals(Directions.NORTH)) {
 
-      transition.setFromX(startPos.getScreenX() - BulletCoordinatesEnum.SHOOT_START_POS_X.get());
-      transition.setToX(endPos.getScreenX() - BulletCoordinatesEnum.SHOOT_END_POS_X.get());
+      transition.setFromX(startPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
+      transition.setToX(endPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
 
     } else {
-      transition.setFromX(startPos.getScreenX());
-      transition.setToX(endPos.getScreenX());
+      transition.setFromX(startPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
+      transition.setToX(endPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
     }
 
-    transition.setFromY(startPos.getScreenY() - BulletCoordinatesEnum.SHOOT_START_POS_Y.get());
+    transition.setFromY(startPos.getScreenY() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_Y.get());
     transition.setInterpolator(Interpolator.EASE_IN);
     transition.setOnFinished(e -> onBulletStop());
 
     transition.setDuration(Duration.seconds(.5));
-    transition.setToY(endPos.getScreenY() - BulletCoordinatesEnum.SHOOT_END_POS_Y.get());
+    transition.setToY(endPos.getScreenY()- ConstUtil.GridBoardSizeEnum.BOARD_POSITION_Y.get());
     transition.setNode(this);
     transition.play();
   }

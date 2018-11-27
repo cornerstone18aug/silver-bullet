@@ -20,12 +20,14 @@ public abstract class GridNode {
 
   protected boolean canShoot;
 
+  protected boolean hasPickup;
+
   protected Player playerInSpace = null;
 
   protected Random random = new Random();
 
   protected Node image;
-  public Node squareNode;
+
 
   public boolean hasPlayer() {
     return playerInSpace != null;
@@ -98,5 +100,13 @@ public abstract class GridNode {
 
   public void setCanShoot(boolean canShoot) {
     this.canShoot = canShoot;
+  }
+
+  public boolean isHasPickup() {
+    return hasPickup;
+  }
+
+  public void setHasPickup(boolean hasPickup) {
+    this.hasPickup = hasPickup;
   }
 }

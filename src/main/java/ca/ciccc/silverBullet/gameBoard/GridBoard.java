@@ -90,11 +90,11 @@ public class GridBoard {
     playerToMove.setGridPositionX(targetNode.getGridX());
     playerToMove.setGridPositionY(targetNode.getGridY());
 
-    moveTransition.setFromX(startNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
-    moveTransition.setFromY(startNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
+    moveTransition.setFromX(startNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE_X.get());
+    moveTransition.setFromY(startNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE_Y.get());
 
-    moveTransition.setToX(targetNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
-    moveTransition.setToY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
+    moveTransition.setToX(targetNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE_X.get());
+    moveTransition.setToY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE_Y.get());
 
     moveTransition.setDuration(Duration.seconds(.3));
 
@@ -106,9 +106,13 @@ public class GridBoard {
 
     System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
 
-    playerToMove.setTargetMove(null);
+    if (targetNode.isHasPickup()){
+      playerToMove.addShot();
+      targetNode.setHasPickup(false);
+    }
 
     playerToMove.setTargetMove(null);
+
 
   }
 
@@ -129,6 +133,7 @@ public class GridBoard {
 
     gridBoard.setTranslateX(GridBoardSizeEnum.BOARD_POSITION_X.get());
     gridBoard.setTranslateY(GridBoardSizeEnum.BOARD_POSITION_Y.get());
+
     for (int i = 0; i < sizeY; i++) {
       for (int j = 0; j < sizeX; j++) {
         grid[j][i].setScreenX((i * GridBoardSizeEnum.TILE_SIZE.get()) + GridBoardSizeEnum.BOARD_POSITION_X.get());
@@ -149,8 +154,8 @@ public class GridBoard {
     players.add(playerToAdd);
     targetNode.setPlayerInSpace(playerToAdd);
 
-    playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
-    playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE.get());
+    playerToAdd.getPlayerNode().setTranslateX(targetNode.getScreenX() + GridBoardSizeEnum.SPACE_TARGET_NODE_X.get());
+    playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE_Y.get());
 
     return playerToAdd;
 

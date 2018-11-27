@@ -24,8 +24,10 @@ public class ActionCounter extends Pane {
   private int nodesEnabled = 0;
   private Circle playerImage;
   private Text playerText;
+  int manaEnabled;
 
   public ActionCounter(Player parentPlayer) {
+    manaEnabled = 3;
 
     actionNodes = new Circle[5];
     generateNodes();
@@ -87,7 +89,7 @@ public class ActionCounter extends Pane {
 
   private void generateMana(){
       for (int i = 0; i < 3; i++) {
-          manaNodes[i] = new Circle(10, Color.GRAY);
+          manaNodes[i] = new Circle(10, Color.BLUE);
           manaNodes[i].setTranslateX((i * 25) + 150);
           manaNodes[i].setTranslateY(30);
           this.getChildren().add(manaNodes[i]);
@@ -118,6 +120,34 @@ public class ActionCounter extends Pane {
         actionNodes[i].setFill(Color.RED);
       } else {
         actionNodes[i].setFill(Color.GRAY);
+      }
+    }
+  }
+
+  public void addShot(){
+    manaEnabled++;
+    if (nodesEnabled > 3) {
+      nodesEnabled = 3;
+    }
+    for (int i = 0; i < 3; i++) {
+      if (i < manaEnabled) {
+        manaNodes[i].setFill(Color.BLUE);
+      } else {
+        manaNodes[i].setFill(Color.GRAY);
+      }
+    }
+  }
+
+  public void removeShot(){
+    manaEnabled--;
+    if (nodesEnabled < 0) {
+      nodesEnabled = 0;
+    }
+    for (int i = 0; i < 3; i++) {
+      if (i >= 3- manaEnabled) {
+        manaNodes[i].setFill(Color.BLUE);
+      } else {
+        manaNodes[i].setFill(Color.GRAY);
       }
     }
   }
