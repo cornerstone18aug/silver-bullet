@@ -31,9 +31,9 @@ public enum GridElement {
       case WALL:
         return new Wall(positionX, positionY);
       case SPACE:
-        return new Space(positionX, positionY);
+        return new Space(positionX, positionY, false);
       case EDGE:
-        return new Edge(positionX, positionY);
+        return new Edge(positionX, positionY, false);
     }
     throw new IllegalStateException();
   }

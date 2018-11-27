@@ -27,7 +27,15 @@ public abstract class GridNode {
   protected Random random = new Random();
 
   protected Node image;
+  protected Node pickupImage;
 
+  public void setPickupImage(Node pickupImage) {
+    this.pickupImage = pickupImage;
+  }
+
+  public Node getPickupImage() {
+    return pickupImage;
+  }
 
   public boolean hasPlayer() {
     return playerInSpace != null;

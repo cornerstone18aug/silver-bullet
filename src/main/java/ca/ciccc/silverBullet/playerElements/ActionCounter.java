@@ -140,8 +140,8 @@ public class ActionCounter extends Pane {
 
   public void removeShot(){
     manaEnabled--;
-    if (nodesEnabled < 0) {
-      nodesEnabled = 0;
+    if (manaEnabled < 0) {
+      manaEnabled = 0;
     }
     for (int i = 0; i < 3; i++) {
       if (i >= 3- manaEnabled) {

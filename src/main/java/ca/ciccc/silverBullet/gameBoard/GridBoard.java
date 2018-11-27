@@ -5,6 +5,7 @@ import ca.ciccc.silverBullet.enums.gameplay.GridElement;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.Bullet;
 import ca.ciccc.silverBullet.playerElements.Player;
+import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.ConstUtil.GridBoardSizeEnum;
 import ca.ciccc.silverBullet.utils.LevelFileReadUtil;
 import ca.ciccc.silverBullet.utils.MediaUtil;
@@ -12,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 public class GridBoard {
@@ -107,8 +112,11 @@ public class GridBoard {
     System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
 
     if (targetNode.isHasPickup()){
-      playerToMove.addShot();
-      targetNode.setHasPickup(false);
+      if(playerToMove.getNumberOfShots() < 3){
+
+        playerToMove.addShot();
+        picckupAquired(targetNode);
+      }
     }
 
     playerToMove.setTargetMove(null);
@@ -125,6 +133,7 @@ public class GridBoard {
       for (int j = 0; j < sizeX; j++) {
         GridNode nodeToAdd = GridElement.createGridNode(imageToPrint[i][j], j, i);
         gridBoard.add(nodeToAdd.getImage(), j, i);
+
         grid[i][j] = nodeToAdd;
         nodeToAdd.setGridX(j);
         nodeToAdd.setGridY(i);
@@ -138,6 +147,15 @@ public class GridBoard {
       for (int j = 0; j < sizeX; j++) {
         grid[j][i].setScreenX((i * GridBoardSizeEnum.TILE_SIZE.get()) + GridBoardSizeEnum.BOARD_POSITION_X.get());
         grid[j][i].setScreenY((j * GridBoardSizeEnum.TILE_SIZE.get()) + GridBoardSizeEnum.BOARD_POSITION_Y.get());
+
+        if(grid[j][i].isHasPickup()){
+          Image pickupImage = MediaUtil.createImage(ConstUtil.PICKUP_IMAGE_PATH);
+          Node pickupNode = new Circle(20, new ImagePattern(pickupImage));
+          pickupNode.setTranslateX(grid[j][i].getScreenX() - GridBoardSizeEnum.BOARD_POSITION_X.get() + 10);
+          pickupNode.setTranslateY(grid[j][i].getScreenY() - GridBoardSizeEnum.BOARD_POSITION_Y.get());
+          grid[j][i].setPickupImage(pickupNode);
+          gridBoard.getChildren().add(pickupNode);
+        }
       }
     }
   }
@@ -243,6 +261,11 @@ public class GridBoard {
 
   public void removePlayer(Player playerToRemove) {
     GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
+  }
+
+  public void picckupAquired(GridNode node){
+    node.setHasPickup(false);
+    gridBoard.getChildren().remove(node.getPickupImage());
   }
 
   public void shootBullet(Player player) {
