@@ -21,7 +21,6 @@ public class ConstUtil {
   }
 
   public interface hasDoubleSize {
-
     double get();
   }
 
@@ -167,9 +166,11 @@ public class ConstUtil {
   public static final String APP_NAME = "SILVER BULLET";
   public static final String TITLE_FONT = "Times New Roman";
   public static final String MENU_FONT = "Times New Roman";
-  public static final int[] PLAYER_NUMBERS = new int[]{1, 2};
+  public static final int[] PLAYER_NUMBERS = new int[]{2, 3, 4};
+  public static final int DEFAULT_PLAYER_NUMBER_INDEX = 0;
+  @Deprecated
   public static final int[] BOARD_SIZES = new int[]{6, 9, 12};
-  public static final int[] LEVEL_NUMBERS = new int[]{1, 2, 3};
-  public static final int DEFAULT_LEVEL = 3;
+  public static final int[] GAME_LEVEL_NUMBERS = new int[]{1, 2, 3};
+  public static final int DEFAULT_GAME_LEVEL_INDEX = 0;
 
 }

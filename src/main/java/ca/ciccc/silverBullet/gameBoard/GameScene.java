@@ -59,6 +59,8 @@ public class GameScene extends Pane {
     this.getChildren().add(backgroundGrid.gridBoard);
     this.getChildren().add(gameBoard.gridBoard);
 
+    gameBoard.addPlayer(1, 1, 1);
+    gameBoard.addPlayer(5, 5, 2);
 
     gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_1_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_1_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_1.get());
     gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_2_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_2_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_2.get());

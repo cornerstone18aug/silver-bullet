@@ -23,8 +23,6 @@ public class GridBoard {
   int gridSizeX;
   int gridSizeY;
   public static GridBoard instance;
-  private MediaUtil mediaUtil = new MediaUtil();
-
 
   public GridBoard(int sizeX, int sizeY, int level) {
     generateBoard(sizeX, sizeY, level);

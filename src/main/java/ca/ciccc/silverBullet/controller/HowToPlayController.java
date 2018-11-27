@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
  *
  * @author Masa
  */
-public class HowToPlayController {
+public class HowToPlayController extends AbstractMenuController {
 
   private static HowToPlayController instance;
   private static Scene SCENE;
