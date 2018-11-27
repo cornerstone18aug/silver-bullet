@@ -29,12 +29,18 @@ public abstract class GridNode {
   protected Node image;
   protected Node pickupImage;
 
+  protected int playerStartPosition = 0;
+
   public void setPickupImage(Node pickupImage) {
     this.pickupImage = pickupImage;
   }
 
   public Node getPickupImage() {
     return pickupImage;
+  }
+
+  public int getPlayerStartPosition() {
+    return playerStartPosition;
   }
 
   public boolean hasPlayer() {
