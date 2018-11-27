@@ -32,6 +32,9 @@ public class GameScene extends Pane {
 
     gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_1_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_1_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_1.get());
     gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_2_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_2_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_2.get());
+    gameBoard.addPlayer(5,3,3);
+
+
 
     timerDisplay = new TimerDisplay(gameBoard.players);
     timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get());
@@ -44,7 +47,9 @@ public class GameScene extends Pane {
     for (int i = 0; i < gameBoard.players.size(); i++) {
       Player player = gameBoard.players.get(i);
       ActionCounter ac = player.getPlayerActionCounter();
-      ac.setTranslateX(GameSceneCoordinatesEnum.SIZE_BOARD_X_MAIN.get() + 400 * i);
+
+      ac.adjustActionCounter(gameBoard.players.size(), i);
+
       ac.setTranslateY(GameSceneCoordinatesEnum.SIZE_BOARD_Y_MAIN.get());
       this.getChildren().addAll(player.getPlayerNode(), ac);
     }
