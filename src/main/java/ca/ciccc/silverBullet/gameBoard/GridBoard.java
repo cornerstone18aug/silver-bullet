@@ -4,6 +4,7 @@ import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.enums.gameplay.GridElement;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.Bullet;
+import ca.ciccc.silverBullet.playerElements.CollisionBullet;
 import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.ConstUtil.GridBoardSizeEnum;
@@ -290,6 +291,9 @@ public class GridBoard {
         finalLocation,
         player
     ));
+    gridBoard.getChildren().add(new CollisionBullet(new Move(player.getGridPositionX(), player.getGridPositionY()),
+            finalLocation,
+            player));
   }
 
   public GridNode[] getPlayerStartLocation() {
