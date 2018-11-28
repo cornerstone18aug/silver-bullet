@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 /**
@@ -15,8 +16,12 @@ import javafx.scene.paint.Color;
  * @author Masa
  */
 public class MenuController extends AbstractMenuController {
+
   private static MenuController instance;
   private static Scene SCENE;
+
+  @FXML
+  private ImageView menuBg;
 
   static {
     FXMLLoader fxmlLoader = new FXMLLoader();
@@ -32,6 +37,9 @@ public class MenuController extends AbstractMenuController {
     scene.setFill(Color.TRANSPARENT);
     SCENE = scene;
     instance = fxmlLoader.getController();
+
+    // Set imageBg
+//    instance.menuBg.setImage();
   }
 
   /**
