@@ -1,5 +1,6 @@
 package ca.ciccc.silverBullet.gameBoard;
 
+import ca.ciccc.silverBullet.controller.GameController;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
@@ -124,6 +125,7 @@ public class GameScene extends Pane {
 
 
   public void showGameOver(int playerWhoWon){
+    stopAll();
     gameOverScreen = new GameOverScreen(playerWhoWon);
     this.getChildren().add(gameOverScreen);
   }
@@ -211,6 +213,10 @@ public class GameScene extends Pane {
     ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", () -> {isPaused = false;
       highlightActions(gameBoard.players.get(controllingPlayer));
     });
+  }
+
+  public void stopAll(){
+    GameController.getInstance().timer.stop();
   }
 
   private void executeMove() {

@@ -14,13 +14,20 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.util.List;
+
 public class CollisionBullet extends Rectangle {
 
   AnimationTimer timer;
   Player playerShooting;
 
-  public CollisionBullet(Move startPosition, Move endPosition, Player player) {
-      super(25, 25, 50, 50);
+  Bullet visualBullet;
+
+  public CollisionBullet(Move startPosition, Move endPosition, Player player, Bullet otherBulletRef) {
+      super(5, 5);
+
+      visualBullet = otherBulletRef;
+
       playerShooting = player;
 
       timer = new AnimationTimer() {
@@ -34,7 +41,7 @@ public class CollisionBullet extends Rectangle {
 
       GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
       GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
-      setTranslateX(startNode.getScreenX());
+      setTranslateX(startNode.getScreenX() + 5);
       setTranslateY(startNode.getScreenY());
       shootMovement(startNode, endNode, player);
   }
@@ -47,12 +54,12 @@ public class CollisionBullet extends Rectangle {
     if (player.getFacingDirection().equals(Directions.SOUTH) || player.getFacingDirection()
         .equals(Directions.NORTH)) {
 
-      transition.setFromX(startPos.getScreenX());
-      transition.setToX(endPos.getScreenX());
+      transition.setFromX(startPos.getScreenX() + 5);
+      transition.setToX(endPos.getScreenX() + 5);
 
     } else {
-      transition.setFromX(startPos.getScreenX());
-      transition.setToX(endPos.getScreenX());
+      transition.setFromX(startPos.getScreenX() + 5);
+      transition.setToX(endPos.getScreenX() + 5);
     }
 
     transition.setFromY(startPos.getScreenY());
@@ -66,15 +73,26 @@ public class CollisionBullet extends Rectangle {
   }
 
   public void checkOverlap(){
-    for(Player p : GridBoard.instance.players)
-      if(!p.equals(playerShooting) && getBoundsInParent().intersects(p.getPlayerNode().getBoundsInParent())){
-        p.Die();
-        timer.stop();
-        onBulletStop();
+      Player playerToRemove = null;
+    for(int i = 0; i < GridBoard.instance.players.size(); i++)
+      if(!GridBoard.instance.players.get(i).equals(playerShooting) &&
+              getBoundsInParent().intersects(GridBoard.instance.players.get(i).getPlayerNode().getBoundsInParent())){
+
+          playerToRemove = GridBoard.instance.players.get(i);
+
+
       }
+      if(playerToRemove != null){
+
+          timer.stop();
+          playerToRemove.Die();
+          onBulletStop();
+      }
+
   }
 
   public void onBulletStop() {
     GridBoard.instance.gridBoard.getChildren().remove(this);
+    visualBullet.onBulletStop();
   }
 }

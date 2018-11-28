@@ -133,6 +133,7 @@ public class GridBoard {
     grid = new GridNode[sizeY][sizeX];
     playerStartLocation = new GridNode[4];
     gridBoard = new GridPane();
+
     char[][] imageToPrint = LevelFileReadUtil.getLevelMapAry(levelNumber);
 
     for (int i = 0; i < sizeY; i++) {
@@ -286,14 +287,17 @@ public class GridBoard {
       return;
     }
 
-    gridBoard.getChildren().add(new Bullet(
-        new Move(player.getGridPositionX(), player.getGridPositionY()),
-        finalLocation,
-        player
-    ));
+    Bullet bulletToShoot = new Bullet(
+            new Move(player.getGridPositionX(), player.getGridPositionY()),
+            finalLocation,
+            player
+    );
+
+    gridBoard.getChildren().add(bulletToShoot);
     gridBoard.getChildren().add(new CollisionBullet(new Move(player.getGridPositionX(), player.getGridPositionY()),
             finalLocation,
-            player));
+            player,
+            bulletToShoot));
   }
 
   public GridNode[] getPlayerStartLocation() {
