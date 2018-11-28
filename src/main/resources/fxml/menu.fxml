@@ -30,7 +30,7 @@
       </StackPane>
       <VBox alignment="CENTER" layoutX="300.0" layoutY="240.0">
          <children>
-            <StackPane onMouseClicked="#OnStartClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
+            <StackPane onMouseClicked="#OnStartClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="START" textAlignment="CENTER">
                      <font>
@@ -43,7 +43,7 @@
                   <Insets bottom="20.0" />
                </padding>
             </StackPane>
-            <StackPane onMouseClicked="#OnHowToPlayClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
+            <StackPane onMouseClicked="#OnHowToPlayClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY" textAlignment="CENTER">
                      <font>
@@ -56,7 +56,7 @@
                   <Insets bottom="20.0" />
                </padding>
             </StackPane>
-            <StackPane onMouseClicked="#OnQuitClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
+            <StackPane onMouseClicked="#OnQuitClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited">
                <children>
                   <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="QUIT" textAlignment="CENTER">
                      <font>
