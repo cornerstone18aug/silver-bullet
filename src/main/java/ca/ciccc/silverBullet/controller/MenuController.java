@@ -7,7 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 /**
  * MenuController
@@ -76,18 +79,15 @@ public class MenuController extends AbstractMenuController {
   }
 
   @FXML
-  public void OnEntered() {
-    System.out.println("Entered");
+  public void OnEntered(MouseEvent event) {
+    Text text = (Text) ((StackPane)event.getSource()).getChildren().get(0);
+    text.setText("▷ " + text.getText());
   }
 
   @FXML
-  public void OnPressed() {
-    System.out.println("Pressed");
-  }
-
-  @FXML
-  public void OnExited() {
-    System.out.println("Exited");
+  public void OnExited(MouseEvent event) {
+    Text text = (Text) ((StackPane)event.getSource()).getChildren().get(0);
+    text.setText(text.getText().replace("▷ ", ""));
   }
 
 }

@@ -5,7 +5,6 @@ import ca.ciccc.silverBullet.utils.MediaUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,10 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 
 /**
@@ -35,22 +31,18 @@ public class HowToPlayController extends AbstractMenuController {
   private static HowToPlayController instance;
   private static Scene SCENE;
   private static final String[] TITLE_ARY = {
-      "COMMAND PHASE",
-      "EXECUTION PHASE"
-  };
-  private static final String[] DESCRIPTION_ARY = {
-      "Input 5 commands one after another.",
-      "Those are executed one by one. If being shot, the player dies"
+      "1. COMMAND PHASE",
+      "2. EXECUTION PHASE"
   };
   private static final String[] IMAGE_PATH_ARY = {
-      "file:src/main/resources/images/Character/Fire/Fire.png",
-      "file:src/main/resources/images/Character/Wind/Wind.png"
+      "file:src/main/resources/images/Menu/howToPlay_preview_1.png",
+      "file:src/main/resources/images/Menu/howToPlay_preview_2.png"
   };
 
   private static final Color SLIDER_NOT_SELECTED_COLOR =
-      Color.rgb(31, 147, 255, 0.4);
+      Color.rgb(76, 248, 87, 0.4);
   private static final Color SLIDER_SELECTED_COLOR =
-      Color.rgb(31, 147, 255, 1);
+      Color.rgb(76, 248, 87, 1);
 
   private List<Image> imageList = new ArrayList<>();
   private List<Circle> imageSliderList = new ArrayList<>();
@@ -58,15 +50,9 @@ public class HowToPlayController extends AbstractMenuController {
   @FXML
   private Text titleText;
   @FXML
-  private Text descriptionText;
-  @FXML
   private ImageView imageView;
   @FXML
   private HBox imageSlider;
-  @FXML
-  private Polygon leftSign;
-  @FXML
-  private Polygon rightSign;
 
   static {
     FXMLLoader fxmlLoader = new FXMLLoader();
@@ -90,7 +76,6 @@ public class HowToPlayController extends AbstractMenuController {
         .collect(Collectors.toList()));
     instance.imageView.setImage(instance.imageList.get(0));
     instance.titleText.setText(TITLE_ARY[0]);
-    instance.descriptionText.setText(DESCRIPTION_ARY[0]);
 
     // Add image slider
     IntStream.range(0, IMAGE_PATH_ARY.length).forEach(i -> {
@@ -128,21 +113,6 @@ public class HowToPlayController extends AbstractMenuController {
   }
 
   @FXML
-  void OnEntered(MouseEvent event) {
-
-  }
-
-  @FXML
-  void OnExited(MouseEvent event) {
-
-  }
-
-  @FXML
-  void OnPressed(MouseEvent event) {
-
-  }
-
-  @FXML
   void onLeftSignClicked(MouseEvent event) {
     int index = this.imageList.indexOf(this.imageView.getImage());
     this.imageSliderList.get(index).setFill(SLIDER_NOT_SELECTED_COLOR);
@@ -166,7 +136,6 @@ public class HowToPlayController extends AbstractMenuController {
 
   private void slide(int newIndex) {
     this.titleText.setText(TITLE_ARY[newIndex]);
-    this.descriptionText.setText(DESCRIPTION_ARY[newIndex]);
     this.imageView.setImage(instance.imageList.get(newIndex));
     this.imageSliderList.get(newIndex).setFill(SLIDER_SELECTED_COLOR);
   }

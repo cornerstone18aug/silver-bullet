@@ -40,7 +40,6 @@ public class GameScene extends Pane {
 
 
 
-
     timerDisplay = new TimerDisplay(gameBoard.players);
     timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get());
     timerDisplay.setTranslateY(GameSceneCoordinatesEnum.TIMER_DISPLAY_Y.get());
