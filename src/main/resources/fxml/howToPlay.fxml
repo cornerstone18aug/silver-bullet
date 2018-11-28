@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -12,15 +19,15 @@
    <children>
       <StackPane layoutY="30.0">
          <children>
-            <Text fill="#2acf15" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY">
+            <Text fill="#39cf15" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY" textAlignment="CENTER">
                <font>
-                  <Font size="55.0" />
+                  <Font name="Pokemon GB" size="40.0" />
                </font>
             </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" opacity="0.4" stroke="WHITE" strokeType="INSIDE" width="900.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="80.0" opacity="0.4" stroke="#ffffff00" strokeType="INSIDE" strokeWidth="0.0" width="900.0" />
          </children>
       </StackPane>
-      <VBox alignment="CENTER" layoutX="300.0" layoutY="476.0">
+      <VBox alignment="CENTER" layoutX="300.0" layoutY="521.0">
          <effect>
             <DropShadow />
          </effect>
@@ -37,5 +44,64 @@
             </StackPane>
          </children>
       </VBox>
+      <BorderPane layoutX="144.0" layoutY="100.0" prefHeight="405.0" prefWidth="620.0">
+         <bottom>
+            <HBox fx:id="imageSlider" alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Polygon fx:id="leftSign" onMouseClicked="#onLeftSignClicked" points="29.166702270507812, 19.240676879882812, 50.0, 40.0, 49.99998474121094, -5.2222137451171875" stroke="TRANSPARENT" strokeType="INSIDE">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#306cb2" />
+                              <Stop color="#306cb2" offset="0.007434944237918215" />
+                              <Stop color="#468fc7d9" offset="0.588019544702913" />
+                              <Stop color="#468fc7d9" offset="0.7302905596101004" />
+                              <Stop color="#306bb0" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Polygon>
+                  <Polygon fx:id="rightSign" onMouseClicked="#onRightSignClicked" points="72.45562744140625, 19.279953002929688, 50.0, 40.0, 50.0, -4.0883331298828125" stroke="TRANSPARENT" strokeType="INSIDE">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#306cb2" />
+                              <Stop color="#306cb2" offset="0.007434944237918215" />
+                              <Stop color="#468fc7d9" offset="0.588019544702913" />
+                              <Stop color="#468fc7d9" offset="0.7302905596101004" />
+                              <Stop color="#306bb0" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Polygon>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <VBox alignment="CENTER" prefHeight="50.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="descriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="530.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>
