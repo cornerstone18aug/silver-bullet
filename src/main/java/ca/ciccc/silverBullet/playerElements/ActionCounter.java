@@ -5,6 +5,7 @@ import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -208,4 +209,18 @@ public class ActionCounter extends Pane {
       this.setTranslateX(ConstUtil.GameSceneCoordinatesEnum.SIZE_BOARD_X_MAIN.get() +  20 + (this.getPrefWidth() * i));
     }
   }
+
+  public void darkenSelf(){
+    ColorAdjust darken = new ColorAdjust();
+    darken.setBrightness(-.5);
+    this.setEffect(darken);
+  }
+
+  public void lightenSelf(){
+    ColorAdjust lighten = new ColorAdjust();
+    lighten.setBrightness(0);
+    this.setEffect(lighten);
+  }
+
+
 }

@@ -4,8 +4,8 @@ import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
 import ca.ciccc.silverBullet.playerElements.Player;
+import ca.ciccc.silverBullet.extraScreens.GameOverScreen;
 import ca.ciccc.silverBullet.utils.ConstUtil.GameSceneCoordinatesEnum;
-import ca.ciccc.silverBullet.utils.ConstUtil.GridBoardSizeEnum;
 import ca.ciccc.silverBullet.utils.ModalUtil;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -23,6 +23,8 @@ public class GameScene extends Pane {
   TimerDisplay timerDisplay;
   boolean isPaused;
 
+  GameOverScreen gameOverScreen;
+
   public GameScene(int lvl, int numberOfPlayers) {
     backgroundGrid = new BackgroundGrid();
     gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), lvl);
@@ -39,10 +41,14 @@ public class GameScene extends Pane {
     }
 
 
-
-
     timerDisplay = new TimerDisplay(gameBoard.players);
-    timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get());
+
+    if(numberOfPlayers == 4){
+      timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get()- 40);
+    }else{
+      timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get());
+    }
+
     timerDisplay.setTranslateY(GameSceneCoordinatesEnum.TIMER_DISPLAY_Y.get());
 
     this.getChildren().add(timerDisplay);
@@ -58,6 +64,10 @@ public class GameScene extends Pane {
       ac.setTranslateY(GameSceneCoordinatesEnum.SIZE_BOARD_Y_MAIN.get());
       this.getChildren().addAll(player.getPlayerNode(), ac);
     }
+
+    highlightActions(gameBoard.players.get(0));
+
+
   }
 
   public GameScene() {
@@ -111,6 +121,13 @@ public class GameScene extends Pane {
     }
 
   }
+
+
+  public void showGameOver(int playerWhoWon){
+    gameOverScreen = new GameOverScreen(playerWhoWon);
+    this.getChildren().add(gameOverScreen);
+  }
+
 
   public void boardUpdate() {
 
@@ -191,7 +208,9 @@ public class GameScene extends Pane {
     currentActionNumber = 0;
     isPaused = true;
     timerDisplay.setHighlight(controllingPlayer);
-    ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", () -> isPaused = false);
+    ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", () -> {isPaused = false;
+      highlightActions(gameBoard.players.get(controllingPlayer));
+    });
   }
 
   private void executeMove() {
@@ -211,12 +230,26 @@ public class GameScene extends Pane {
 
   }
 
+  public void highlightActions(Player playerToHighlight){
+    gameBoard.players.forEach(p->{
+      if(!playerToHighlight.equals(p)){
+        p.getPlayerActionCounter().darkenSelf();
+      } else{
+        p.getPlayerActionCounter().lightenSelf();
+      }
+    });
+  }
+
+  public void highlightAllActions(){
+    gameBoard.players.forEach(p->p.getPlayerActionCounter().lightenSelf());
+  }
 
   private void turnEnd() {
     gameBoard.players.get(controllingPlayer).passTurn();
     isPaused = true;
     if (!gameBoard.areAllFull()) {
       controllingPlayer++;
+      highlightActions(gameBoard.players.get(controllingPlayer));
       timerDisplay.setHighlight(controllingPlayer);
       ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", () -> {
         isPaused = false;
@@ -232,6 +265,7 @@ public class GameScene extends Pane {
         controllingPlayer = 0;
         isExecuting = true;
         isPaused = false;
+        highlightAllActions();
       });
     }
   }

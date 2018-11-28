@@ -268,6 +268,10 @@ public class GridBoard {
 
   public void removePlayer(Player playerToRemove) {
     GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
+    players.remove(playerToRemove);
+    if(players.size() == 1){
+      GameScene.instance.showGameOver(players.get(0).getPlayerNumber());
+    }
   }
 
   public void picckupAquired(GridNode node){
