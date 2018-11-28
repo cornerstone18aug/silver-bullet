@@ -127,8 +127,8 @@ public class ActionCounter extends Pane {
 
   public void addShot(){
     manaEnabled++;
-    if (nodesEnabled > 3) {
-      nodesEnabled = 3;
+    if (manaEnabled > 3) {
+      manaEnabled = 3;
     }
     for (int i = 0; i < 3; i++) {
       if (i < manaEnabled) {
@@ -157,6 +157,7 @@ public class ActionCounter extends Pane {
     for (int i = 0; i < 5; i++) {
       actionNodes[i].setFill(Color.GRAY);
     }
+    nodesEnabled = 0;
   }
 
 
