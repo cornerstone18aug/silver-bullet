@@ -5,6 +5,7 @@ import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.geometry.Insets;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -23,7 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class ActionCounter extends Pane {
-
+  private Image image = MediaUtil.createImage("file:src/main/resources/images/Woodboard.png");
   private Circle[] actionNodes;
   private Text actionsText;
   private Circle[] manaNodes;
@@ -61,8 +62,14 @@ public class ActionCounter extends Pane {
     actionsText.setFont(
         Font.font("Pixel", FontWeight.NORMAL, 12)
     );
-    this.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(4), Insets.EMPTY)));
 
+    BackgroundPosition custom = new BackgroundPosition(Side.RIGHT, 0D, true, Side.TOP, 0.5D, true);
+
+
+
+//    this.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(4), Insets.EMPTY)));
+    this.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,
+        custom, BackgroundSize.DEFAULT)));
 
 
     manaText = new Text("Mana");
