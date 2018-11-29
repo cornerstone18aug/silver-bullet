@@ -3,11 +3,17 @@ package ca.ciccc.silverBullet.playerElements;
 import ca.ciccc.silverBullet.gameBoard.GameScene;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.utils.ConstUtil;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -37,11 +43,14 @@ public class ActionCounter extends Pane {
     generateMana();
 
 
+    Font.loadFont("File:src/main/resources/Font/Pixel.ttf", 120);
+
     playerText = new Text("Player " + parentPlayer.getPlayerNumber());
     playerText.setFill(Color.WHITE);
       playerText.setFont(
-              Font.font("Times New Roman", FontWeight.SEMI_BOLD, 12)
+              Font.font("Pixel", FontWeight.SEMI_BOLD, 12)
       );
+      playerText.setStyle("Pixel");
       playerText.setTranslateX(300);
       playerText.setTranslateY(25);
       this.getChildren().add(playerText);
@@ -50,13 +59,15 @@ public class ActionCounter extends Pane {
     actionsText = new Text("Actions");
     actionsText.setFill(Color.WHITE);
     actionsText.setFont(
-        Font.font("Times New Roman", FontWeight.BOLD, 18)
+        Font.font("Pixel", FontWeight.NORMAL, 12)
     );
     this.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(4), Insets.EMPTY)));
 
+
+
     manaText = new Text("Mana");
       manaText.setFont(
-              Font.font("Times New Roman", FontWeight.BOLD, 17)
+              Font.font("Pixel", FontWeight.NORMAL, 11)
       );
       manaText.setFill(Color.WHITE);
       manaText.setTranslateX(80);
