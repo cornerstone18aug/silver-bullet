@@ -255,9 +255,18 @@ public class ActionCounter extends Pane {
     }
   }
 
+
+
+
   public void darkenSelf(){
     ColorAdjust darken = new ColorAdjust();
-    darken.setBrightness(-.5);
+    darken.setBrightness(-.4);
+    this.setEffect(darken);
+  }
+
+  public void blackout(){
+    ColorAdjust darken = new ColorAdjust();
+    darken.setBrightness(-.85);
     this.setEffect(darken);
   }
 

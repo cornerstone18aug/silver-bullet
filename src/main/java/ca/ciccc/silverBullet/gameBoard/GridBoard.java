@@ -270,6 +270,9 @@ public class GridBoard {
 
   public void removePlayer(Player playerToRemove) {
     GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
+    grid[playerToRemove.getGridPositionX()][playerToRemove.getGridPositionY()].setPlayerInSpace(null);
+    playerToRemove.getPlayerActionCounter().blackout();
+    GameScene.instance.timerDisplay.removePlayerImage(playerToRemove);
     players.remove(playerToRemove);
     if(players.size() == 1){
       GameScene.instance.showGameOver(players.get(0).getPlayerNumber());
