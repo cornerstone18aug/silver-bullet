@@ -31,7 +31,7 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="80.0" opacity="0.4" stroke="#ffffff00" strokeWidth="0.0" width="900.0" />
          </children>
       </StackPane>
-      <BorderPane layoutX="144.0" layoutY="100.0" prefHeight="416.0" prefWidth="620.0">
+      <BorderPane layoutY="105.0" prefHeight="410.0" prefWidth="900.0">
          <bottom>
             <HBox fx:id="imageSlider" alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
@@ -74,7 +74,7 @@
             </HBox>
          </bottom>
          <center>
-            <ImageView fx:id="imageView" fitHeight="336.0" fitWidth="530.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+            <ImageView fx:id="imageView" fitHeight="336.0" fitWidth="564.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
          </center>
          <top>
             <Text fx:id="titleText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER" wrappingWidth="611.6538238525391" BorderPane.alignment="CENTER">
