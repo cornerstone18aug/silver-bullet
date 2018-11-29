@@ -29,15 +29,15 @@ import java.util.List;
 public class TimerDisplay extends HBox {
     double currentTime;
     Text timerText;
-    List<Circle> playerImages;
     private Image image = MediaUtil.createImage("file:src/main/resources/images/Woodboard.png");
+    Circle[] playerImages;
 
 
     public TimerDisplay(List<Player> players) {
 
-        playerImages = new ArrayList<>();
-        for (Player p : players){
-            playerImages.add((Circle) p.getPlayerNode());
+        playerImages = new Circle[players.size()];
+        for (int i = 0; i < players.size(); i++){
+            playerImages[i] = ((Circle) players.get(i).getPlayerNode());
         }
 
 //        this.setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN, new CornerRadii(4), Insets.EMPTY)));
@@ -52,12 +52,12 @@ public class TimerDisplay extends HBox {
         timerText.setFont(
                 Font.font("Times New Roman", FontWeight.BOLD, 20)
         );
-        for(int i = 0; i<playerImages.size(); i++){
-            if(i == playerImages.size() / 2){
+        for(int i = 0; i<playerImages.length; i++){
+            if(i == playerImages.length / 2){
                 getChildren().add(timerText);
             }
-            Circle imageToAdd = new Circle(20,((Circle)playerImages.get(i)).getFill());
-            playerImages.set(i, imageToAdd);
+            Circle imageToAdd = new Circle(20,((Circle)playerImages[i]).getFill());
+            playerImages[i] = imageToAdd;
             getChildren().add(imageToAdd);
 
         }
@@ -76,28 +76,38 @@ public class TimerDisplay extends HBox {
         timerText.setText(doubleToTime(d));
     }
 
-    public void setHighlight(int playerNumber){
-        Circle imageToCheck = playerImages.get(playerNumber);
+    public void removePlayerImage(Player playerToRemove){
         ColorAdjust darken = new ColorAdjust();
-        darken.setBrightness(-.5);
+        darken.setBrightness(-.85);
+        playerImages[playerToRemove.getPlayerNumber()-1].setEffect(darken);
+        playerImages[playerToRemove.getPlayerNumber()-1] = null;
+    }
+
+    public void setHighlight(int playerNumber){
+        Circle imageToCheck = playerImages[playerNumber];
+        ColorAdjust darken = new ColorAdjust();
+        darken.setBrightness(-.4);
         ColorAdjust lighten = new ColorAdjust();
         lighten.setBrightness(0);
         imageToCheck.setEffect(lighten);
-        playerImages.forEach(i->{
-            if(!i.equals(imageToCheck)){
-                i.setEffect(darken);
+
+        for(int i = 0; i < playerImages.length; i ++){
+            if(playerImages[i]!= null){
+                if(!playerImages[i].equals(imageToCheck)){
+                    playerImages[i].setEffect(darken);
+                }
             }
-        });
+        }
     }
 
     public void highlightAll(){
         ColorAdjust lighten = new ColorAdjust();
         lighten.setBrightness(0);
-        playerImages.forEach(i->{
 
-            i.setEffect(lighten);
-
-        });
-
+        for(int i = 0; i < playerImages.length; i ++){
+            if(playerImages[i]!= null){
+                playerImages[i].setEffect(lighten);
+            }
+        }
     }
 }
