@@ -29,8 +29,8 @@ import java.util.List;
 public class TimerDisplay extends HBox {
     double currentTime;
     Text timerText;
-    Circle[] playerImages;
     private Image image = MediaUtil.createImage("file:src/main/resources/images/Woodboard.png");
+    Circle[] playerImages;
 
 
     public TimerDisplay(List<Player> players) {
