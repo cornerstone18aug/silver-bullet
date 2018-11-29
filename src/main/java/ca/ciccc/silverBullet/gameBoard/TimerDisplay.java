@@ -1,11 +1,17 @@
 package ca.ciccc.silverBullet.gameBoard;
 
 import ca.ciccc.silverBullet.playerElements.Player;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -24,6 +30,8 @@ public class TimerDisplay extends HBox {
     double currentTime;
     Text timerText;
     List<Circle> playerImages;
+    private Image image = MediaUtil.createImage("file:src/main/resources/images/Woodboard.png");
+
 
     public TimerDisplay(List<Player> players) {
 
@@ -32,7 +40,10 @@ public class TimerDisplay extends HBox {
             playerImages.add((Circle) p.getPlayerNode());
         }
 
-        this.setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN, new CornerRadii(4), Insets.EMPTY)));
+//        this.setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN, new CornerRadii(4), Insets.EMPTY)));
+        this.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+
         this.setPadding(new Insets(10));
         currentTime = 0;
         timerText = new Text();
