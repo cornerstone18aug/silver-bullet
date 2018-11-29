@@ -44,11 +44,13 @@ public class GameScene extends Pane {
 
     timerDisplay = new TimerDisplay(gameBoard.players);
 
+
     if(numberOfPlayers == 4){
       timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get()- 40);
     }else{
       timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get());
     }
+
 
     timerDisplay.setTranslateY(GameSceneCoordinatesEnum.TIMER_DISPLAY_Y.get());
 
