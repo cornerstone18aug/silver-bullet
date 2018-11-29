@@ -1,0 +1,98 @@
+package ca.ciccc.silverBullet.playerElements;
+
+import ca.ciccc.silverBullet.enums.gameplay.Directions;
+import ca.ciccc.silverBullet.gameBoard.GridBoard;
+import ca.ciccc.silverBullet.gameBoard.Move;
+import ca.ciccc.silverBullet.gridNodes.GridNode;
+import ca.ciccc.silverBullet.utils.ConstUtil;
+import ca.ciccc.silverBullet.utils.MediaUtil;
+import javafx.animation.AnimationTimer;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
+import java.util.List;
+
+public class CollisionBullet extends Rectangle {
+
+  AnimationTimer timer;
+  Player playerShooting;
+
+  Bullet visualBullet;
+
+  public CollisionBullet(Move startPosition, Move endPosition, Player player, Bullet otherBulletRef) {
+      super(5, 5);
+
+      visualBullet = otherBulletRef;
+
+      playerShooting = player;
+
+      timer = new AnimationTimer() {
+        @Override
+        public void handle(long l) {
+          checkOverlap();
+        }
+      };
+
+      timer.start();
+
+      GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
+      GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
+      setTranslateX(startNode.getScreenX() + 5);
+      setTranslateY(startNode.getScreenY());
+      shootMovement(startNode, endNode, player);
+  }
+
+  public void shootMovement(GridNode startPos, GridNode endPos, Player player) {
+    TranslateTransition transition = new TranslateTransition();
+
+
+    this.setFill(Color.TRANSPARENT);
+    if (player.getFacingDirection().equals(Directions.SOUTH) || player.getFacingDirection()
+        .equals(Directions.NORTH)) {
+
+      transition.setFromX(startPos.getScreenX() + 5);
+      transition.setToX(endPos.getScreenX() + 5);
+
+    } else {
+      transition.setFromX(startPos.getScreenX() + 5);
+      transition.setToX(endPos.getScreenX() + 5);
+    }
+
+    transition.setFromY(startPos.getScreenY());
+    transition.setInterpolator(Interpolator.EASE_IN);
+    transition.setOnFinished(e -> onBulletStop());
+
+    transition.setDuration(Duration.seconds(.5));
+    transition.setToY(endPos.getScreenY());
+    transition.setNode(this);
+    transition.play();
+  }
+
+  public void checkOverlap(){
+      Player playerToRemove = null;
+    for(int i = 0; i < GridBoard.instance.players.size(); i++)
+      if(!GridBoard.instance.players.get(i).equals(playerShooting) &&
+              getBoundsInParent().intersects(GridBoard.instance.players.get(i).getPlayerNode().getBoundsInParent())){
+
+          playerToRemove = GridBoard.instance.players.get(i);
+
+
+      }
+      if(playerToRemove != null){
+
+          timer.stop();
+          playerToRemove.Die();
+          onBulletStop();
+      }
+
+  }
+
+  public void onBulletStop() {
+    GridBoard.instance.gridBoard.getChildren().remove(this);
+    visualBullet.onBulletStop();
+  }
+}

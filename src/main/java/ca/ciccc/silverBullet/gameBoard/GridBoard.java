@@ -4,6 +4,7 @@ import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.enums.gameplay.GridElement;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.Bullet;
+import ca.ciccc.silverBullet.playerElements.CollisionBullet;
 import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.ConstUtil.GridBoardSizeEnum;
@@ -132,6 +133,7 @@ public class GridBoard {
     grid = new GridNode[sizeY][sizeX];
     playerStartLocation = new GridNode[4];
     gridBoard = new GridPane();
+
     char[][] imageToPrint = LevelFileReadUtil.getLevelMapAry(levelNumber);
 
     for (int i = 0; i < sizeY; i++) {
@@ -268,6 +270,10 @@ public class GridBoard {
 
   public void removePlayer(Player playerToRemove) {
     GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
+    players.remove(playerToRemove);
+    if(players.size() == 1){
+      GameScene.instance.showGameOver(players.get(0).getPlayerNumber());
+    }
   }
 
   public void picckupAquired(GridNode node){
@@ -281,11 +287,17 @@ public class GridBoard {
       return;
     }
 
-    gridBoard.getChildren().add(new Bullet(
-        new Move(player.getGridPositionX(), player.getGridPositionY()),
-        finalLocation,
-        player
-    ));
+    Bullet bulletToShoot = new Bullet(
+            new Move(player.getGridPositionX(), player.getGridPositionY()),
+            finalLocation,
+            player
+    );
+
+    gridBoard.getChildren().add(bulletToShoot);
+    gridBoard.getChildren().add(new CollisionBullet(new Move(player.getGridPositionX(), player.getGridPositionY()),
+            finalLocation,
+            player,
+            bulletToShoot));
   }
 
   public GridNode[] getPlayerStartLocation() {

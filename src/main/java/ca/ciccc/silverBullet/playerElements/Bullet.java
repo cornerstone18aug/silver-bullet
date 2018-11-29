@@ -16,25 +16,16 @@ import javafx.util.Duration;
 
 public class Bullet extends Rectangle {
 
-  AnimationTimer timer;
+
   Player playerShooting;
 
   public Bullet(Move startPosition, Move endPosition, Player player) {
       super(25, 25, 50, 50);
       playerShooting = player;
 
-      timer = new AnimationTimer() {
-        @Override
-        public void handle(long l) {
-          checkOverlap();
-        }
-      };
-
-      timer.start();
-
       GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
       GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
-      setTranslateX(startNode.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
+      setTranslateX(startNode.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get() + 10);
       setTranslateY(startNode.getScreenY() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_Y.get());
       shootMovement(startNode, endNode, player);
   }
@@ -61,12 +52,12 @@ public class Bullet extends Rectangle {
     if (player.getFacingDirection().equals(Directions.SOUTH) || player.getFacingDirection()
         .equals(Directions.NORTH)) {
 
-      transition.setFromX(startPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
-      transition.setToX(endPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
+      transition.setFromX(startPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get() + 7);
+      transition.setToX(endPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get() + 7);
 
     } else {
-      transition.setFromX(startPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
-      transition.setToX(endPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get());
+      transition.setFromX(startPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get() + 7);
+      transition.setToX(endPos.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get() + 7);
     }
 
     transition.setFromY(startPos.getScreenY() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_Y.get());
@@ -79,14 +70,6 @@ public class Bullet extends Rectangle {
     transition.play();
   }
 
-  public void checkOverlap(){
-    for(Player p : GridBoard.instance.players)
-      if(!p.equals(playerShooting) && getBoundsInParent().intersects(p.getPlayerNode().getBoundsInParent())){
-        p.Die();
-        timer.stop();
-        onBulletStop();
-      }
-  }
 
   public void onBulletStop() {
     GridBoard.instance.gridBoard.getChildren().remove(this);
