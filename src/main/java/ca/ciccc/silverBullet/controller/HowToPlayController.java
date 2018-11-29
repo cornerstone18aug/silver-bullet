@@ -35,8 +35,8 @@ public class HowToPlayController extends AbstractMenuController {
       "2. EXECUTION PHASE"
   };
   private static final String[] IMAGE_PATH_ARY = {
-      "file:src/main/resources/images/Menu/howToPlay_preview_1.png",
-      "file:src/main/resources/images/Menu/howToPlay_preview_2.png"
+      "file:src/main/resources/images/Menu/HowToPlay_command.png",
+      "file:src/main/resources/images/Menu/HowToPlay_execution.png"
   };
 
   private static final Color SLIDER_NOT_SELECTED_COLOR =
@@ -87,6 +87,20 @@ public class HowToPlayController extends AbstractMenuController {
       );
       if (i != IMAGE_PATH_ARY.length - 1) {
         HBox.setMargin(imageSlider, new Insets(0, 10, 0, 0));
+      }
+    });
+
+    // Add onKeyEvent
+    SCENE.setOnKeyPressed(e -> {
+      switch (e.getCode()) {
+        case LEFT:
+          instance.onLeftSignClicked(null);
+          break;
+        case RIGHT:
+          instance.onRightSignClicked(null);
+          break;
+        default:
+          break;
       }
     });
 
