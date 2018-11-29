@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Polygon?>
@@ -17,46 +16,34 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ciccc.silverBullet.controller.HowToPlayController">
    <children>
+      <ImageView fitHeight="602.0" fitWidth="902.0" pickOnBounds="true">
+         <image>
+            <Image url="@/images/Menu/hawToPlay_bg.jpeg" />
+         </image>
+      </ImageView>
       <StackPane layoutY="30.0">
          <children>
-            <Text fill="#39cf15" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY" textAlignment="CENTER">
+            <Text fill="WHITE" stroke="#ffffff00" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY" textAlignment="CENTER">
                <font>
-                  <Font name="Pokemon GB" size="40.0" />
+                  <Font name="Pixel" size="45.0" />
                </font>
             </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="80.0" opacity="0.4" stroke="#ffffff00" strokeType="INSIDE" strokeWidth="0.0" width="900.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="80.0" opacity="0.4" stroke="#ffffff00" strokeWidth="0.0" width="900.0" />
          </children>
       </StackPane>
-      <VBox alignment="CENTER" layoutX="300.0" layoutY="521.0">
-         <effect>
-            <DropShadow />
-         </effect>
-         <children>
-            <StackPane onMouseClicked="#onBackToMenuClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="50.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
-                  <Text fill="#5e5e5e" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK TO MENU">
-                     <font>
-                        <Font name="STHeiti" size="30.0" />
-                     </font>
-                  </Text>
-               </children>
-            </StackPane>
-         </children>
-      </VBox>
-      <BorderPane layoutX="144.0" layoutY="100.0" prefHeight="405.0" prefWidth="620.0">
+      <BorderPane layoutX="144.0" layoutY="100.0" prefHeight="416.0" prefWidth="620.0">
          <bottom>
             <HBox fx:id="imageSlider" alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <Polygon fx:id="leftSign" onMouseClicked="#onLeftSignClicked" points="29.166702270507812, 19.240676879882812, 50.0, 40.0, 49.99998474121094, -5.2222137451171875" stroke="TRANSPARENT" strokeType="INSIDE">
+                  <Polygon fx:id="leftSign" onMouseClicked="#onLeftSignClicked" points="31.128005981445312, 25.554519653320312, 50.0, 40.0, 50.00001525878906, 9.777786254882812" stroke="TRANSPARENT" strokeType="INSIDE">
                      <fill>
                         <LinearGradient endX="1.0" endY="1.0">
                            <stops>
                               <Stop color="#306cb2" />
-                              <Stop color="#306cb2" offset="0.007434944237918215" />
-                              <Stop color="#468fc7d9" offset="0.588019544702913" />
-                              <Stop color="#468fc7d9" offset="0.7302905596101004" />
-                              <Stop color="#306bb0" offset="1.0" />
+                              <Stop color="WHITE" offset="0.007434944237918215" />
+                              <Stop color="#c3ffd8d9" offset="0.32407902425681584" />
+                              <Stop color="#4cf857d9" offset="0.6782459499446729" />
+                              <Stop color="WHITE" offset="1.0" />
                            </stops>
                         </LinearGradient>
                      </fill>
@@ -64,15 +51,15 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </Polygon>
-                  <Polygon fx:id="rightSign" onMouseClicked="#onRightSignClicked" points="72.45562744140625, 19.279953002929688, 50.0, 40.0, 50.0, -4.0883331298828125" stroke="TRANSPARENT" strokeType="INSIDE">
+                  <Polygon fx:id="rightSign" onMouseClicked="#onRightSignClicked" points="69.418212890625, 25.456863403320312, 50.0, 40.0, 50.0, 9.680130004882812" stroke="TRANSPARENT" strokeType="INSIDE">
                      <fill>
                         <LinearGradient endX="1.0" endY="1.0">
                            <stops>
                               <Stop color="#306cb2" />
-                              <Stop color="#306cb2" offset="0.007434944237918215" />
-                              <Stop color="#468fc7d9" offset="0.588019544702913" />
-                              <Stop color="#468fc7d9" offset="0.7302905596101004" />
-                              <Stop color="#306bb0" offset="1.0" />
+                              <Stop color="WHITE" offset="0.007434944237918215" />
+                              <Stop color="#c3ffd8d9" offset="0.2980567194241025" />
+                              <Stop color="#4cf857d9" offset="0.6708110057067547" />
+                              <Stop color="#4cf857" offset="1.0" />
                            </stops>
                         </LinearGradient>
                      </fill>
@@ -81,27 +68,34 @@
                      </HBox.margin>
                   </Polygon>
                </children>
+               <BorderPane.margin>
+                  <Insets top="5.0" />
+               </BorderPane.margin>
             </HBox>
          </bottom>
-         <top>
-            <VBox alignment="CENTER" prefHeight="50.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="descriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-               </children>
-            </VBox>
-         </top>
          <center>
-            <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="530.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+            <ImageView fx:id="imageView" fitHeight="336.0" fitWidth="530.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
          </center>
+         <top>
+            <Text fx:id="titleText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER" wrappingWidth="611.6538238525391" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Pokemon GB" size="25.0" />
+               </font>
+            </Text>
+         </top>
       </BorderPane>
+      <StackPane layoutX="349.0" layoutY="532.0" onMouseClicked="#onBackToMenuClicked">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
+            <Text fill="#5e5e5e" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK TO MENU" textAlignment="CENTER" StackPane.alignment="CENTER">
+               <font>
+                  <Font name="Pixel" size="18.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="8.0" />
+               </StackPane.margin>
+            </Text>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
