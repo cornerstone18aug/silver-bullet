@@ -2,6 +2,7 @@ package ca.ciccc.silverBullet.gameBoard;
 
 import ca.ciccc.silverBullet.controller.GameController;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
+import ca.ciccc.silverBullet.extraScreens.InstructionStuff;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
 import ca.ciccc.silverBullet.playerElements.Player;
@@ -34,6 +35,9 @@ public class GameScene extends Pane {
     this.getChildren().add(backgroundGrid.gridBoard);
     this.getChildren().add(gameBoard.gridBoard);
 
+
+    Pane instructionsPane = new InstructionStuff();
+    this.getChildren().add(instructionsPane);
 
     for(int i = 1; i < numberOfPlayers+1; i++){
       GridNode playerNode = gameBoard.getPlayerStartLocation()[i-1];
