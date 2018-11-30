@@ -4,10 +4,15 @@ import ca.ciccc.silverBullet.gameBoard.GameScene;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.MediaUtil;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -24,7 +29,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class ActionCounter extends Pane {
-  private Image image = MediaUtil.createImage("file:src/main/resources/images/Woodboard.png");
+  private Image player1 = MediaUtil.createImage("file:src/main/resources/images/wf.png");
+  private Image player2 = MediaUtil.createImage("file:src/main/resources/images/wr.png");
+  private Image player3 = MediaUtil.createImage("file:src/main/resources/images/ww.png");
+  private Image player4 = MediaUtil.createImage("file:src/main/resources/images/wwi.png");
+
   private Circle[] actionNodes;
   private Text actionsText;
   private Circle[] manaNodes;
@@ -32,6 +41,7 @@ public class ActionCounter extends Pane {
   private int nodesEnabled = 0;
   private Circle playerImage;
   private Text playerText;
+  private Player parentPlayer;
   int manaEnabled;
 
   public ActionCounter(Player parentPlayer) {
@@ -43,6 +53,7 @@ public class ActionCounter extends Pane {
     manaNodes = new Circle[3];
     generateMana();
 
+    this.parentPlayer = parentPlayer;
 
     Font.loadFont("File:src/main/resources/Font/Pixel.ttf", 120);
 
@@ -65,11 +76,26 @@ public class ActionCounter extends Pane {
 
     BackgroundPosition custom = new BackgroundPosition(Side.RIGHT, 0D, true, Side.TOP, 0.5D, true);
 
+    switch (parentPlayer.getPlayerNumber())
+    {
+      case 1:
+        this.setBackground(new Background(new BackgroundImage(player1, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,
+            custom, BackgroundSize.DEFAULT)));
+        break;
+      case 2:
+        this.setBackground(new Background(new BackgroundImage(player2, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,
+            custom, BackgroundSize.DEFAULT)));
+        break;
+      case 3:
+        this.setBackground(new Background(new BackgroundImage(player3, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,
+            custom, BackgroundSize.DEFAULT)));
+        break;
+      case 4:
+        this.setBackground(new Background(new BackgroundImage(player4, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,
+            custom, BackgroundSize.DEFAULT)));
+        break;
+    }
 
-
-//    this.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(4), Insets.EMPTY)));
-    this.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,
-        custom, BackgroundSize.DEFAULT)));
 
 
     manaText = new Text("Mana");

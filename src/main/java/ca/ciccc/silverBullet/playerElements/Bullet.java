@@ -47,6 +47,14 @@ public class Bullet extends Rectangle {
         this.setFill(new ImagePattern(
             MediaUtil.createImage("file:src/main/resources/images/Character/Fire/FireAttack.png")));
         break;
+      case 3:
+        this.setFill(new ImagePattern(
+            MediaUtil.createImage("file:src/main/resources/images/Character/Water/WaterAttack.png")));
+        break;
+      case 4:
+        this.setFill(new ImagePattern(
+            MediaUtil.createImage("file:src/main/resources/images/Character/Wind/WindAttack.png")));
+        break;
     }
 
     if (player.getFacingDirection().equals(Directions.SOUTH) || player.getFacingDirection()

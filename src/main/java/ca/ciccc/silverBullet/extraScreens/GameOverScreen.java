@@ -1,5 +1,6 @@
 package ca.ciccc.silverBullet.extraScreens;
 
+import ca.ciccc.silverBullet.controller.AbstractMenuController;
 import ca.ciccc.silverBullet.controller.MenuController;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -43,6 +44,7 @@ public class GameOverScreen extends Pane {
 
         this.getChildren().add(testBackToMenu);
 
-        testBackToMenu.setOnMouseClicked(mouseEvent -> MenuController.getInstance().show());
+        testBackToMenu.setOnMouseClicked(mouseEvent -> {
+            MenuController.getInstance().show();});
     }
 }
