@@ -104,7 +104,10 @@ public class SettingsController extends AbstractMenuController {
                 this.gameLevelCombo.getSelectionModel().getSelectedItem()
             );
             if (AbstractMenuController.MENU_CLIP.isPlaying()) {
-//              AbstractMenuController.MENU_CLIP.stop();
+              AbstractMenuController.MENU_CLIP.stop();
+              AbstractMenuController.BATTLE_CLIP.play();
+              AbstractMenuController.BATTLE_CLIP.setCycleCount(999999);
+
             }
           }
       );
