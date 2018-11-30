@@ -176,8 +176,14 @@ public class GridBoard {
       return null;
     }
 
-    Player playerToAdd =
-        new Player(3, playerNumber, gridX, gridY, Directions.SOUTH);
+    Player playerToAdd;
+  if(gridY > gridSizeY / 2){
+    playerToAdd =
+        new Player(3, playerNumber, gridX, gridY, Directions.NORTH);
+  } else {
+    playerToAdd =
+            new Player(3, playerNumber, gridX, gridY, Directions.SOUTH);
+  }
     players.add(playerToAdd);
     targetNode.setPlayerInSpace(playerToAdd);
 

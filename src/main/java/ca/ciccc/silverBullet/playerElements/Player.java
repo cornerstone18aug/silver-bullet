@@ -61,15 +61,23 @@ public class Player {
 
       case 1:
         image =MediaUtil.createImage("File:src/main/resources/images/Character/Fire/Fire.png");
+        if(facingDirection == Directions.NORTH)
+          image = MediaUtil.createImage("File:src/main/resources/images/Character/Fire/FireUp.png");
         break;
       case 2:
         image = MediaUtil.createImage("File:src/main/resources/images/Character/Rock/Rock.png");
+        if(facingDirection == Directions.NORTH)
+          image = MediaUtil.createImage("File:src/main/resources/images/Character/Rock/RockUp.png");
         break;
       case 3:
         image = MediaUtil.createImage("File:src/main/resources/images/Character/Water/Water.png");
+        if(facingDirection == Directions.NORTH)
+          image = MediaUtil.createImage("File:src/main/resources/images/Character/Water/WaterUp.png");
         break;
       case 4:
         image = MediaUtil.createImage("File:src/main/resources/images/Character/Wind/Wind.png");
+        if(facingDirection == Directions.NORTH)
+          image = MediaUtil.createImage("File:src/main/resources/images/Character/Wind/WindUp.png");
         break;
 
     }
