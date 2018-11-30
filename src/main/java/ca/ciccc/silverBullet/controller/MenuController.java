@@ -56,6 +56,11 @@ public class MenuController extends AbstractMenuController {
       MENU_CLIP.setCycleCount(Integer.MAX_VALUE);
       AbstractMenuController.MENU_CLIP.play();
     }
+
+    if (AbstractMenuController.BATTLE_CLIP.isPlaying()) {
+      BATTLE_CLIP.setCycleCount(Integer.MAX_VALUE);
+      AbstractMenuController.BATTLE_CLIP.stop();
+    }
     SilverBulletApp.primaryStage.setScene(SCENE);
   }
 
