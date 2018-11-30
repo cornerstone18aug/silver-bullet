@@ -71,5 +71,15 @@
             <DropShadow />
          </effect>
       </VBox>
+      <StackPane layoutX="385.0" layoutY="561.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="30.0" opacity="0.4" stroke="#ffffff00" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Presented by Juan, Hao-tse, Enrique, Masa " textAlignment="CENTER">
+               <font>
+                  <Font name="Pokemon GB" size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
