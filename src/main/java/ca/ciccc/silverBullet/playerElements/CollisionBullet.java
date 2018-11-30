@@ -92,6 +92,7 @@ public class CollisionBullet extends Rectangle {
   }
 
   public void onBulletStop() {
+      timer.stop();
     GridBoard.instance.gridBoard.getChildren().remove(this);
     visualBullet.onBulletStop();
   }
