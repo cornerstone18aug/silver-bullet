@@ -55,7 +55,6 @@ public abstract class GridNode {
     this.playerInSpace = playerInSpace;
   }
 
-
   public int getGridX() {
     return gridX;
   }

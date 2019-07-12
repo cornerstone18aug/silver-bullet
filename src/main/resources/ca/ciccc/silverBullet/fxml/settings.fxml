@@ -19,7 +19,7 @@
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@/Test/BackGround.gif" />
+            <Image url="jrt:/SilverBulletModule/ca/ciccc/silverBullet/Test/BackGround.gif" />
          </image>
       </ImageView>
       <StackPane layoutY="30.0">

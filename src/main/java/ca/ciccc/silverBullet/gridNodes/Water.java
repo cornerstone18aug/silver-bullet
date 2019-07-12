@@ -6,8 +6,6 @@ import javafx.scene.shape.Rectangle;
 
 public class Water extends GridNode {
 
-  private final static String FILE_PATH = "file:src/main/resources/images/Tiles/TileRock%s.png";
-
   public Water(int gridx, int gridy) {
     this.gridX = gridx;
     this.gridY = gridy;
@@ -18,6 +16,6 @@ public class Water extends GridNode {
     image = new Rectangle(WIDTH, HEIGHT);
     int n = random.nextInt(3) + 1;
     ((Rectangle) image)
-        .setFill(new ImagePattern(MediaUtil.createImage("file:src/main/resources/Test/Wave.gif")));
+        .setFill(new ImagePattern(MediaUtil.createImage("/Test/Wave.gif")));
   }
 }

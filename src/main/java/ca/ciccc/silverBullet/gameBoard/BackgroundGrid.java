@@ -6,19 +6,19 @@ import javafx.scene.layout.GridPane;
 
 public class BackgroundGrid {
 
-    public GridPane gridBoard;
+    GridPane gridBoard;
     GridNode[][] grid;
     private int size = 50;
     public static BackgroundGrid instance;
 
 
-    public BackgroundGrid() {
+    BackgroundGrid() {
         generategrid();
 
         instance = this;
     }
 
-    public void generategrid()
+    private void generategrid()
     {
         grid = new GridNode[size][size];
         gridBoard = new GridPane();

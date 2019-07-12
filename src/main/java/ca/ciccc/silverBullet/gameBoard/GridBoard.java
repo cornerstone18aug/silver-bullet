@@ -23,17 +23,16 @@ import javafx.util.Duration;
 
 public class GridBoard {
 
-  public GridNode[][] grid;
+  private GridNode[][] grid;
   public GridPane gridBoard;
   public List<Player> players;
+  private GridNode[] playerStartLocation;
 
-  public GridNode[] playerStartLocation;
-
-  int gridSizeX;
-  int gridSizeY;
+  private int gridSizeX;
+  private int gridSizeY;
   public static GridBoard instance;
 
-  public GridBoard(int sizeX, int sizeY, int level) {
+  GridBoard(int sizeX, int sizeY, int level) {
     generateBoard(sizeX, sizeY, level);
 
     players = new ArrayList<>();
@@ -41,7 +40,6 @@ public class GridBoard {
     gridSizeY = sizeY - 1;
     instance = this;
   }
-
 
   public Move tryMovePlayer(Player playerToMove) {
 
@@ -84,7 +82,7 @@ public class GridBoard {
   }
 
 
-  public void movePlayer(Player playerToMove) {
+  void movePlayer(Player playerToMove) {
     if (playerToMove.getTargetMove() == null) {
       return;
     }
@@ -125,11 +123,9 @@ public class GridBoard {
     }
 
     playerToMove.setTargetMove(null);
-
-
   }
 
-  public void generateBoard(int sizeX, int sizeY, int levelNumber) {
+  private void generateBoard(int sizeX, int sizeY, int levelNumber) {
     grid = new GridNode[sizeY][sizeX];
     playerStartLocation = new GridNode[4];
     gridBoard = new GridPane();
@@ -169,7 +165,7 @@ public class GridBoard {
     }
   }
 
-  public Player addPlayer(int gridX, int gridY, int playerNumber) {
+  Player addPlayer(int gridX, int gridY, int playerNumber) {
     GridNode targetNode = grid[gridY][gridX];
     if (targetNode.hasPlayer()) {
 
@@ -194,7 +190,7 @@ public class GridBoard {
 
   }
 
-  public Move tryShoot(Player playerShooting) {
+  private Move tryShoot(Player playerShooting) {
     if (!playerShooting.isHasShot()) {
       return null;
     }
@@ -285,7 +281,7 @@ public class GridBoard {
     }
   }
 
-  public void picckupAquired(GridNode node){
+  private void picckupAquired(GridNode node){
     node.setHasPickup(false);
     gridBoard.getChildren().remove(node.getPickupImage());
   }
@@ -309,7 +305,7 @@ public class GridBoard {
             bulletToShoot));
   }
 
-  public GridNode[] getPlayerStartLocation() {
+  GridNode[] getPlayerStartLocation() {
     return playerStartLocation;
   }
 
@@ -317,7 +313,7 @@ public class GridBoard {
     return grid[y][x];
   }
 
-  public boolean areAllFull() {
+  boolean areAllFull() {
     return players.stream().allMatch(Player::isActionsFull);
   }
 }

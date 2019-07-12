@@ -2,8 +2,6 @@ package ca.ciccc.silverBullet.controller;
 
 import ca.ciccc.silverBullet.SilverBulletApp;
 import ca.ciccc.silverBullet.gameBoard.GameScene;
-import ca.ciccc.silverBullet.gameBoard.GameScene.Builder;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -14,7 +12,6 @@ import javafx.scene.paint.Color;
  */
 public class GameController extends AbstractController {
   private static GameController instance;
-  private static Scene SCENE;
   private static GameScene game;
   public AnimationTimer timer;
 
@@ -35,17 +32,16 @@ public class GameController extends AbstractController {
     }
   }
 
-  public void show(int players, int boardSize, int level) {
-    game = new Builder()
+  void show(int players, int boardSize, int level) {
+    game = new GameScene.Builder()
         .player(players)
         .boardSize(boardSize)
         .level(level).build();
-    game.setStyle("-fx-background-color: #000000");
+    game.setStyle("-fx-background-color: #000000;");
     game.setPrefSize(900, 700);
     Scene scene = new Scene(game);
     scene.setOnKeyPressed(e -> game.onKeyPressed(e.getCode()));
     scene.setFill(Color.TRANSPARENT);
-    SCENE = scene;
 
     timer = new AnimationTimer() {
       @Override
@@ -55,7 +51,7 @@ public class GameController extends AbstractController {
     };
     timer.start();
 
-    SilverBulletApp.primaryStage.setScene(SCENE);
+    SilverBulletApp.primaryStage.setScene(scene);
   }
 
 }

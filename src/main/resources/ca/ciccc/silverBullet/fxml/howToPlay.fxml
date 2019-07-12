@@ -18,7 +18,7 @@
    <children>
       <ImageView fitHeight="602.0" fitWidth="902.0" pickOnBounds="true">
          <image>
-            <Image url="@/images/Menu/hawToPlay_bg.jpeg" />
+            <Image url="jrt:/SilverBulletModule/ca/ciccc/silverBullet/images/Menu/hawToPlay_bg.jpeg" />
          </image>
       </ImageView>
       <StackPane layoutY="30.0">

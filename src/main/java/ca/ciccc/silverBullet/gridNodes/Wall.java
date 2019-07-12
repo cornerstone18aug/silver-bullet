@@ -5,7 +5,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Wall extends GridNode {
-  private final static String FILE_PATH = "file:src/main/resources/images/Tiles/TileRock%s.png";
+  private final static String FILE_PATH = "/images/Tiles/TileRock%s.png";
 
   public Wall(int gridx, int gridy) {
     this.gridX = gridx;

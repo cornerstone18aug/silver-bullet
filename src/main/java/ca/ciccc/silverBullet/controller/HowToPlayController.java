@@ -35,8 +35,8 @@ public class HowToPlayController extends AbstractMenuController {
       "2. EXECUTION PHASE"
   };
   private static final String[] IMAGE_PATH_ARY = {
-      "file:src/main/resources/images/Menu/HowToPlay_command.png",
-      "file:src/main/resources/images/Menu/HowToPlay_execution.png"
+      "/images/Menu/HowToPlay_command.png",
+      "/images/Menu/HowToPlay_execution.png"
   };
 
   private static final Color SLIDER_NOT_SELECTED_COLOR =
@@ -59,7 +59,7 @@ public class HowToPlayController extends AbstractMenuController {
     try {
       fxmlLoader.load(
           HowToPlayController.class.getModule().getResourceAsStream(
-              "fxml/howToPlay.fxml"
+              "ca/ciccc/silverBullet/fxml/howToPlay.fxml"
           ));
     } catch (IOException e) {
       e.printStackTrace();

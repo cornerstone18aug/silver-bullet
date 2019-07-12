@@ -134,7 +134,7 @@ public class ConstUtil {
   public static final String MENU_FONT = "Times New Roman";
   public static final int[] PLAYER_NUMBERS = new int[]{2, 3, 4};
   public static final int DEFAULT_PLAYER_NUMBER_INDEX = 0;
-  public static final String PICKUP_IMAGE_PATH = "File:src/main/resources/images/Tiles/Pickup.png";
+  public static final String PICKUP_IMAGE_PATH = "jrt:/SilverBulletModule/ca/ciccc/silverBullet/images/Tiles/Pickup.png";
   @Deprecated
   public static final int[] BOARD_SIZES = new int[]{6, 9, 12};
   public static final int[] GAME_LEVEL_NUMBERS = new int[]{1, 2, 3};
