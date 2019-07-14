@@ -333,8 +333,7 @@ public class Player {
     }
 
     String path =
-        "/images/Character/" + playerelement + "/" + playerelement + dirction
-            + ".png";
+        String.format("/images/Character/%s/%s%s.png", playerelement, playerelement, dirction);
     Image img = MediaUtil.createImage(path);
     ((Circle) this.playerNode).setFill(new ImagePattern(img));
   }

@@ -125,17 +125,14 @@ public class SettingsController extends AbstractMenuController {
 
   @FXML
   public void OnEntered() {
-    System.out.println("Entered");
   }
 
   @FXML
   public void OnPressed() {
-    System.out.println("Pressed");
   }
 
   @FXML
   public void OnExited() {
-    System.out.println("Exited");
   }
 
 }

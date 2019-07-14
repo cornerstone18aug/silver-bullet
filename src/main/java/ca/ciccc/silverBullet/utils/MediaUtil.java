@@ -10,7 +10,11 @@ public class MediaUtil {
   }
 
   public static Image createImage(String filePath) {
-    return new Image(PATH_TO_RESOURCES + filePath);
+    Image result = new Image(PATH_TO_RESOURCES + filePath);
+    if (result.getException() != null)
+      result.getException().printStackTrace();
+
+    return result;
   }
 
   public static AudioClip createClip(String filePath) throws RuntimeException {

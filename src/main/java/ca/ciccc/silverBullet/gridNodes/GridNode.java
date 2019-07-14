@@ -6,30 +6,30 @@ import javafx.scene.Node;
 
 public abstract class GridNode {
 
-  protected static final int WIDTH = 60;
-  protected static final int HEIGHT = 60;
+  static final int WIDTH = 60;
+  static final int HEIGHT = 60;
 
-  protected int gridX;
-  protected int gridY;
+  int gridX;
+  int gridY;
   protected String name;
 
-  protected double screenX;
-  protected double screenY;
+  private double screenX;
+  private double screenY;
 
-  protected boolean canMoveTo;
+  boolean canMoveTo;
 
-  protected boolean canShoot;
+  boolean canShoot;
 
-  protected boolean hasPickup;
+  boolean hasPickup;
 
-  protected Player playerInSpace = null;
+  private Player playerInSpace = null;
 
-  protected Random random = new Random();
+  Random random = new Random();
 
   protected Node image;
-  protected Node pickupImage;
+  private Node pickupImage;
 
-  protected int playerStartPosition = 0;
+  int playerStartPosition = 0;
 
   public void setPickupImage(Node pickupImage) {
     this.pickupImage = pickupImage;

@@ -28,7 +28,7 @@ public class GameScene extends Pane {
     gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), lvl);
     instance = this;
 
-    this.getChildren().add(backgroundGrid.gridBoard);
+    this.getChildren().add(backgroundGrid.gridPane);
     this.getChildren().add(gameBoard.gridBoard);
 
 
