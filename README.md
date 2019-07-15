@@ -21,6 +21,10 @@
 2. Unzip
 3. Double click or Run ./bin/silverBullet from your terminal
 
+## Build
+1. mvn clean jlink:compile // Compile
+2. mvn jlink:jlink  // Export jlink Image into jlinkimage directory
+
 ## Team
 - Juan (@Floxnu)
 - Hao-tse (@Maxroo)
