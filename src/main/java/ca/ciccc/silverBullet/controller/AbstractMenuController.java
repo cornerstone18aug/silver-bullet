@@ -7,7 +7,7 @@ import javafx.scene.media.AudioClip;
 public abstract class AbstractMenuController extends AbstractController {
 
   protected static final AudioClip MENU_CLIP =
-      MediaUtil.createClip("/Sound/BitShift.wav");
+      MediaUtil.createClip("/audios/BitShift.wav");
 
   public static AudioClip getMenuClip() {
     return MENU_CLIP;
@@ -18,5 +18,5 @@ public abstract class AbstractMenuController extends AbstractController {
   }
 
   protected static final AudioClip BATTLE_CLIP =
-      MediaUtil.createClip("/Sound/Overworld.wav");
+      MediaUtil.createClip("/audios/Overworld.wav");
 }
