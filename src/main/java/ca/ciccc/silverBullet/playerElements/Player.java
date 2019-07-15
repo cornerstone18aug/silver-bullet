@@ -1,14 +1,13 @@
 package ca.ciccc.silverBullet.playerElements;
 
-import ca.ciccc.silverBullet.utils.MediaUtil;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.enums.gameplay.Orientation;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.gameBoard.Move;
+import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -49,35 +48,27 @@ public class Player {
   public Player(int numberOfShots, int playerNumber, int gridX, int gridY,
       Directions facingDirection) {
 
-     this.numberOfShots = numberOfShots;
+    this.numberOfShots = numberOfShots;
     this.playerNumber = playerNumber;
     this.facingDirection = facingDirection;
     this.currentAmo = 3;
     gridPositionX = gridX;
     gridPositionY = gridY;
     playerNode = new Circle(30, Color.GREEN);
-    Image image = MediaUtil.createImage("File:src/main/resources/images/Character/Fire/Fire.png");
-    switch (playerNumber){
+    Image image = MediaUtil.createImage("/images/Character/Fire/Fire.png");
+    switch (playerNumber) {
 
       case 1:
-        image =MediaUtil.createImage("File:src/main/resources/images/Character/Fire/Fire.png");
-        if(facingDirection == Directions.NORTH)
-          image = MediaUtil.createImage("File:src/main/resources/images/Character/Fire/FireUp.png");
+        image = MediaUtil.createImage("/images/Character/Fire/Fire.png");
         break;
       case 2:
-        image = MediaUtil.createImage("File:src/main/resources/images/Character/Rock/Rock.png");
-        if(facingDirection == Directions.NORTH)
-          image = MediaUtil.createImage("File:src/main/resources/images/Character/Rock/RockUp.png");
+        image = MediaUtil.createImage("/images/Character/Rock/Rock.png");
         break;
       case 3:
-        image = MediaUtil.createImage("File:src/main/resources/images/Character/Water/Water.png");
-        if(facingDirection == Directions.NORTH)
-          image = MediaUtil.createImage("File:src/main/resources/images/Character/Water/WaterUp.png");
+        image = MediaUtil.createImage("/images/Character/Water/Water.png");
         break;
       case 4:
-        image = MediaUtil.createImage("File:src/main/resources/images/Character/Wind/Wind.png");
-        if(facingDirection == Directions.NORTH)
-          image = MediaUtil.createImage("File:src/main/resources/images/Character/Wind/WindUp.png");
+        image = MediaUtil.createImage("/images/Character/Wind/Wind.png");
         break;
 
     }
@@ -86,9 +77,7 @@ public class Player {
 
   }
 
-  public void rotatePlayer(Orientation move) {
-
-
+  private void rotatePlayer(Orientation move) {
     switch (facingDirection) {
       case NORTH:
         if (move == Orientation.LEFT) {
@@ -136,26 +125,24 @@ public class Player {
     }
   }
 
-  public void Die() {
+  void Die() {
     isDead = true;
     GridBoard.instance.removePlayer(this);
-    System.out.println("Player " + playerNumber + " was shot");
   }
 
   public void addAction(PlayerAction actionToAdd) {
+    if (!isActionsFull()) {
+      playerActions[currentAction] = actionToAdd;
+      currentAction++;
+      if (currentAction > 4) {
 
-      if (!isActionsFull()){
-          playerActions[currentAction] = actionToAdd;
-          currentAction++;
-          if (currentAction > 4) {
+        currentAction = 0;
+        actionsFull = true;
 
-              currentAction = 0;
-              actionsFull = true;
-
-          }
-          System.out.println("Player actions counter: " + currentAction);
-          playerActionCounter.addAction();
       }
+
+      playerActionCounter.addAction();
+    }
   }
 
   public boolean takeAction(int actionNumber) {
@@ -185,14 +172,14 @@ public class Player {
   }
 
 
-  public void passTurn(){
-      if(!isActionsFull()){
-          for(int i = 0; i<playerActions.length; i++){
-              if(playerActions[i] == PlayerAction.NONE){
-                  addAction(PlayerAction.WAIT);
-              }
-          }
+  public void passTurn() {
+    if (!isActionsFull()) {
+      for (PlayerAction playerAction : playerActions) {
+        if (playerAction == PlayerAction.NONE) {
+          addAction(PlayerAction.WAIT);
+        }
       }
+    }
   }
 
   @Override
@@ -211,17 +198,21 @@ public class Player {
     actionsFull = false;
   }
 
-  public void addShot(){
+  public void addShot() {
     numberOfShots++;
 
-    if (numberOfShots>3){numberOfShots = 3;}
+    if (numberOfShots > 3) {
+      numberOfShots = 3;
+    }
 
     playerActionCounter.addShot();
   }
 
-  public void removeShot(){
-    numberOfShots --;
-    if(numberOfShots< 0){ numberOfShots = 0;}
+  private void removeShot() {
+    numberOfShots--;
+    if (numberOfShots < 0) {
+      numberOfShots = 0;
+    }
     playerActionCounter.removeShot();
   }
 
@@ -302,10 +293,10 @@ public class Player {
   }
 
   public int getCurrentAmo() {
-    if (currentAmo == 0 || isHasShot() == false) {
-      System.out.println("You don't have more Amo!!!");
+    if (currentAmo == 0 || !isHasShot()) {
+      //System.out.println("You don't have more Amo!!!");
     } else {
-      System.out.println("You have " + currentAmo + " of Amo!!!");
+      //System.out.println("You have " + currentAmo + " of Amo!!!");
       currentAmo--;
     }
     return currentAmo;
@@ -341,8 +332,7 @@ public class Player {
     }
 
     String path =
-        "File:src/main/resources/images/Character/" + playerelement + "/" + playerelement + dirction
-            + ".png";
+        String.format("/images/Character/%s/%s%s.png", playerelement, playerelement, dirction);
     Image img = MediaUtil.createImage(path);
     ((Circle) this.playerNode).setFill(new ImagePattern(img));
   }

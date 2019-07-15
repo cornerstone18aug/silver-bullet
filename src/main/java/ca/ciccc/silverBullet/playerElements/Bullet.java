@@ -37,23 +37,23 @@ public class Bullet extends Rectangle {
     switch (player.getPlayerNumber()) {
       case 1:
         this.setFill(new ImagePattern(
-            MediaUtil.createImage("file:src/main/resources/images/Character/Fire/FireAttack.png")));
+            MediaUtil.createImage("/images/Character/Fire/FireAttack.png")));
         break;
       case 2:
         this.setFill(new ImagePattern(
-            MediaUtil.createImage("file:src/main/resources/images/Character/Rock/RockAttack.png")));
+            MediaUtil.createImage("/images/Character/Rock/RockAttack.png")));
         break;
       default:
         this.setFill(new ImagePattern(
-            MediaUtil.createImage("file:src/main/resources/images/Character/Fire/FireAttack.png")));
+            MediaUtil.createImage("/images/Character/Fire/FireAttack.png")));
         break;
       case 3:
         this.setFill(new ImagePattern(
-            MediaUtil.createImage("file:src/main/resources/images/Character/Water/WaterAttack.png")));
+            MediaUtil.createImage("/images/Character/Water/WaterAttack.png")));
         break;
       case 4:
         this.setFill(new ImagePattern(
-            MediaUtil.createImage("file:src/main/resources/images/Character/Wind/WindAttack.png")));
+            MediaUtil.createImage("/images/Character/Wind/WindAttack.png")));
         break;
     }
 

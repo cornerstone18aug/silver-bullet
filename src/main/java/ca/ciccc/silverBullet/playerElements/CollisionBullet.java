@@ -4,24 +4,19 @@ import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.gameBoard.GridBoard;
 import ca.ciccc.silverBullet.gameBoard.Move;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
-import ca.ciccc.silverBullet.utils.ConstUtil;
-import ca.ciccc.silverBullet.utils.MediaUtil;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.util.List;
-
 public class CollisionBullet extends Rectangle {
 
-  AnimationTimer timer;
-  Player playerShooting;
+  private AnimationTimer timer;
+  private Player playerShooting;
 
-  Bullet visualBullet;
+  private Bullet visualBullet;
 
   public CollisionBullet(Move startPosition, Move endPosition, Player player, Bullet otherBulletRef) {
       super(5, 5);
@@ -46,7 +41,7 @@ public class CollisionBullet extends Rectangle {
       shootMovement(startNode, endNode, player);
   }
 
-  public void shootMovement(GridNode startPos, GridNode endPos, Player player) {
+  private void shootMovement(GridNode startPos, GridNode endPos, Player player) {
     TranslateTransition transition = new TranslateTransition();
 
 
@@ -91,7 +86,7 @@ public class CollisionBullet extends Rectangle {
 
   }
 
-  public void onBulletStop() {
+  private void onBulletStop() {
       timer.stop();
     GridBoard.instance.gridBoard.getChildren().remove(this);
     visualBullet.onBulletStop();

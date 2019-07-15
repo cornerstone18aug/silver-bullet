@@ -25,7 +25,8 @@ public class MenuController extends AbstractMenuController {
     FXMLLoader fxmlLoader = new FXMLLoader();
     try {
       fxmlLoader.load(
-          MenuController.class.getModule().getResourceAsStream("fxml/menu.fxml")
+          MenuController.class.getModule().getResourceAsStream(
+              "ca/ciccc/silverBullet/fxml/menu.fxml")
       );
     } catch (IOException e) {
       e.printStackTrace();

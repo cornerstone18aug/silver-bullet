@@ -23,28 +23,25 @@ import javafx.util.Duration;
 
 public class GridBoard {
 
-  public GridNode[][] grid;
+  private GridNode[][] grid;
   public GridPane gridBoard;
   public List<Player> players;
-
-  public GridNode[] playerStartLocation;
-
-  int gridSizeX;
-  int gridSizeY;
+  private GridNode[] playerStartLocation;
+  private int gridSizeX;
+  private int gridSizeY;
   public static GridBoard instance;
+  private static final String PICKUP_IMAGE_PATH = "/images/Tiles/Pickup.png";
 
-  public GridBoard(int sizeX, int sizeY, int level) {
-    generateBoard(sizeX, sizeY, level);
+  GridBoard(int sizeX, int sizeY, int level) {
+    this.generateBoard(sizeX, sizeY, level);
 
-    players = new ArrayList<>();
-    gridSizeX = sizeX - 1;
-    gridSizeY = sizeY - 1;
+    this.players = new ArrayList<>();
+    this.gridSizeX = sizeX - 1;
+    this.gridSizeY = sizeY - 1;
     instance = this;
   }
 
-
   public Move tryMovePlayer(Player playerToMove) {
-
     GridNode originGrid =
         grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
     int targetX = 0;
@@ -84,7 +81,7 @@ public class GridBoard {
   }
 
 
-  public void movePlayer(Player playerToMove) {
+  void movePlayer(Player playerToMove) {
     if (playerToMove.getTargetMove() == null) {
       return;
     }
@@ -114,36 +111,32 @@ public class GridBoard {
 
     moveTransition.play();
 
-    System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
-
     if (targetNode.isHasPickup()){
       if(playerToMove.getNumberOfShots() < 3){
 
         playerToMove.addShot();
-        picckupAquired(targetNode);
+        pickupAquired(targetNode);
       }
     }
 
     playerToMove.setTargetMove(null);
-
-
   }
 
-  public void generateBoard(int sizeX, int sizeY, int levelNumber) {
-    grid = new GridNode[sizeY][sizeX];
-    playerStartLocation = new GridNode[4];
-    gridBoard = new GridPane();
+  private void generateBoard(int sizeX, int sizeY, int levelNumber) {
+    this.grid = new GridNode[sizeY][sizeX];
+    this.playerStartLocation = new GridNode[4];
+    this.gridBoard = new GridPane();
 
     char[][] imageToPrint = LevelFileReadUtil.getLevelMapAry(levelNumber);
 
     for (int i = 0; i < sizeY; i++) {
       for (int j = 0; j < sizeX; j++) {
         GridNode nodeToAdd = GridElement.createGridNode(imageToPrint[i][j], j, i);
-        gridBoard.add(nodeToAdd.getImage(), j, i);
+        this.gridBoard.add(nodeToAdd.getImage(), j, i);
         if(nodeToAdd.getPlayerStartPosition() > 0){
-          playerStartLocation[nodeToAdd.getPlayerStartPosition()-1] = nodeToAdd;
+          this.playerStartLocation[nodeToAdd.getPlayerStartPosition()-1] = nodeToAdd;
         }
-        grid[i][j] = nodeToAdd;
+        this.grid[i][j] = nodeToAdd;
         nodeToAdd.setGridX(j);
         nodeToAdd.setGridY(i);
       }
@@ -158,7 +151,7 @@ public class GridBoard {
         grid[j][i].setScreenY((j * GridBoardSizeEnum.TILE_SIZE.get()) + GridBoardSizeEnum.BOARD_POSITION_Y.get());
 
         if(grid[j][i].isHasPickup()){
-          Image pickupImage = MediaUtil.createImage(ConstUtil.PICKUP_IMAGE_PATH);
+          Image pickupImage = MediaUtil.createImage(PICKUP_IMAGE_PATH);
           Node pickupNode = new Circle(20, new ImagePattern(pickupImage));
           pickupNode.setTranslateX(grid[j][i].getScreenX() - GridBoardSizeEnum.BOARD_POSITION_X.get() + 10);
           pickupNode.setTranslateY(grid[j][i].getScreenY() - GridBoardSizeEnum.BOARD_POSITION_Y.get());
@@ -169,7 +162,7 @@ public class GridBoard {
     }
   }
 
-  public Player addPlayer(int gridX, int gridY, int playerNumber) {
+  Player addPlayer(int gridX, int gridY, int playerNumber) {
     GridNode targetNode = grid[gridY][gridX];
     if (targetNode.hasPlayer()) {
 
@@ -191,10 +184,9 @@ public class GridBoard {
     playerToAdd.getPlayerNode().setTranslateY(targetNode.getScreenY() + GridBoardSizeEnum.SPACE_TARGET_NODE_Y.get());
 
     return playerToAdd;
-
   }
 
-  public Move tryShoot(Player playerShooting) {
+  private Move tryShoot(Player playerShooting) {
     if (!playerShooting.isHasShot()) {
       return null;
     }
@@ -204,8 +196,6 @@ public class GridBoard {
     List<GridNode> nodesAffected = new ArrayList<>();
     GridNode currentTargetNode;
     int gridIterator = 1;
-
-    System.out.println(playerShooting.getFacingDirection().name());
 
     switch (playerShooting.getFacingDirection()) {
       case NORTH:
@@ -285,7 +275,7 @@ public class GridBoard {
     }
   }
 
-  public void picckupAquired(GridNode node){
+  private void pickupAquired(GridNode node){
     node.setHasPickup(false);
     gridBoard.getChildren().remove(node.getPickupImage());
   }
@@ -309,7 +299,7 @@ public class GridBoard {
             bulletToShoot));
   }
 
-  public GridNode[] getPlayerStartLocation() {
+  GridNode[] getPlayerStartLocation() {
     return playerStartLocation;
   }
 
@@ -317,7 +307,7 @@ public class GridBoard {
     return grid[y][x];
   }
 
-  public boolean areAllFull() {
+  boolean areAllFull() {
     return players.stream().allMatch(Player::isActionsFull);
   }
 }

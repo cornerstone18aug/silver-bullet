@@ -2,11 +2,11 @@ package ca.ciccc.silverBullet.gameBoard;
 
 import ca.ciccc.silverBullet.controller.GameController;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
+import ca.ciccc.silverBullet.extraScreens.GameOverScreen;
 import ca.ciccc.silverBullet.extraScreens.InstructionStuff;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
 import ca.ciccc.silverBullet.playerElements.Player;
-import ca.ciccc.silverBullet.extraScreens.GameOverScreen;
 import ca.ciccc.silverBullet.utils.ConstUtil.GameSceneCoordinatesEnum;
 import ca.ciccc.silverBullet.utils.ModalUtil;
 import javafx.scene.input.KeyCode;
@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
 public class GameScene extends Pane {
 
   private GridBoard gameBoard;
-  private BackgroundGrid backgroundGrid;
   private double t = 0;
   private boolean isExecuting;
   private int currentActionNumber = 0;
@@ -23,16 +22,14 @@ public class GameScene extends Pane {
   static GameScene instance;
   private double turnTimer = 10;
   TimerDisplay timerDisplay;
-  boolean isPaused;
+  private boolean isPaused;
 
-  GameOverScreen gameOverScreen;
-
-  public GameScene(int lvl, int numberOfPlayers) {
-    backgroundGrid = new BackgroundGrid();
+  private GameScene(int lvl, int numberOfPlayers) {
+    BackgroundGrid backgroundGrid = new BackgroundGrid();
     gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), lvl);
     instance = this;
 
-    this.getChildren().add(backgroundGrid.gridBoard);
+    this.getChildren().add(backgroundGrid.gridPane);
     this.getChildren().add(gameBoard.gridBoard);
 
 
@@ -45,9 +42,7 @@ public class GameScene extends Pane {
       gameBoard.addPlayer(playerNode.getGridX(), playerNode.getGridY(), i);
     }
 
-
     timerDisplay = new TimerDisplay(gameBoard.players);
-
 
     if(numberOfPlayers == 4){
       timerDisplay.setTranslateX(GameSceneCoordinatesEnum.TIMER_DISPLAY_X.get()- 40);
@@ -77,34 +72,8 @@ public class GameScene extends Pane {
 
   }
 
-  public GameScene() {
-
-    gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.LEVEL_SELECTED.get());
-    instance = this;
-    backgroundGrid = new BackgroundGrid();
-
-    this.getChildren().add(backgroundGrid.gridBoard);
-    this.getChildren().add(gameBoard.gridBoard);
-
-    gameBoard.addPlayer(1, 1, 1);
-    gameBoard.addPlayer(5, 5, 2);
-
-    gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_1_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_1_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_1.get());
-    gameBoard.addPlayer(GameSceneCoordinatesEnum.POSITION_PLAYER_2_X.get(), GameSceneCoordinatesEnum.POSITION_PLAYER_2_Y.get(), GameSceneCoordinatesEnum.PLAYER_NUMBER_2.get());
-
-    for (int i = 0; i < gameBoard.players.size(); i++) {
-      Player player = gameBoard.players.get(i);
-      ActionCounter ac = player.getPlayerActionCounter();
-      ac.setTranslateX(GameSceneCoordinatesEnum.SIZE_BOARD_X.get() + 200 * i);
-      ac.setTranslateY(GameSceneCoordinatesEnum.SIZE_BOARD_Y.get());
-      this.getChildren().addAll(player.getPlayerNode(), ac);
-    }
-
-  }
-
   public static class Builder {
     private int playerNumber;
-    private int boardSize;
     private int level;
 
     public Builder player(int playerNumber) {
@@ -113,7 +82,6 @@ public class GameScene extends Pane {
     }
 
     public Builder boardSize(int boardSize) {
-      this.boardSize = boardSize;
       return this;
     }
 
@@ -123,23 +91,18 @@ public class GameScene extends Pane {
     }
 
     public GameScene build() {
-      GameScene gameScene = new GameScene(this.level, playerNumber);
-      return gameScene;
+      return new GameScene(this.level, playerNumber);
     }
 
   }
 
-
-  public void showGameOver(int playerWhoWon){
+  void showGameOver(int playerWhoWon){
     stopAll();
-    gameOverScreen = new GameOverScreen(playerWhoWon);
+    GameOverScreen gameOverScreen = new GameOverScreen(playerWhoWon);
     this.getChildren().add(gameOverScreen);
   }
 
-
   public void boardUpdate() {
-
-
     if (!isExecuting && !isPaused) {
 
       if (turnTimer <= 0) {
@@ -187,7 +150,7 @@ public class GameScene extends Pane {
 
   }
 
-  public void executePlayerActions() {
+  private void executePlayerActions() {
 
     for (Player p : gameBoard.players) {
       if (PlayerAction.SHOOT.equals(p.getPlayerActions()[currentActionNumber])) {
@@ -204,7 +167,7 @@ public class GameScene extends Pane {
     executeMove();
   }
 
-  public void actionEndStep() {
+  private void actionEndStep() {
 
     for (Player p : gameBoard.players) {
       p.getPlayerActionCounter().clearActions();
@@ -221,7 +184,7 @@ public class GameScene extends Pane {
     });
   }
 
-  public void stopAll(){
+  private void stopAll(){
     GameController.getInstance().timer.stop();
   }
 
@@ -242,7 +205,7 @@ public class GameScene extends Pane {
 
   }
 
-  public void highlightActions(Player playerToHighlight){
+  private void highlightActions(Player playerToHighlight){
     gameBoard.players.forEach(p->{
       if(!playerToHighlight.equals(p)){
         p.getPlayerActionCounter().darkenSelf();
@@ -252,7 +215,7 @@ public class GameScene extends Pane {
     });
   }
 
-  public void highlightAllActions(){
+  private void highlightAllActions(){
     gameBoard.players.forEach(p->p.getPlayerActionCounter().lightenSelf());
   }
 

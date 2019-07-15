@@ -1,15 +1,28 @@
 # Silver Bullet
-Java Final Project for team 名探偵コナン
+## About
+- JavaFX 2 Player Game
+- For Java Final Project in CICCC
 
-## Building an executable Java FX 11 application with Maven
-This is an application that demonstrates how to construct an executable Java FX application.
-It uses Java 11, jlink and Java FX 11. It shows three things
+## Screen shot
+### - Top
+![Top](/screenshots/Top.png)
 
-1. How to build a Java 11/ Java FX 11
-2. How to build this application modularized.
-3. How to use jlink to generate an executable for the application
-4. How to do all this with Maven
+### - Main
+![Main](/screenshots/Main.png)
 
-### Requirements
-Maven 3.5.x
-Java 11 JDK
+## Framework / Language
+
+- JDK12
+- JavaFX (OpenJFX13)
+- Maven
+
+## Download & Play
+1. Download Executable.zip from [Here](https://storage.cloud.google.com/silver-bullet/Executable.zip?hl=en)
+2. Unzip
+3. Double click or Run ./bin/silverBullet from your terminal
+
+## Team
+- Juan (@Floxnu)
+- Hao-tse (@Maxroo)
+- Enrique (@Enrique92)
+- Masa (@nator333)

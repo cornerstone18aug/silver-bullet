@@ -32,7 +32,8 @@ public class SettingsController extends AbstractMenuController {
     FXMLLoader fxmlLoader = new FXMLLoader();
     try {
       fxmlLoader.load(
-          SettingsController.class.getModule().getResourceAsStream("fxml/settings.fxml")
+          SettingsController.class.getModule().getResourceAsStream(
+              "ca/ciccc/silverBullet/fxml/settings.fxml")
       );
     } catch (IOException e) {
       e.printStackTrace();
@@ -124,17 +125,14 @@ public class SettingsController extends AbstractMenuController {
 
   @FXML
   public void OnEntered() {
-    System.out.println("Entered");
   }
 
   @FXML
   public void OnPressed() {
-    System.out.println("Pressed");
   }
 
   @FXML
   public void OnExited() {
-    System.out.println("Exited");
   }
 
 }

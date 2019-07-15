@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.ciccc.silverBullet.controller.SettingsController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="jrt:/SilverBulletModule/ca/ciccc/silverBullet/images/BackGround.gif" />
+         </image>
+      </ImageView>
+      <StackPane layoutY="30.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SETTINGS">
+               <font>
+                  <Font name="Pixel" size="45.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="80.0" opacity="0.4" stroke="#ffffff00" strokeType="INSIDE" width="900.0" />
+         </children>
+      </StackPane>
+      <VBox alignment="CENTER" layoutX="-5.0" layoutY="202.0" prefWidth="900.0" AnchorPane.bottomAnchor="276.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="202.0">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <HBox prefHeight="150.0">
+               <children>
+                  <StackPane alignment="CENTER_LEFT" prefWidth="400.0">
+                     <children>
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- How many players?">
+                           <font>
+                              <Font name="Pokemon GB" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
+                     <children>
+                        <ComboBox fx:id="howManyPlayersCombo" prefWidth="150.0" promptText="Select number" visibleRowCount="3" StackPane.alignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="150.0">
+               <children>
+                  <StackPane alignment="TOP_LEFT" prefWidth="400.0">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- Choose Game Level" StackPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Pokemon GB" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
+                     <children>
+                        <ComboBox fx:id="gameLevelCombo" prefWidth="150.0" promptText="Select number" StackPane.alignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+      </VBox>
+      <HBox alignment="CENTER" layoutY="480.0" prefWidth="900.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="480.0">
+         <children>
+            <StackPane onMouseClicked="#onStartClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed" prefWidth="320.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" StackPane.alignment="CENTER_LEFT">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#80ffbd" />
+                              <Stop color="#97ffcb" offset="0.27424749163879597" />
+                              <Stop color="#b7ffda" offset="0.6980268801830137" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill></Rectangle>
+                  <Text fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="START" textAlignment="CENTER" StackPane.alignment="CENTER">
+                     <font>
+                        <Font name="Pokemon GB" size="23.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets top="7.0" />
+                     </StackPane.margin>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane onMouseClicked="#onBackToMenuClicked" onMouseEntered="#OnEntered" onMouseExited="#OnExited" onMousePressed="#OnPressed" prefWidth="320.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#4fd2f0" />
+                              <Stop color="#84ebff" offset="0.3262921013042234" />
+                              <Stop color="#bdf4ff" offset="0.6980268801830137" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill></Rectangle>
+                  <Text fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK TO MENU" textAlignment="CENTER">
+                     <font>
+                        <Font name="Pokemon GB" size="23.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets top="7.0" />
+                     </StackPane.margin>
+                  </Text>
+               </children>
+            </StackPane>
+         </children>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

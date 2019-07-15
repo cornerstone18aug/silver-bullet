@@ -6,34 +6,24 @@ import javafx.scene.layout.GridPane;
 
 public class BackgroundGrid {
 
-    public GridPane gridBoard;
-    GridNode[][] grid;
-    private int size = 50;
+    GridPane gridPane = new GridPane();
     public static BackgroundGrid instance;
 
-
-    public BackgroundGrid() {
-        generategrid();
-
-        instance = this;
-    }
-
-    public void generategrid()
-    {
-        grid = new GridNode[size][size];
-        gridBoard = new GridPane();
+    BackgroundGrid() {
+        int size = 50;
+        GridNode[][] grid = new GridNode[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 GridNode nodeToAdd = new Water(j, i);
-                gridBoard.add(nodeToAdd.getImage(), j, i);
+                this.gridPane.add(nodeToAdd.getImage(), j, i);
                 grid[i][j] = nodeToAdd;
                 nodeToAdd.setGridX(j);
                 nodeToAdd.setGridY(i);
             }
         }
 
-        gridBoard.setTranslateX(0);
-        gridBoard.setTranslateY(0);
+        this.gridPane.setTranslateX(0);
+        this.gridPane.setTranslateY(0);
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 grid[j][i].setScreenX((i * 60) + 50);
@@ -41,5 +31,6 @@ public class BackgroundGrid {
             }
         }
 
+        instance = this;
     }
 }

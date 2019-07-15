@@ -5,7 +5,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Space extends GridNode {
-  private final static String FILE_PATH = "file:src/main/resources/images/Tiles/Tile%s.png";
+  private final static String FILE_PATH = "/images/Tiles/Tile%s.png";
 
   public Space(int gridx, int gridy, boolean hasPickup, int playerStart) {
     this.gridX = gridx;
