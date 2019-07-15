@@ -128,7 +128,6 @@ public class Player {
   void Die() {
     isDead = true;
     GridBoard.instance.removePlayer(this);
-    System.out.println("Player " + playerNumber + " was shot");
   }
 
   public void addAction(PlayerAction actionToAdd) {
@@ -141,7 +140,7 @@ public class Player {
         actionsFull = true;
 
       }
-      System.out.println("Player actions counter: " + currentAction);
+
       playerActionCounter.addAction();
     }
   }
@@ -295,9 +294,9 @@ public class Player {
 
   public int getCurrentAmo() {
     if (currentAmo == 0 || !isHasShot()) {
-      System.out.println("You don't have more Amo!!!");
+      //System.out.println("You don't have more Amo!!!");
     } else {
-      System.out.println("You have " + currentAmo + " of Amo!!!");
+      //System.out.println("You have " + currentAmo + " of Amo!!!");
       currentAmo--;
     }
     return currentAmo;

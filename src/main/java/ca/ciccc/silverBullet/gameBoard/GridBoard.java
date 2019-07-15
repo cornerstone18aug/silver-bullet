@@ -111,8 +111,6 @@ public class GridBoard {
 
     moveTransition.play();
 
-    System.out.println(targetNode.getGridX() + ", " + targetNode.getGridY());
-
     if (targetNode.isHasPickup()){
       if(playerToMove.getNumberOfShots() < 3){
 
@@ -198,8 +196,6 @@ public class GridBoard {
     List<GridNode> nodesAffected = new ArrayList<>();
     GridNode currentTargetNode;
     int gridIterator = 1;
-
-    System.out.println(playerShooting.getFacingDirection().name());
 
     switch (playerShooting.getFacingDirection()) {
       case NORTH:
