@@ -17,7 +17,7 @@
 - Maven
 
 ## Download & Play
-1. Download Executable.zip from below
+1. Download Executable.zip from below (**Java doesn't need to be installed in your laptop👍**)
    - [For Mac/Linux](https://storage.cloud.google.com/silver-bullet/Executable.zip?hl=en)
    - [For Windows](https://storage.cloud.google.com/silver-bullet/Executable_win.zip?hl=en)
 
