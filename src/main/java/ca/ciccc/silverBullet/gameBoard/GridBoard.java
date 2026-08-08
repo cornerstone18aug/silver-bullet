@@ -3,6 +3,7 @@ package ca.ciccc.silverBullet.gameBoard;
 import ca.ciccc.silverBullet.enums.gameplay.Directions;
 import ca.ciccc.silverBullet.enums.gameplay.GridElement;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
+import ca.ciccc.silverBullet.logic.GameLogic;
 import ca.ciccc.silverBullet.playerElements.Bullet;
 import ca.ciccc.silverBullet.playerElements.CollisionBullet;
 import ca.ciccc.silverBullet.playerElements.Player;
@@ -44,40 +45,21 @@ public class GridBoard {
   public Move tryMovePlayer(Player playerToMove) {
     GridNode originGrid =
         grid[playerToMove.getGridPositionY()][playerToMove.getGridPositionX()];
-    int targetX = 0;
-    int targetY = 0;
 
-    GridNode targetNode;
-    if (originGrid.hasPlayer()) {
-      switch (originGrid.getPlayerInSpace().getFacingDirection()) {
-        case NORTH:
-          targetX = originGrid.getGridX();
-          targetY = originGrid.getGridY() - GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
-          break;
-        case SOUTH:
-          targetX = originGrid.getGridX();
-          targetY = originGrid.getGridY() + GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
-          break;
-        case EAST:
-          targetX = originGrid.getGridX() + GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
-          targetY = originGrid.getGridY();
-          break;
-        case WEST:
-          targetX = originGrid.getGridX() - GridBoardSizeEnum.TILE_CORRECTION_COORDINATE.get();
-          targetY = originGrid.getGridY();
-          break;
-      }
-      if ((targetX < 0 || targetY < 0) || (targetX > gridSizeX || targetY > gridSizeY)) {
-        return null;
-      }
-      targetNode = grid[targetY][targetX];
-
-      if(!targetNode.hasPlayer() && targetNode.isCanMoveTo()) {
-        return new Move(targetX, targetY);
-      }
+    if (!originGrid.hasPlayer()) {
+      return null;
     }
 
-    return null;
+    int[] destination = GameLogic.moveDestination(
+        originGrid.getGridX(),
+        originGrid.getGridY(),
+        originGrid.getPlayerInSpace().getFacingDirection(),
+        gridSizeX,
+        gridSizeY,
+        (x, y) -> grid[y][x].isCanMoveTo(),
+        (x, y) -> grid[y][x].hasPlayer());
+
+    return destination == null ? null : new Move(destination[0], destination[1]);
   }
 
 
@@ -191,77 +173,15 @@ public class GridBoard {
       return null;
     }
 
-    GridNode playerStartingNode = grid[playerShooting.getGridPositionY()][playerShooting
-        .getGridPositionX()];
-    List<GridNode> nodesAffected = new ArrayList<>();
-    GridNode currentTargetNode;
-    int gridIterator = 1;
+    int[] endpoint = GameLogic.shotEndpoint(
+        playerShooting.getGridPositionX(),
+        playerShooting.getGridPositionY(),
+        playerShooting.getFacingDirection(),
+        gridSizeX,
+        gridSizeY,
+        (x, y) -> grid[y][x].isCanMoveTo());
 
-    switch (playerShooting.getFacingDirection()) {
-      case NORTH:
-        while (true) {
-          if (playerShooting.getGridPositionY() - gridIterator >= 0) {
-
-            currentTargetNode = grid[playerStartingNode.getGridY()
-                - gridIterator][playerStartingNode.getGridX()];
-            if (currentTargetNode.isCanMoveTo()) {
-              nodesAffected.add(currentTargetNode);
-            } else {
-              break;
-            }
-            gridIterator++;
-          } else {
-            break;
-          }
-        }
-        break;
-      case SOUTH:
-        while (playerShooting.getGridPositionY() + gridIterator <= gridSizeY) {
-
-          currentTargetNode = grid[playerStartingNode.getGridY()
-              + gridIterator][playerStartingNode.getGridX()];
-          if (currentTargetNode.isCanMoveTo()) {
-            nodesAffected.add(currentTargetNode);
-          } else {
-            break;
-          }
-          gridIterator++;
-        }
-        break;
-      case EAST:
-        while (playerShooting.getGridPositionX() + gridIterator <= gridSizeX) {
-
-          currentTargetNode = grid[playerStartingNode.getGridY()][playerStartingNode.getGridX()
-              + gridIterator];
-          if (currentTargetNode.isCanMoveTo()) {
-            nodesAffected.add(currentTargetNode);
-          } else {
-            break;
-          }
-          gridIterator++;
-        }
-        break;
-      case WEST:
-        while (playerShooting.getGridPositionX() - gridIterator >= 0) {
-
-          currentTargetNode = grid[playerStartingNode.getGridY()][playerStartingNode.getGridX()
-              - gridIterator];
-          if (currentTargetNode.isCanMoveTo()) {
-            nodesAffected.add(currentTargetNode);
-          } else {
-            break;
-          }
-          gridIterator++;
-        }
-    }
-
-    Move resultMove = null;
-    if (!nodesAffected.isEmpty()) {
-      GridNode gn = nodesAffected.get(nodesAffected.size() - 1);
-      resultMove = new Move(gn.getGridX(), gn.getGridY());
-    }
-
-    return resultMove;
+    return endpoint == null ? null : new Move(endpoint[0], endpoint[1]);
   }
 
   public void removePlayer(Player playerToRemove) {

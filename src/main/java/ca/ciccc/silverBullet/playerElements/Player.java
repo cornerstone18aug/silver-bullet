@@ -78,51 +78,8 @@ public class Player {
   }
 
   private void rotatePlayer(Orientation move) {
-    switch (facingDirection) {
-      case NORTH:
-        if (move == Orientation.LEFT) {
-          facingDirection = Directions.WEST;
-          this.setimage();
-        } else {
-          facingDirection = Directions.EAST;
-          this.setimage();
-
-        }
-        break;
-      case SOUTH:
-        if (move == Orientation.LEFT) {
-          facingDirection = Directions.EAST;
-          this.setimage();
-
-        } else {
-          facingDirection = Directions.WEST;
-          this.setimage();
-
-        }
-        break;
-      case EAST:
-        if (move == Orientation.LEFT) {
-          facingDirection = Directions.NORTH;
-          this.setimage();
-
-        } else {
-          facingDirection = Directions.SOUTH;
-          this.setimage();
-
-        }
-        break;
-      case WEST:
-        if (move == Orientation.LEFT) {
-          facingDirection = Directions.SOUTH;
-          this.setimage();
-
-        } else {
-          facingDirection = Directions.NORTH;
-          this.setimage();
-
-        }
-        break;
-    }
+    facingDirection = facingDirection.rotate(move);
+    this.setimage();
   }
 
   void Die() {
