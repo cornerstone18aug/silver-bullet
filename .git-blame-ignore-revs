@@ -1,0 +1,6 @@
+# Bulk formatting / whitespace-only revisions to skip in `git blame`.
+# Enable locally with:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# style: apply Palantir Java format across the codebase
+763d7ffac88fab99bdaf6e3a53fbe6a304ca9fc9
