@@ -18,82 +18,75 @@ import javafx.scene.text.Text;
  * @author Masa
  */
 public class MenuController extends AbstractMenuController {
-  private static MenuController instance;
-  private static Scene SCENE;
+    private static MenuController instance;
+    private static Scene SCENE;
 
-  static {
-    FXMLLoader fxmlLoader = new FXMLLoader();
-    try {
-      fxmlLoader.load(
-          MenuController.class.getModule().getResourceAsStream(
-              "ca/ciccc/silverBullet/fxml/menu.fxml")
-      );
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    Parent parent = fxmlLoader.getRoot();
-    Scene scene = new Scene(parent);
-    scene.setFill(Color.TRANSPARENT);
-    SCENE = scene;
-    instance = fxmlLoader.getController();
-  }
-
-  /**
-   * Return singleton instance
-   *
-   * @return instance
-   */
-  public static MenuController getInstance() {
-    synchronized (MenuController.class) {
-      if (instance == null) {
-        instance = new MenuController();
-      }
-      return instance;
-    }
-  }
-
-  public void show() {
-    if (!AbstractMenuController.MENU_CLIP.isPlaying()) {
-      MENU_CLIP.setCycleCount(Integer.MAX_VALUE);
-      AbstractMenuController.MENU_CLIP.play();
+    static {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.load(
+                    MenuController.class.getModule().getResourceAsStream("ca/ciccc/silverBullet/fxml/menu.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = fxmlLoader.getRoot();
+        Scene scene = new Scene(parent);
+        scene.setFill(Color.TRANSPARENT);
+        SCENE = scene;
+        instance = fxmlLoader.getController();
     }
 
-    if (AbstractMenuController.BATTLE_CLIP.isPlaying()) {
-      BATTLE_CLIP.setCycleCount(Integer.MAX_VALUE);
-      AbstractMenuController.BATTLE_CLIP.stop();
+    /**
+     * Return singleton instance
+     *
+     * @return instance
+     */
+    public static MenuController getInstance() {
+        synchronized (MenuController.class) {
+            if (instance == null) {
+                instance = new MenuController();
+            }
+            return instance;
+        }
     }
-    SilverBulletApp.primaryStage.setScene(SCENE);
-  }
 
-  @FXML
-  public void OnStartClicked() {
-    SettingsController.getInstance().show();
-  }
+    public void show() {
+        if (!AbstractMenuController.MENU_CLIP.isPlaying()) {
+            MENU_CLIP.setCycleCount(Integer.MAX_VALUE);
+            AbstractMenuController.MENU_CLIP.play();
+        }
 
-  @FXML
-  public void OnHowToPlayClicked() {
-    HowToPlayController.getInstance().show();
-  }
+        if (AbstractMenuController.BATTLE_CLIP.isPlaying()) {
+            BATTLE_CLIP.setCycleCount(Integer.MAX_VALUE);
+            AbstractMenuController.BATTLE_CLIP.stop();
+        }
+        SilverBulletApp.primaryStage.setScene(SCENE);
+    }
 
-  @FXML
-  public void OnQuitClicked() {
-    ModalUtil.confirm(
-        "QUIT",
-        "Did you really want to quit?",
-        () -> System.exit(1)
-    );
-  }
+    @FXML
+    public void OnStartClicked() {
+        SettingsController.getInstance().show();
+    }
 
-  @FXML
-  public void OnEntered(MouseEvent event) {
-    Text text = (Text) ((StackPane)event.getSource()).getChildren().get(0);
-    text.setText("▷ " + text.getText());
-  }
+    @FXML
+    public void OnHowToPlayClicked() {
+        HowToPlayController.getInstance().show();
+    }
 
-  @FXML
-  public void OnExited(MouseEvent event) {
-    Text text = (Text) ((StackPane)event.getSource()).getChildren().get(0);
-    text.setText(text.getText().replace("▷ ", ""));
-  }
+    @FXML
+    public void OnQuitClicked() {
+        ModalUtil.confirm("QUIT", "Did you really want to quit?", () -> System.exit(1));
+    }
 
+    @FXML
+    public void OnEntered(MouseEvent event) {
+        Text text = (Text) ((StackPane) event.getSource()).getChildren().get(0);
+        text.setText("▷ " + text.getText());
+    }
+
+    @FXML
+    public void OnExited(MouseEvent event) {
+        Text text = (Text) ((StackPane) event.getSource()).getChildren().get(0);
+        text.setText(text.getText().replace("▷ ", ""));
+    }
 }

@@ -10,5 +10,5 @@ package ca.ciccc.silverBullet.gameBoard;
 @FunctionalInterface
 public interface Prompter {
 
-  void prompt(String title, String message, Runnable onConfirm);
+    void prompt(String title, String message, Runnable onConfirm);
 }

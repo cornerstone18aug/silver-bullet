@@ -30,90 +30,90 @@ import org.junit.jupiter.api.Test;
  */
 class GridBoardMoveShootTest {
 
-  private static final int BOARD = 9;
+    private static final int BOARD = 9;
 
-  @BeforeAll
-  static void startJavaFx() throws InterruptedException {
-    JavaFxToolkit.init();
-  }
+    @BeforeAll
+    static void startJavaFx() throws InterruptedException {
+        JavaFxToolkit.init();
+    }
 
-  private static Player place(GridBoard board, int x, int y, int number, Directions facing) {
-    Player player = board.addPlayer(x, y, number);
-    player.setFacingDirection(facing);
-    return player;
-  }
+    private static Player place(GridBoard board, int x, int y, int number, Directions facing) {
+        Player player = board.addPlayer(x, y, number);
+        player.setFacingDirection(facing);
+        return player;
+    }
 
-  private static void assertMove(int expectedX, int expectedY, Move move) {
-    assertEquals(expectedX, move.getMoveX(), "moveX");
-    assertEquals(expectedY, move.getMoveY(), "moveY");
-  }
+    private static void assertMove(int expectedX, int expectedY, Move move) {
+        assertEquals(expectedX, move.getMoveX(), "moveX");
+        assertEquals(expectedY, move.getMoveY(), "moveY");
+    }
 
-  // ---- tryMovePlayer -------------------------------------------------------
+    // ---- tryMovePlayer -------------------------------------------------------
 
-  @Test
-  void movesOntoTheAdjacentOpenTile() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player player = place(board, 1, 2, 1, Directions.EAST);
+    @Test
+    void movesOntoTheAdjacentOpenTile() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player player = place(board, 1, 2, 1, Directions.EAST);
 
-    assertMove(2, 2, board.tryMovePlayer(player));
-  }
+        assertMove(2, 2, board.tryMovePlayer(player));
+    }
 
-  @Test
-  void movementIsBlockedByAWall() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player player = place(board, 1, 3, 1, Directions.EAST); // wall sits at (2,3)
+    @Test
+    void movementIsBlockedByAWall() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player player = place(board, 1, 3, 1, Directions.EAST); // wall sits at (2,3)
 
-    assertNull(board.tryMovePlayer(player));
-  }
+        assertNull(board.tryMovePlayer(player));
+    }
 
-  @Test
-  void movementIsBlockedByTheBoardEdge() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player player = place(board, 0, 4, 1, Directions.WEST); // would step off the left edge
+    @Test
+    void movementIsBlockedByTheBoardEdge() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player player = place(board, 0, 4, 1, Directions.WEST); // would step off the left edge
 
-    assertNull(board.tryMovePlayer(player));
-  }
+        assertNull(board.tryMovePlayer(player));
+    }
 
-  @Test
-  void movementIsBlockedByAnotherPlayer() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player mover = place(board, 4, 2, 1, Directions.SOUTH);
-    place(board, 4, 3, 2, Directions.NORTH); // occupies the target tile
+    @Test
+    void movementIsBlockedByAnotherPlayer() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player mover = place(board, 4, 2, 1, Directions.SOUTH);
+        place(board, 4, 3, 2, Directions.NORTH); // occupies the target tile
 
-    assertNull(board.tryMovePlayer(mover));
-  }
+        assertNull(board.tryMovePlayer(mover));
+    }
 
-  // ---- tryShoot ------------------------------------------------------------
+    // ---- tryShoot ------------------------------------------------------------
 
-  @Test
-  void shotTravelsAcrossOpenGroundToTheFarEdge() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player shooter = place(board, 1, 2, 1, Directions.EAST); // row 2 is fully open
+    @Test
+    void shotTravelsAcrossOpenGroundToTheFarEdge() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player shooter = place(board, 1, 2, 1, Directions.EAST); // row 2 is fully open
 
-    assertMove(8, 2, board.tryShoot(shooter));
-  }
+        assertMove(8, 2, board.tryShoot(shooter));
+    }
 
-  @Test
-  void shotStopsOnTheLastTileBeforeAWall() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player shooter = place(board, 3, 3, 1, Directions.EAST); // wall at (6,3); (4,3),(5,3) open
+    @Test
+    void shotStopsOnTheLastTileBeforeAWall() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player shooter = place(board, 3, 3, 1, Directions.EAST); // wall at (6,3); (4,3),(5,3) open
 
-    assertMove(5, 3, board.tryShoot(shooter));
-  }
+        assertMove(5, 3, board.tryShoot(shooter));
+    }
 
-  @Test
-  void shotAtAnAdjacentWallGoesNowhere() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player shooter = place(board, 1, 3, 1, Directions.EAST); // wall immediately at (2,3)
+    @Test
+    void shotAtAnAdjacentWallGoesNowhere() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player shooter = place(board, 1, 3, 1, Directions.EAST); // wall immediately at (2,3)
 
-    assertNull(board.tryShoot(shooter));
-  }
+        assertNull(board.tryShoot(shooter));
+    }
 
-  @Test
-  void aPlayerWithNoAmmoCannotShoot() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player unarmed = new Player(0, 1, 3, 3, Directions.EAST, null); // zero shots
+    @Test
+    void aPlayerWithNoAmmoCannotShoot() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player unarmed = new Player(0, 1, 3, 3, Directions.EAST, null); // zero shots
 
-    assertNull(board.tryShoot(unarmed));
-  }
+        assertNull(board.tryShoot(unarmed));
+    }
 }

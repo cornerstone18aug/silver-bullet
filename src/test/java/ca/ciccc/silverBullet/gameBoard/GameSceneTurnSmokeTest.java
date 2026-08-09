@@ -25,58 +25,61 @@ import org.junit.jupiter.api.Test;
  */
 class GameSceneTurnSmokeTest {
 
-  @BeforeAll
-  static void startJavaFx() throws InterruptedException {
-    JavaFxToolkit.init();
-  }
+    @BeforeAll
+    static void startJavaFx() throws InterruptedException {
+        JavaFxToolkit.init();
+    }
 
-  private static GameScene buildScene(int players, int level) throws InterruptedException {
-    AtomicReference<GameScene> scene = new AtomicReference<>();
-    JavaFxToolkit.runOnFxThread(
-        () -> scene.set(new GameScene.Builder().player(players).level(level).build()));
-    return scene.get();
-  }
+    private static GameScene buildScene(int players, int level) throws InterruptedException {
+        AtomicReference<GameScene> scene = new AtomicReference<>();
+        JavaFxToolkit.runOnFxThread(() ->
+                scene.set(new GameScene.Builder().player(players).level(level).build()));
+        return scene.get();
+    }
 
-  @Test
-  void buildsAFullyAssembledSceneForTwoPlayers() throws InterruptedException {
-    GameScene scene = buildScene(2, 1);
+    @Test
+    void buildsAFullyAssembledSceneForTwoPlayers() throws InterruptedException {
+        GameScene scene = buildScene(2, 1);
 
-    assertFalse(scene.getChildren().isEmpty(), "scene graph should be populated");
-    assertEquals(2, scene.getGameBoard().players.size(), "both players should be on the board");
-  }
+        assertFalse(scene.getChildren().isEmpty(), "scene graph should be populated");
+        assertEquals(2, scene.getGameBoard().players.size(), "both players should be on the board");
+    }
 
-  @Test
-  void planningKeysFillTheControlledPlayersActionQueue() throws InterruptedException {
-    GameScene scene = buildScene(2, 1);
+    @Test
+    void planningKeysFillTheControlledPlayersActionQueue() throws InterruptedException {
+        GameScene scene = buildScene(2, 1);
 
-    JavaFxToolkit.runOnFxThread(() -> {
-      scene.onKeyPressed(KeyCode.Q); // TURN_LEFT
-      scene.onKeyPressed(KeyCode.W); // MOVE
-      scene.onKeyPressed(KeyCode.E); // TURN_RIGHT
-      scene.onKeyPressed(KeyCode.R); // SHOOT
-      scene.onKeyPressed(KeyCode.T); // WAIT
-    });
+        JavaFxToolkit.runOnFxThread(() -> {
+            scene.onKeyPressed(KeyCode.Q); // TURN_LEFT
+            scene.onKeyPressed(KeyCode.W); // MOVE
+            scene.onKeyPressed(KeyCode.E); // TURN_RIGHT
+            scene.onKeyPressed(KeyCode.R); // SHOOT
+            scene.onKeyPressed(KeyCode.T); // WAIT
+        });
 
-    Player controlled = scene.getGameBoard().players.get(0);
-    assertTrue(controlled.isActionsFull(), "five actions should fill the queue");
-    assertArrayEquals(
-        new PlayerAction[] {
-            PlayerAction.TURN_LEFT, PlayerAction.MOVE, PlayerAction.TURN_RIGHT,
-            PlayerAction.SHOOT, PlayerAction.WAIT
-        },
-        controlled.getPlayerActions());
-  }
+        Player controlled = scene.getGameBoard().players.get(0);
+        assertTrue(controlled.isActionsFull(), "five actions should fill the queue");
+        assertArrayEquals(
+                new PlayerAction[] {
+                    PlayerAction.TURN_LEFT,
+                    PlayerAction.MOVE,
+                    PlayerAction.TURN_RIGHT,
+                    PlayerAction.SHOOT,
+                    PlayerAction.WAIT
+                },
+                controlled.getPlayerActions());
+    }
 
-  @Test
-  void planningOnlyAffectsTheCurrentPlayerNotTheNextOne() throws InterruptedException {
-    GameScene scene = buildScene(2, 1);
+    @Test
+    void planningOnlyAffectsTheCurrentPlayerNotTheNextOne() throws InterruptedException {
+        GameScene scene = buildScene(2, 1);
 
-    JavaFxToolkit.runOnFxThread(() -> scene.onKeyPressed(KeyCode.W)); // MOVE for player 0 only
+        JavaFxToolkit.runOnFxThread(() -> scene.onKeyPressed(KeyCode.W)); // MOVE for player 0 only
 
-    Player first = scene.getGameBoard().players.get(0);
-    Player second = scene.getGameBoard().players.get(1);
-    assertEquals(PlayerAction.MOVE, first.getPlayerActions()[0]);
-    assertFalse(first.isActionsFull());
-    assertEquals(PlayerAction.NONE, second.getPlayerActions()[0], "the other player is untouched");
-  }
+        Player first = scene.getGameBoard().players.get(0);
+        Player second = scene.getGameBoard().players.get(1);
+        assertEquals(PlayerAction.MOVE, first.getPlayerActions()[0]);
+        assertFalse(first.isActionsFull());
+        assertEquals(PlayerAction.NONE, second.getPlayerActions()[0], "the other player is untouched");
+    }
 }

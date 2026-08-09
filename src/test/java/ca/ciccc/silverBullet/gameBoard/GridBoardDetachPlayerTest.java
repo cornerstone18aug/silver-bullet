@@ -22,53 +22,53 @@ import org.junit.jupiter.api.Test;
  */
 class GridBoardDetachPlayerTest {
 
-  private static final int BOARD = 9;
+    private static final int BOARD = 9;
 
-  @BeforeAll
-  static void startJavaFx() throws InterruptedException {
-    JavaFxToolkit.init();
-  }
+    @BeforeAll
+    static void startJavaFx() throws InterruptedException {
+        JavaFxToolkit.init();
+    }
 
-  @Test
-  void clearsTheTileThePlayerActuallyStandsOn() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player standing = board.addPlayer(2, 1, 1);   // asymmetric: x=2, y=1
-    board.addPlayer(6, 7, 2);                      // a second player so one survives
+    @Test
+    void clearsTheTileThePlayerActuallyStandsOn() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player standing = board.addPlayer(2, 1, 1); // asymmetric: x=2, y=1
+        board.addPlayer(6, 7, 2); // a second player so one survives
 
-    // Precondition: (2,1) is occupied and the transposed tile (1,2) is not.
-    assertTrue(board.getNodeFromGrid(2, 1).hasPlayer(), "player's own tile should start occupied");
-    assertFalse(board.getNodeFromGrid(1, 2).hasPlayer(), "transposed tile should be empty");
+        // Precondition: (2,1) is occupied and the transposed tile (1,2) is not.
+        assertTrue(board.getNodeFromGrid(2, 1).hasPlayer(), "player's own tile should start occupied");
+        assertFalse(board.getNodeFromGrid(1, 2).hasPlayer(), "transposed tile should be empty");
 
-    board.detachPlayerFromBoard(standing);
+        board.detachPlayerFromBoard(standing);
 
-    // The tile the player stood on must be cleared. Under the old grid[x][y]
-    // bug this stayed occupied because grid[2][1] (i.e. tile (1,2)) was cleared.
-    assertFalse(board.getNodeFromGrid(2, 1).hasPlayer(), "player's tile must be cleared on removal");
-    assertFalse(board.players.contains(standing), "player must be dropped from the roster");
-  }
+        // The tile the player stood on must be cleared. Under the old grid[x][y]
+        // bug this stayed occupied because grid[2][1] (i.e. tile (1,2)) was cleared.
+        assertFalse(board.getNodeFromGrid(2, 1).hasPlayer(), "player's tile must be cleared on removal");
+        assertFalse(board.players.contains(standing), "player must be dropped from the roster");
+    }
 
-  @Test
-  void reportsTheSoleSurvivorAsTheWinner() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player one = board.addPlayer(2, 1, 1);
-    board.addPlayer(6, 7, 2);
+    @Test
+    void reportsTheSoleSurvivorAsTheWinner() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player one = board.addPlayer(2, 1, 1);
+        board.addPlayer(6, 7, 2);
 
-    OptionalInt winner = board.detachPlayerFromBoard(one);
+        OptionalInt winner = board.detachPlayerFromBoard(one);
 
-    assertTrue(winner.isPresent(), "one player left means the game is over");
-    assertEquals(2, winner.getAsInt(), "the remaining player wins");
-  }
+        assertTrue(winner.isPresent(), "one player left means the game is over");
+        assertEquals(2, winner.getAsInt(), "the remaining player wins");
+    }
 
-  @Test
-  void reportsNoWinnerWhileMoreThanOnePlayerRemains() {
-    GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player one = board.addPlayer(2, 1, 1);
-    board.addPlayer(6, 7, 2);
-    board.addPlayer(2, 7, 3);
+    @Test
+    void reportsNoWinnerWhileMoreThanOnePlayerRemains() {
+        GridBoard board = new GridBoard(BOARD, BOARD, 1);
+        Player one = board.addPlayer(2, 1, 1);
+        board.addPlayer(6, 7, 2);
+        board.addPlayer(2, 7, 3);
 
-    OptionalInt winner = board.detachPlayerFromBoard(one);
+        OptionalInt winner = board.detachPlayerFromBoard(one);
 
-    assertFalse(winner.isPresent(), "two players remain, so the game continues");
-    assertEquals(2, board.players.size());
-  }
+        assertFalse(winner.isPresent(), "two players remain, so the game continues");
+        assertEquals(2, board.players.size());
+    }
 }

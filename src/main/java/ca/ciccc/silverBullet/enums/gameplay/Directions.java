@@ -9,7 +9,10 @@ package ca.ciccc.silverBullet.enums.gameplay;
  * movement/turning rules testable in isolation.
  */
 public enum Directions {
-    NORTH, SOUTH, EAST, WEST;
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST;
 
     /**
      * Horizontal step for one tile of movement in this direction.
