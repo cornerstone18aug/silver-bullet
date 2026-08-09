@@ -4,6 +4,15 @@ on:
   push:
     branches:
       - master
+  # Also verify the executable build on PRs that touch the build itself — e.g.
+  # Dependabot bumping the javafx-maven-plugin (the jlink goal) or a pom/plugin
+  # change. Path-scoped so the heavy 3-OS matrix does not run on unrelated PRs.
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'pom.xml'
+      - '.github/workflows/build.yml'
   workflow_dispatch:
 
 jobs:
