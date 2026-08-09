@@ -216,6 +216,11 @@ public class GameScene extends Pane {
         gameBoard.movePlayer(gameBoard.players.get(i));
       }
     }
+
+    // A move applies only in its own step. Drop any target left unfulfilled by a
+    // collision so it cannot resolve on a later, non-move step. (Players that
+    // moved were already cleared by movePlayer.)
+    gameBoard.players.forEach(player -> player.setTargetMove(null));
   }
 
   private void highlightActions(Player playerToHighlight){
