@@ -112,7 +112,7 @@ class GridBoardMoveShootTest {
   @Test
   void aPlayerWithNoAmmoCannotShoot() {
     GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player unarmed = new Player(0, 1, 3, 3, Directions.EAST); // zero shots
+    Player unarmed = new Player(0, 1, 3, 3, Directions.EAST, null); // zero shots
 
     assertNull(board.tryShoot(unarmed));
   }

@@ -18,7 +18,7 @@ class PlayerAmmoTest {
   }
 
   private static Player playerWithShots(int shots) {
-    return new Player(shots, 1, 0, 0, Directions.NORTH);
+    return new Player(shots, 1, 0, 0, Directions.NORTH, null);
   }
 
   @Test

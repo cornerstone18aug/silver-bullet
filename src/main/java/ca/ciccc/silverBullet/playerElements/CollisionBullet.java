@@ -15,15 +15,18 @@ public class CollisionBullet extends Rectangle {
 
   private AnimationTimer timer;
   private Player playerShooting;
+  private final GridBoard board;
 
   private Bullet visualBullet;
 
-  public CollisionBullet(Move startPosition, Move endPosition, Player player, Bullet otherBulletRef) {
+  public CollisionBullet(Move startPosition, Move endPosition, Player player, Bullet otherBulletRef,
+      GridBoard board) {
       super(5, 5);
 
       visualBullet = otherBulletRef;
 
       playerShooting = player;
+      this.board = board;
 
       timer = new AnimationTimer() {
         @Override
@@ -34,8 +37,8 @@ public class CollisionBullet extends Rectangle {
 
       timer.start();
 
-      GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
-      GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
+      GridNode startNode = board.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
+      GridNode endNode = board.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
       setTranslateX(startNode.getScreenX() + 5);
       setTranslateY(startNode.getScreenY());
       shootMovement(startNode, endNode, player);
@@ -69,11 +72,11 @@ public class CollisionBullet extends Rectangle {
 
   public void checkOverlap(){
       Player playerToRemove = null;
-    for(int i = 0; i < GridBoard.instance.players.size(); i++)
-      if(!GridBoard.instance.players.get(i).equals(playerShooting) &&
-              getBoundsInParent().intersects(GridBoard.instance.players.get(i).getPlayerNode().getBoundsInParent())){
+    for(int i = 0; i < board.players.size(); i++)
+      if(!board.players.get(i).equals(playerShooting) &&
+              getBoundsInParent().intersects(board.players.get(i).getPlayerNode().getBoundsInParent())){
 
-          playerToRemove = GridBoard.instance.players.get(i);
+          playerToRemove = board.players.get(i);
 
 
       }
@@ -88,7 +91,7 @@ public class CollisionBullet extends Rectangle {
 
   private void onBulletStop() {
       timer.stop();
-    GridBoard.instance.gridBoard.getChildren().remove(this);
+    board.gridBoard.getChildren().remove(this);
     visualBullet.onBulletStop();
   }
 }

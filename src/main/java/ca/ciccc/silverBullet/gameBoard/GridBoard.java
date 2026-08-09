@@ -31,7 +31,6 @@ public class GridBoard {
   private GridNode[] playerStartLocation;
   private int gridSizeX;
   private int gridSizeY;
-  public static GridBoard instance;
   private static final String PICKUP_IMAGE_PATH = "/images/Tiles/Pickup.png";
 
   GridBoard(int sizeX, int sizeY, int level) {
@@ -40,7 +39,6 @@ public class GridBoard {
     this.players = new ArrayList<>();
     this.gridSizeX = sizeX - 1;
     this.gridSizeY = sizeY - 1;
-    instance = this;
   }
 
   public Move tryMovePlayer(Player playerToMove) {
@@ -155,10 +153,10 @@ public class GridBoard {
     Player playerToAdd;
   if(gridY > gridSizeY / 2){
     playerToAdd =
-        new Player(3, playerNumber, gridX, gridY, Directions.NORTH);
+        new Player(3, playerNumber, gridX, gridY, Directions.NORTH, this);
   } else {
     playerToAdd =
-            new Player(3, playerNumber, gridX, gridY, Directions.SOUTH);
+            new Player(3, playerNumber, gridX, gridY, Directions.SOUTH, this);
   }
     players.add(playerToAdd);
     targetNode.setPlayerInSpace(playerToAdd);
@@ -226,14 +224,16 @@ public class GridBoard {
     Bullet bulletToShoot = new Bullet(
             new Move(player.getGridPositionX(), player.getGridPositionY()),
             finalLocation,
-            player
+            player,
+            this
     );
 
     gridBoard.getChildren().add(bulletToShoot);
     gridBoard.getChildren().add(new CollisionBullet(new Move(player.getGridPositionX(), player.getGridPositionY()),
             finalLocation,
             player,
-            bulletToShoot));
+            bulletToShoot,
+            this));
   }
 
   GridNode[] getPlayerStartLocation() {

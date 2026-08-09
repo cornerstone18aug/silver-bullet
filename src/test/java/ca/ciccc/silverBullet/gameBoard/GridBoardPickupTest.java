@@ -31,7 +31,7 @@ class GridBoardPickupTest {
   }
 
   private static Player movingPlayer(int shots) {
-    Player player = new Player(shots, 1, 3, PICKUP_Y, Directions.EAST); // start at (3,4)
+    Player player = new Player(shots, 1, 3, PICKUP_Y, Directions.EAST, null); // start at (3,4)
     player.setTargetMove(new Move(PICKUP_X, PICKUP_Y));
     return player;
   }
@@ -67,7 +67,7 @@ class GridBoardPickupTest {
   @Test
   void movingOntoAPlainTileLeavesAmmoUnchanged() throws InterruptedException {
     GridBoard board = new GridBoard(BOARD, BOARD, 1);
-    Player player = new Player(1, 1, 1, 2, Directions.EAST); // (1,2) -> (2,2), both plain spaces
+    Player player = new Player(1, 1, 1, 2, Directions.EAST, null); // (1,2) -> (2,2), both plain spaces
     player.setTargetMove(new Move(2, 2));
 
     JavaFxToolkit.runOnFxThread(() -> board.movePlayer(player));

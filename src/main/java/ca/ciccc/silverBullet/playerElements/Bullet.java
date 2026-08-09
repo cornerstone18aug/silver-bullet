@@ -18,13 +18,15 @@ public class Bullet extends Rectangle {
 
 
   Player playerShooting;
+  private final GridBoard board;
 
-  public Bullet(Move startPosition, Move endPosition, Player player) {
+  public Bullet(Move startPosition, Move endPosition, Player player, GridBoard board) {
       super(25, 25, 50, 50);
       playerShooting = player;
+      this.board = board;
 
-      GridNode startNode = GridBoard.instance.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
-      GridNode endNode = GridBoard.instance.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
+      GridNode startNode = board.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
+      GridNode endNode = board.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
       setTranslateX(startNode.getScreenX() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_X.get() + 10);
       setTranslateY(startNode.getScreenY() - ConstUtil.GridBoardSizeEnum.BOARD_POSITION_Y.get());
       shootMovement(startNode, endNode, player);
@@ -80,6 +82,6 @@ public class Bullet extends Rectangle {
 
 
   public void onBulletStop() {
-    GridBoard.instance.gridBoard.getChildren().remove(this);
+    board.gridBoard.getChildren().remove(this);
   }
 }

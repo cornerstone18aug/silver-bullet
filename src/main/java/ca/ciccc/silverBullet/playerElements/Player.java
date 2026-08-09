@@ -17,6 +17,7 @@ public class Player {
 
   private int numberOfShots;
 
+  private final GridBoard board;
   private int playerNumber;
   private Directions facingDirection;
   private int gridPositionX;
@@ -44,11 +45,12 @@ public class Player {
   }
 
   public Player(int numberOfShots, int playerNumber, int gridX, int gridY,
-      Directions facingDirection) {
+      Directions facingDirection, GridBoard board) {
 
     this.numberOfShots = numberOfShots;
     this.playerNumber = playerNumber;
     this.facingDirection = facingDirection;
+    this.board = board;
     gridPositionX = gridX;
     gridPositionY = gridY;
     playerNode = new Circle(30, Color.GREEN);
@@ -81,7 +83,7 @@ public class Player {
 
   void Die() {
     isDead = true;
-    GridBoard.instance.removePlayer(this);
+    board.removePlayer(this);
   }
 
   public void addAction(PlayerAction actionToAdd) {
@@ -105,7 +107,7 @@ public class Player {
     }
     switch (playerActions[actionNumber]) {
       case MOVE:
-        this.targetMove = GridBoard.instance.tryMovePlayer(this);
+        this.targetMove = board.tryMovePlayer(this);
 
         break;
       case TURN_LEFT:
@@ -115,7 +117,7 @@ public class Player {
         this.rotatePlayer(Orientation.RIGHT);
         break;
       case SHOOT:
-        GridBoard.instance.shootBullet(this);
+        board.shootBullet(this);
         removeShot();
         break;
       case WAIT:

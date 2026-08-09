@@ -25,7 +25,7 @@ class PlayerActionQueueTest {
   }
 
   private static Player newPlayer() {
-    return new Player(3, 1, 0, 0, Directions.NORTH);
+    return new Player(3, 1, 0, 0, Directions.NORTH, null);
   }
 
   private static PlayerAction[] filled(PlayerAction... actions) {
