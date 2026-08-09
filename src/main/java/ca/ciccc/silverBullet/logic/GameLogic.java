@@ -89,4 +89,34 @@ public final class GameLogic {
 
     return reachedAny ? new int[] {lastX, lastY} : null;
   }
+
+  /**
+   * Resolve a set of simultaneous player moves. Each entry of {@code targets}
+   * is a player's destination tile as {@code {x, y}}, or {@code null} if that
+   * player is not moving this step. A player may complete its move only if no
+   * other player targets the same destination; when two or more contend for a
+   * tile they collide and none of them moves. The decision is taken from this
+   * snapshot, so it does not depend on the order moves are applied.
+   *
+   * @param targets each player's destination this step (null = not moving)
+   * @return a parallel array: {@code true} where that player should move
+   */
+  public static boolean[] resolveSimultaneousMoves(int[][] targets) {
+    boolean[] canMove = new boolean[targets.length];
+    for (int i = 0; i < targets.length; i++) {
+      if (targets[i] == null) {
+        continue;
+      }
+      boolean contended = false;
+      for (int j = 0; j < targets.length; j++) {
+        if (j != i && targets[j] != null
+            && targets[j][0] == targets[i][0] && targets[j][1] == targets[i][1]) {
+          contended = true;
+          break;
+        }
+      }
+      canMove[i] = !contended;
+    }
+    return canMove;
+  }
 }

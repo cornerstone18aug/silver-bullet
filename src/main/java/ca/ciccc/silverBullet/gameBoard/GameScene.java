@@ -5,6 +5,7 @@ import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
 import ca.ciccc.silverBullet.extraScreens.GameOverScreen;
 import ca.ciccc.silverBullet.extraScreens.InstructionStuff;
 import ca.ciccc.silverBullet.gridNodes.GridNode;
+import ca.ciccc.silverBullet.logic.GameLogic;
 import ca.ciccc.silverBullet.playerElements.ActionCounter;
 import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.utils.ConstUtil.GameSceneCoordinatesEnum;
@@ -195,21 +196,22 @@ public class GameScene extends Pane {
     GameController.getInstance().timer.stop();
   }
 
-  private void executeMove() {
-    gameBoard.players.forEach(player -> {
-      if (gameBoard.players.stream().anyMatch(p -> {
-        if (!p.equals(player) && player.getTargetMove() != null) {
-          return !(p.getTargetMove() != null
-              && p.getTargetMove().equals(player.getTargetMove()));
-        } else if (player.getTargetMove() == null) {
-          return false;
-        }
-        return false;
-      })) {
-        gameBoard.movePlayer(player);
-      }
-    });
+  // Package-private so simultaneous-move collision resolution can be tested.
+  void executeMove() {
+    // Snapshot every player's destination, decide all moves at once, then apply
+    // them. Players contending for the same tile collide and none of them move.
+    int[][] targets = new int[gameBoard.players.size()][];
+    for (int i = 0; i < gameBoard.players.size(); i++) {
+      Move move = gameBoard.players.get(i).getTargetMove();
+      targets[i] = move == null ? null : new int[] {move.getMoveX(), move.getMoveY()};
+    }
 
+    boolean[] canMove = GameLogic.resolveSimultaneousMoves(targets);
+    for (int i = 0; i < gameBoard.players.size(); i++) {
+      if (canMove[i]) {
+        gameBoard.movePlayer(gameBoard.players.get(i));
+      }
+    }
   }
 
   private void highlightActions(Player playerToHighlight){
