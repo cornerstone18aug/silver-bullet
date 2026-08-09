@@ -2,5 +2,6 @@
 # Enable locally with:
 #   git config blame.ignoreRevsFile .git-blame-ignore-revs
 
-# style: apply Palantir Java format across the codebase
-763d7ffac88fab99bdaf6e3a53fbe6a304ca9fc9
+# chore: modernize build (#51) — squash-merged; the bulk Palantir reformat
+# of all sources landed as part of this commit.
+44e8c66aea162161b1dd801aef390154712fff21
