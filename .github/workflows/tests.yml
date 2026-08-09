@@ -1,0 +1,37 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+      - 'feature/**'
+
+jobs:
+  test:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # JDK 21 (LTS): the pom targets --release 12, which needs a JDK >= 12,
+      # so the repo's older JDK 11 CI configs cannot build this project.
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Run tests
+        run: mvn -B test
+
+      # Publish the JaCoCo coverage report generated during the test phase.
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+          if-no-files-found: ignore
