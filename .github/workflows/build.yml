@@ -8,8 +8,18 @@ on:
 
 jobs:
   build:
-    name: Build executable image
-    runs-on: ubuntu-latest
+    name: Build executable image (${{ matrix.label }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # Keep building the other platform even if one fails.
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: linux
+          - os: windows-latest
+            label: windows
 
     steps:
       - name: Check out repository
@@ -23,16 +33,16 @@ jobs:
           cache: maven
 
       # Produces a self-contained runtime image under target/jlinkImage with a
-      # bin/silverBullet launcher (a Linux image, since this runs on Linux).
+      # bin/silverBullet launcher (plus silverBullet.bat on Windows), native to
+      # whichever runner OS this matrix leg runs on.
       - name: Build jlink runtime image
         run: mvn -B clean compile org.openjfx:javafx-maven-plugin:0.0.2:jlink
 
-      - name: Package executable
-        run: (cd target && zip -r Executable.zip jlinkImage)
-
+      # upload-artifact zips the directory on download, so no OS-specific
+      # archiving step is needed.
       - name: Upload executable artifact
         uses: actions/upload-artifact@v7
         with:
-          name: silver-bullet-executable-linux
-          path: target/Executable.zip
+          name: silver-bullet-executable-${{ matrix.label }}
+          path: target/jlinkImage
           if-no-files-found: error
