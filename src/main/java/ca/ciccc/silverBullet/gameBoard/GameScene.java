@@ -98,6 +98,11 @@ public class GameScene extends Pane {
     this.getChildren().add(gameOverScreen);
   }
 
+  // Package-private accessor so the turn/planning flow can be smoke-tested.
+  GridBoard getGameBoard() {
+    return gameBoard;
+  }
+
   public void boardUpdate() {
     if (!isExecuting && !isPaused) {
 
