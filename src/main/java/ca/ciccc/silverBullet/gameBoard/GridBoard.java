@@ -169,7 +169,9 @@ public class GridBoard {
     return playerToAdd;
   }
 
-  private Move tryShoot(Player playerShooting) {
+  // Package-private (not private) so the trajectory can be verified against a
+  // real board in tests.
+  Move tryShoot(Player playerShooting) {
     if (!playerShooting.isHasShot()) {
       return null;
     }
