@@ -12,8 +12,8 @@
 
 ## Framework / Language
 
-- JDK12
-- JavaFX (OpenJFX13)
+- JDK 21 (compiles to `--release 12` bytecode)
+- JavaFX (OpenJFX 21)
 - Maven
 
 ## Download & Play
@@ -24,9 +24,40 @@
 2. Unzip
 3. Double click or Run ./bin/silverBullet(Mac, Linux) or ./bin/silverBullet.bat(Windows) from your terminal
 
-## Build
-1. mvn clean jlink:compile // Compile
-2. mvn jlink:jlink  // Export jlink Image into jlinkimage directory
+## Build & CI
+
+[![Tests](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/tests.yml/badge.svg)](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/tests.yml)
+[![Build](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/build.yml/badge.svg)](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/build.yml)
+
+### Build locally
+
+Requires JDK 17+ (built and tested on JDK 21).
+
+```bash
+mvn clean compile                       # compile
+mvn test                                # run tests + JaCoCo coverage report
+mvn clean compile javafx:jlink          # build the self-contained executable image
+```
+
+`mvn test` writes a coverage report to `target/site/jacoco/index.html`. The
+`jlink` goal writes a self-contained runtime image to `target/jlinkImage`;
+launch it with `./bin/silverBullet` (macOS/Linux) or `bin\silverBullet.bat`
+(Windows) — no Java installation required.
+
+### Continuous integration
+
+GitHub Actions runs on every push and pull request:
+
+- **Tests** (`.github/workflows/tests.yml`) — builds and runs the test suite on
+  pushes to `master` / `feature/**` and on PRs into `master`. This is a required
+  status check for merging, and it uploads the JaCoCo coverage report as an
+  artifact.
+- **Build** (`.github/workflows/build.yml`) — on pushes to `master`, produces
+  native `jlink` executable images for **Linux, Windows and macOS** as
+  downloadable artifacts.
+
+Dependency and GitHub Actions updates are automated weekly via Dependabot
+(`.github/dependabot.yml`).
 
 ## Team
 - Juan ([@Floxnu](https://github.com/Floxnu))
