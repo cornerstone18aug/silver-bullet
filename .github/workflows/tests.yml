@@ -5,6 +5,11 @@ on:
     branches:
       - master
       - 'feature/**'
+  # Run on PRs into master. This covers Dependabot's dependency-update PRs
+  # (which fire the pull_request event) and surfaces the result as a PR check.
+  pull_request:
+    branches:
+      - master
 
 jobs:
   test:
