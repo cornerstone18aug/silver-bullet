@@ -5,9 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ca.ciccc.silverBullet.playerElements.Player;
+import ca.ciccc.silverBullet.testsupport.JavaFxToolkit;
 import java.util.OptionalInt;
-import java.util.concurrent.CountDownLatch;
-import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -25,21 +24,9 @@ class GridBoardDetachPlayerTest {
 
   private static final int BOARD = 9;
 
-  /**
-   * Start the JavaFX toolkit once for the whole class. Constructing players
-   * pulls in the graphics pipeline (fonts/action counters), which needs the
-   * toolkit initialized. In CI this runs under a virtual display (xvfb).
-   */
   @BeforeAll
   static void startJavaFx() throws InterruptedException {
-    CountDownLatch ready = new CountDownLatch(1);
-    try {
-      Platform.startup(ready::countDown);
-    } catch (IllegalStateException alreadyStarted) {
-      // The toolkit is already up (another test started it); nothing to do.
-      ready.countDown();
-    }
-    ready.await();
+    JavaFxToolkit.init();
   }
 
   @Test
