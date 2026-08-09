@@ -1,0 +1,17 @@
+# Coverage is informational only: Codecov reports the number and trend but
+# never fails a pull request (the required gate is the "Build and test" check).
+coverage:
+  status:
+    project:
+      default:
+        target: auto        # compare against the base commit
+        threshold: 2%       # tolerate small dips without flagging
+        informational: true # report, never block
+    patch:
+      default:
+        informational: true
+
+# Only comment on PRs that actually change coverage, and keep it concise.
+comment:
+  layout: "reach, diff, files"
+  require_changes: true
