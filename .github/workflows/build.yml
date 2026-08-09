@@ -46,8 +46,10 @@ jobs:
       # Produces a self-contained runtime image under target/jlinkImage with a
       # bin/silverBullet launcher (plus silverBullet.bat on Windows), native to
       # whichever runner OS this matrix leg runs on.
+      # Use the javafx: prefix so the plugin version comes from the pom (and
+      # Dependabot bumps of the plugin actually take effect here).
       - name: Build jlink runtime image
-        run: mvn -B clean compile org.openjfx:javafx-maven-plugin:0.0.2:jlink
+        run: mvn -B clean compile javafx:jlink
 
       # upload-artifact zips the directory on download, so no OS-specific
       # archiving step is needed.
