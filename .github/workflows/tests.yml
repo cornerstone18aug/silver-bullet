@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # JDK 21 (LTS): the pom targets --release 12, which needs a JDK >= 12,
       # so the repo's older JDK 11 CI configs cannot build this project.
