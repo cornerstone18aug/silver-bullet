@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build executable image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      # Produces a self-contained runtime image under target/jlinkImage with a
+      # bin/silverBullet launcher (a Linux image, since this runs on Linux).
+      - name: Build jlink runtime image
+        run: mvn -B clean compile org.openjfx:javafx-maven-plugin:0.0.2:jlink
+
+      - name: Package executable
+        run: (cd target && zip -r Executable.zip jlinkImage)
+
+      - name: Upload executable artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: silver-bullet-executable-linux
+          path: target/Executable.zip
+          if-no-files-found: error
