@@ -44,6 +44,16 @@ mvn clean compile javafx:jlink          # build the self-contained executable im
 launch it with `./bin/silverBullet` (macOS/Linux) or `bin\silverBullet.bat`
 (Windows) — no Java installation required.
 
+### Testing
+
+The suite has **58 tests** (JUnit 5) covering the core gameplay — turning,
+movement, shooting, ammo pickups, the action queue, player removal, and a full
+plan→execute turn — both in isolation and end-to-end on a real board.
+
+Current JaCoCo coverage: **~60% of instructions, ~66% of branches** (key
+classes: `GridBoard` ~87%, `GameScene` ~92%). Run `mvn test` and open
+`target/site/jacoco/index.html` for the full report.
+
 ### Continuous integration
 
 GitHub Actions runs on every push and pull request:
