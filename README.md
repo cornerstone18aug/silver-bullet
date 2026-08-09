@@ -47,13 +47,12 @@ launch it with `./bin/silverBullet` (macOS/Linux) or `bin\silverBullet.bat`
 
 ### Testing
 
-The suite has **58 tests** (JUnit 5) covering the core gameplay — turning,
-movement, shooting, ammo pickups, the action queue, player removal, and a full
-plan→execute turn — both in isolation and end-to-end on a real board.
+A JUnit 5 suite covers the core gameplay — turning, movement, shooting, ammo
+pickups, the action queue, player removal, and a full plan→execute turn — both
+in isolation and end-to-end on a real board.
 
-Current JaCoCo coverage: **~60% of instructions, ~66% of branches** (key
-classes: `GridBoard` ~87%, `GameScene` ~92%). Run `mvn test` and open
-`target/site/jacoco/index.html` for the full report.
+Coverage is tracked by the Codecov badge above. Run `mvn test` and open
+`target/site/jacoco/index.html` for the detailed local report.
 
 ### Continuous integration
 
