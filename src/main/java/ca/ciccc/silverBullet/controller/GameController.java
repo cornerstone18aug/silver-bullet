@@ -32,10 +32,9 @@ public class GameController extends AbstractController {
     }
   }
 
-  void show(int players, int boardSize, int level) {
+  void show(int players, int level) {
     game = new GameScene.Builder()
         .player(players)
-        .boardSize(boardSize)
         .level(level).build();
     game.setStyle("-fx-background-color: #000000;");
     game.setPrefSize(900, 700);

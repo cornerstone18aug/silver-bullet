@@ -81,10 +81,6 @@ public class GameScene extends Pane {
       return this;
     }
 
-    public Builder boardSize(int boardSize) {
-      return this;
-    }
-
     public Builder level(int level) {
       this.level = level;
       return this;

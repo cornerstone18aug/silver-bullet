@@ -101,7 +101,6 @@ public class SettingsController extends AbstractMenuController {
           () -> {
             GameController.getInstance().show(
                 this.howManyPlayersCombo.getSelectionModel().getSelectedItem(),
-                0,
                 this.gameLevelCombo.getSelectionModel().getSelectedItem()
             );
             if (AbstractMenuController.MENU_CLIP.isPlaying()) {
