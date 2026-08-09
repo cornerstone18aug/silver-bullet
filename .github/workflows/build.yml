@@ -20,6 +20,8 @@ jobs:
             label: linux
           - os: windows-latest
             label: windows
+          - os: macos-latest
+            label: macos
 
     steps:
       - name: Check out repository

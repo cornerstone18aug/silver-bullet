@@ -12,7 +12,7 @@
   <properties>
     <encoding>UTF-8</encoding>
     <java.version>12</java.version>
-    <javafx.version>13-ea+9</javafx.version>
+    <javafx.version>21.0.12</javafx.version>
     <mainClassName>ca.ciccc.silverBullet.SilverBulletApp</mainClassName>
   </properties>
 
