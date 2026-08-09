@@ -13,6 +13,7 @@ import ca.ciccc.silverBullet.utils.LevelFileReadUtil;
 import ca.ciccc.silverBullet.utils.MediaUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalInt;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
@@ -186,13 +187,27 @@ public class GridBoard {
 
   public void removePlayer(Player playerToRemove) {
     GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
-    grid[playerToRemove.getGridPositionX()][playerToRemove.getGridPositionY()].setPlayerInSpace(null);
     playerToRemove.getPlayerActionCounter().blackout();
     GameScene.instance.timerDisplay.removePlayerImage(playerToRemove);
+
+    detachPlayerFromBoard(playerToRemove)
+        .ifPresent(GameScene.instance::showGameOver);
+  }
+
+  /**
+   * Clears the tile the player occupies and drops it from the roster. Contains
+   * no rendering side effects, so it can be unit-tested against a real board.
+   *
+   * @return the sole survivor's player number when only one player remains
+   *     (the game-over condition), otherwise empty
+   */
+  OptionalInt detachPlayerFromBoard(Player playerToRemove) {
+    getNodeFromGrid(playerToRemove.getGridPositionX(), playerToRemove.getGridPositionY())
+        .setPlayerInSpace(null);
     players.remove(playerToRemove);
-    if(players.size() == 1){
-      GameScene.instance.showGameOver(players.get(0).getPlayerNumber());
-    }
+    return players.size() == 1
+        ? OptionalInt.of(players.get(0).getPlayerNumber())
+        : OptionalInt.empty();
   }
 
   private void pickupAquired(GridNode node){
