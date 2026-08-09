@@ -28,6 +28,7 @@
 
 [![Tests](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/tests.yml/badge.svg)](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/tests.yml)
 [![Build](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/build.yml/badge.svg)](https://github.com/cornerstone18aug/silver-bullet/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/cornerstone18aug/silver-bullet/branch/master/graph/badge.svg)](https://codecov.io/gh/cornerstone18aug/silver-bullet)
 
 ### Build locally
 
