@@ -193,7 +193,11 @@ public class GameScene extends Pane {
   }
 
   private void stopAll(){
-    GameController.getInstance().timer.stop();
+    // The game loop may not be running (e.g. game-over reached outside a live
+    // session); only stop it when there is a timer to stop.
+    if (GameController.getInstance().timer != null) {
+      GameController.getInstance().timer.stop();
+    }
   }
 
   // Package-private so simultaneous-move collision resolution can be tested.
