@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import ca.ciccc.silverBullet.extraScreens.GameOverScreen;
 import ca.ciccc.silverBullet.playerElements.Player;
 import ca.ciccc.silverBullet.testsupport.JavaFxToolkit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,20 @@ class GameSceneGameOverTest {
     assertEquals(1, scene.getGameBoard().players.size(), "one survivor remains");
     assertEquals(1, scene.getGameBoard().players.get(0).getPlayerNumber(), "player 1 survives");
     assertTrue(showsGameOver(scene), "a game-over screen should be shown");
+  }
+
+  @Test
+  void gameOverStopsTheInjectedGameLoop() throws InterruptedException {
+    AtomicBoolean stopped = new AtomicBoolean(false);
+
+    JavaFxToolkit.runOnFxThread(() -> {
+      GameScene scene = new GameScene.Builder().player(2).level(1).build();
+      scene.setOnStop(() -> stopped.set(true));
+      GridBoard board = scene.getGameBoard();
+      board.removePlayer(board.players.get(1)); // triggers game over
+    });
+
+    assertTrue(stopped.get(), "the game loop should be stopped when the game ends");
   }
 
   @Test

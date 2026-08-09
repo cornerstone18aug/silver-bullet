@@ -1,6 +1,5 @@
 package ca.ciccc.silverBullet.gameBoard;
 
-import ca.ciccc.silverBullet.controller.GameController;
 import ca.ciccc.silverBullet.enums.gameplay.PlayerAction;
 import ca.ciccc.silverBullet.extraScreens.GameOverScreen;
 import ca.ciccc.silverBullet.extraScreens.InstructionStuff;
@@ -25,6 +24,7 @@ public class GameScene extends Pane implements GameSceneEvents {
   TimerDisplay timerDisplay;
   private boolean isPaused;
   private Prompter prompter = ModalUtil::alertWithCallback;
+  private Runnable onStop = () -> { };
 
   private GameScene(int lvl, int numberOfPlayers, int turnSeconds) {
     this.turnDuration = turnSeconds;
@@ -130,6 +130,11 @@ public class GameScene extends Pane implements GameSceneEvents {
     this.prompter = prompter;
   }
 
+  /** Injected by the owner to stop the game loop when the game ends. */
+  public void setOnStop(Runnable onStop) {
+    this.onStop = onStop;
+  }
+
   public void boardUpdate() {
     if (!isExecuting && !isPaused) {
 
@@ -213,11 +218,9 @@ public class GameScene extends Pane implements GameSceneEvents {
   }
 
   private void stopAll(){
-    // The game loop may not be running (e.g. game-over reached outside a live
-    // session); only stop it when there is a timer to stop.
-    if (GameController.getInstance().timer != null) {
-      GameController.getInstance().timer.stop();
-    }
+    // Defaults to a no-op, so ending the game is safe when no loop is running
+    // (e.g. in tests); the owner injects the real stop via setOnStop.
+    onStop.run();
   }
 
   // Package-private so simultaneous-move collision resolution can be tested.

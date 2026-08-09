@@ -49,6 +49,7 @@ public class GameController extends AbstractController {
         game.boardUpdate();
       }
     };
+    game.setOnStop(timer::stop);
     timer.start();
 
     SilverBulletApp.primaryStage.setScene(scene);
