@@ -8,6 +8,11 @@ updates:
     open-pull-requests-limit: 10
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      # Stay on the JavaFX 21 LTS; skip major bumps (they require newer JDKs
+      # and would change the --release target and CI setup).
+      - dependency-name: "org.openjfx:javafx-*"
+        update-types: ["version-update:semver-major"]
 
   # Actions used by the workflows in .github/workflows
   - package-ecosystem: github-actions
