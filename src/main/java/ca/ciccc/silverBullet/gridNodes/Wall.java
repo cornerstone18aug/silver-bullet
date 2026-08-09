@@ -5,16 +5,15 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Wall extends GridNode {
-  private final static String FILE_PATH = "/images/Tiles/TileRock%s.png";
+    private static final String FILE_PATH = "/images/Tiles/TileRock%s.png";
 
-  public Wall(int gridx, int gridy) {
-    this.gridX = gridx;
-    this.gridY = gridy;
-    name = "Wall";
-    canMoveTo = false;
-    canShoot = false;
-    image = new Rectangle(WIDTH, HEIGHT);
-    ((Rectangle) image).setFill(new ImagePattern(MediaUtil.createImage(String.format(FILE_PATH, 1))));
-  }
-
+    public Wall(int gridx, int gridy) {
+        this.gridX = gridx;
+        this.gridY = gridy;
+        name = "Wall";
+        canMoveTo = false;
+        canShoot = false;
+        image = new Rectangle(WIDTH, HEIGHT);
+        ((Rectangle) image).setFill(new ImagePattern(MediaUtil.createImage(String.format(FILE_PATH, 1))));
+    }
 }

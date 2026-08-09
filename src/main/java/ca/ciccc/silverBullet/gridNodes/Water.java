@@ -6,15 +6,14 @@ import javafx.scene.shape.Rectangle;
 
 public class Water extends GridNode {
 
-  public Water(int gridx, int gridy) {
-    this.gridX = gridx;
-    this.gridY = gridy;
+    public Water(int gridx, int gridy) {
+        this.gridX = gridx;
+        this.gridY = gridy;
 
-    this.name = "Water";
-    this.canMoveTo = false;
-    this.canShoot = true;
-    this.image = new Rectangle(WIDTH, HEIGHT);
-    ((Rectangle) image)
-        .setFill(new ImagePattern(MediaUtil.createImage("/images/Wave.gif")));
-  }
+        this.name = "Water";
+        this.canMoveTo = false;
+        this.canShoot = true;
+        this.image = new Rectangle(WIDTH, HEIGHT);
+        ((Rectangle) image).setFill(new ImagePattern(MediaUtil.createImage("/images/Wave.gif")));
+    }
 }

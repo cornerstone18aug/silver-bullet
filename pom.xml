@@ -11,11 +11,24 @@
 
   <properties>
     <encoding>UTF-8</encoding>
-    <java.version>12</java.version>
+    <java.version>21</java.version>
     <javafx.version>21.0.12</javafx.version>
+    <junit.version>6.1.2</junit.version>
     <mainClassName>ca.ciccc.silverBullet.SilverBulletApp</mainClassName>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- Aligns every JUnit artifact (api, engine, launcher) to one version -->
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
@@ -42,28 +55,17 @@
       <artifactId>javafx-base</artifactId>
       <version>${javafx.version}</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-web</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-swing</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-media</artifactId>
       <version>${javafx.version}</version>
     </dependency>
+    <!-- Aggregator brings the Jupiter API + engine so Surefire no longer has
+         to auto-provision the engine implicitly; version comes from junit-bom -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>6.1.2</version>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -71,10 +73,64 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>enforce-build-environment</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[21,)</version>
+                </requireJavaVersion>
+                <requireMavenVersion>
+                  <version>[3.9,)</version>
+                </requireMavenVersion>
+                <dependencyConvergence/>
+                <banDuplicatePomDependencyVersions/>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>2.44.5</version>
+        <configuration>
+          <java>
+            <palantirJavaFormat/>
+            <removeUnusedImports/>
+            <importOrder/>
+            <trimTrailingWhitespace/>
+            <endWithNewline/>
+          </java>
+        </configuration>
+        <executions>
+          <execution>
+            <id>spotless-check</id>
+            <!-- Runs during `mvn test`, which is what CI invokes -->
+            <phase>process-sources</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.4</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
         <configuration>
-          <release>12</release>
+          <release>21</release>
         </configuration>
       </plugin>
       <plugin>
@@ -82,7 +138,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>
         <configuration>
-          <release>12</release>
+          <release>21</release>
           <jlinkImageName>jlinkImage</jlinkImageName>
           <launcher>silverBullet</launcher>
           <mainClass>${mainClassName}</mainClass>

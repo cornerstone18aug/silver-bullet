@@ -21,124 +21,109 @@ import javafx.scene.paint.Color;
  */
 public class SettingsController extends AbstractMenuController {
 
-  private static SettingsController instance;
-  private static Scene SCENE;
+    private static SettingsController instance;
+    private static Scene SCENE;
 
-  @FXML
-  private ComboBox<Integer> howManyPlayersCombo;
-  @FXML
-  private ComboBox<Integer> gameLevelCombo;
-  @FXML
-  private ComboBox<WaitTime> waitTimeCombo;
+    @FXML
+    private ComboBox<Integer> howManyPlayersCombo;
 
-  static {
-    FXMLLoader fxmlLoader = new FXMLLoader();
-    try {
-      fxmlLoader.load(
-          SettingsController.class.getModule().getResourceAsStream(
-              "ca/ciccc/silverBullet/fxml/settings.fxml")
-      );
-    } catch (IOException e) {
-      e.printStackTrace();
+    @FXML
+    private ComboBox<Integer> gameLevelCombo;
+
+    @FXML
+    private ComboBox<WaitTime> waitTimeCombo;
+
+    static {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.load(SettingsController.class
+                    .getModule()
+                    .getResourceAsStream("ca/ciccc/silverBullet/fxml/settings.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = fxmlLoader.getRoot();
+        Scene scene = new Scene(parent);
+        scene.setFill(Color.TRANSPARENT);
+        SCENE = scene;
+        instance = fxmlLoader.getController();
     }
-    Parent parent = fxmlLoader.getRoot();
-    Scene scene = new Scene(parent);
-    scene.setFill(Color.TRANSPARENT);
-    SCENE = scene;
-    instance = fxmlLoader.getController();
-  }
 
-  /**
-   * Return singleton instance
-   *
-   * @return instance
-   */
-  public static SettingsController getInstance() {
-    synchronized (SettingsController.class) {
-      if (instance == null) {
-        instance = new SettingsController();
-      }
-      return instance;
-    }
-  }
-
-  public void show() {
-    if (howManyPlayersCombo.getItems().size() == 0) {
-      // Set combo values
-      this.howManyPlayersCombo.getItems()
-          .addAll(
-              Arrays.stream(ConstUtil.PLAYER_NUMBERS)
-                  .boxed()
-                  .collect(Collectors.toList())
-          );
-      this.gameLevelCombo.getItems()
-          .addAll(
-              Arrays.stream(ConstUtil.GAME_LEVEL_NUMBERS)
-                  .boxed()
-                  .collect(Collectors.toList())
-          );
-      this.waitTimeCombo.getItems().addAll(WaitTime.values());
-
-      // Set default value
-      this.howManyPlayersCombo.getSelectionModel().select(ConstUtil.DEFAULT_PLAYER_NUMBER_INDEX);
-      this.gameLevelCombo.getSelectionModel().select(ConstUtil.DEFAULT_GAME_LEVEL_INDEX);
-      this.waitTimeCombo.getSelectionModel().select(WaitTime.DEFAULT);
-
-    }
-    SilverBulletApp.primaryStage.setScene(SCENE);
-  }
-
-  private boolean validate() {
-    return !this.howManyPlayersCombo.getSelectionModel().isEmpty()
-        && !this.gameLevelCombo.getSelectionModel().isEmpty()
-        && !this.waitTimeCombo.getSelectionModel().isEmpty();
-  }
-
-  @FXML
-  public void onStartClicked() {
-
-    if (!validate()) {
-      ModalUtil.alert("INVALID SETTINGS",
-          "There is an empty option"
-      );
-    } else {
-      ModalUtil.confirm("START",
-          "Are you ready?",
-          () -> {
-            GameController.getInstance().show(
-                this.howManyPlayersCombo.getSelectionModel().getSelectedItem(),
-                this.gameLevelCombo.getSelectionModel().getSelectedItem(),
-                this.waitTimeCombo.getSelectionModel().getSelectedItem().getSeconds()
-            );
-            if (AbstractMenuController.MENU_CLIP.isPlaying()) {
-              AbstractMenuController.MENU_CLIP.stop();
-              AbstractMenuController.BATTLE_CLIP.play();
-              AbstractMenuController.BATTLE_CLIP.setCycleCount(999999);
-
+    /**
+     * Return singleton instance
+     *
+     * @return instance
+     */
+    public static SettingsController getInstance() {
+        synchronized (SettingsController.class) {
+            if (instance == null) {
+                instance = new SettingsController();
             }
-          }
-      );
+            return instance;
+        }
     }
-  }
 
-  @FXML
-  public void onBackToMenuClicked() {
-    ModalUtil.confirm("BACK TO MENU",
-        "Go back to menu?",
-        () -> MenuController.getInstance().show()
-    );
-  }
+    public void show() {
+        if (howManyPlayersCombo.getItems().size() == 0) {
+            // Set combo values
+            this.howManyPlayersCombo
+                    .getItems()
+                    .addAll(Arrays.stream(ConstUtil.PLAYER_NUMBERS).boxed().collect(Collectors.toList()));
+            this.gameLevelCombo
+                    .getItems()
+                    .addAll(Arrays.stream(ConstUtil.GAME_LEVEL_NUMBERS).boxed().collect(Collectors.toList()));
+            this.waitTimeCombo.getItems().addAll(WaitTime.values());
 
-  @FXML
-  public void OnEntered() {
-  }
+            // Set default value
+            this.howManyPlayersCombo.getSelectionModel().select(ConstUtil.DEFAULT_PLAYER_NUMBER_INDEX);
+            this.gameLevelCombo.getSelectionModel().select(ConstUtil.DEFAULT_GAME_LEVEL_INDEX);
+            this.waitTimeCombo.getSelectionModel().select(WaitTime.DEFAULT);
+        }
+        SilverBulletApp.primaryStage.setScene(SCENE);
+    }
 
-  @FXML
-  public void OnPressed() {
-  }
+    private boolean validate() {
+        return !this.howManyPlayersCombo.getSelectionModel().isEmpty()
+                && !this.gameLevelCombo.getSelectionModel().isEmpty()
+                && !this.waitTimeCombo.getSelectionModel().isEmpty();
+    }
 
-  @FXML
-  public void OnExited() {
-  }
+    @FXML
+    public void onStartClicked() {
 
+        if (!validate()) {
+            ModalUtil.alert("INVALID SETTINGS", "There is an empty option");
+        } else {
+            ModalUtil.confirm("START", "Are you ready?", () -> {
+                GameController.getInstance()
+                        .show(
+                                this.howManyPlayersCombo.getSelectionModel().getSelectedItem(),
+                                this.gameLevelCombo.getSelectionModel().getSelectedItem(),
+                                this.waitTimeCombo
+                                        .getSelectionModel()
+                                        .getSelectedItem()
+                                        .getSeconds());
+                if (AbstractMenuController.MENU_CLIP.isPlaying()) {
+                    AbstractMenuController.MENU_CLIP.stop();
+                    AbstractMenuController.BATTLE_CLIP.play();
+                    AbstractMenuController.BATTLE_CLIP.setCycleCount(999999);
+                }
+            });
+        }
+    }
+
+    @FXML
+    public void onBackToMenuClicked() {
+        ModalUtil.confirm("BACK TO MENU", "Go back to menu?", () -> MenuController.getInstance()
+                .show());
+    }
+
+    @FXML
+    public void OnEntered() {}
+
+    @FXML
+    public void OnPressed() {}
+
+    @FXML
+    public void OnExited() {}
 }

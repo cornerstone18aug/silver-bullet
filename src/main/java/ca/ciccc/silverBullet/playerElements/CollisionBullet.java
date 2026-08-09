@@ -13,85 +13,82 @@ import javafx.util.Duration;
 
 public class CollisionBullet extends Rectangle {
 
-  private AnimationTimer timer;
-  private Player playerShooting;
-  private final GridBoard board;
+    private AnimationTimer timer;
+    private Player playerShooting;
+    private final GridBoard board;
 
-  private Bullet visualBullet;
+    private Bullet visualBullet;
 
-  public CollisionBullet(Move startPosition, Move endPosition, Player player, Bullet otherBulletRef,
-      GridBoard board) {
-      super(5, 5);
+    public CollisionBullet(
+            Move startPosition, Move endPosition, Player player, Bullet otherBulletRef, GridBoard board) {
+        super(5, 5);
 
-      visualBullet = otherBulletRef;
+        visualBullet = otherBulletRef;
 
-      playerShooting = player;
-      this.board = board;
+        playerShooting = player;
+        this.board = board;
 
-      timer = new AnimationTimer() {
-        @Override
-        public void handle(long l) {
-          checkOverlap();
-        }
-      };
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                checkOverlap();
+            }
+        };
 
-      timer.start();
+        timer.start();
 
-      GridNode startNode = board.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
-      GridNode endNode = board.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
-      setTranslateX(startNode.getScreenX() + 5);
-      setTranslateY(startNode.getScreenY());
-      shootMovement(startNode, endNode, player);
-  }
-
-  private void shootMovement(GridNode startPos, GridNode endPos, Player player) {
-    TranslateTransition transition = new TranslateTransition();
-
-
-    this.setFill(Color.TRANSPARENT);
-    if (player.getFacingDirection().equals(Directions.SOUTH) || player.getFacingDirection()
-        .equals(Directions.NORTH)) {
-
-      transition.setFromX(startPos.getScreenX() + 5);
-      transition.setToX(endPos.getScreenX() + 5);
-
-    } else {
-      transition.setFromX(startPos.getScreenX() + 5);
-      transition.setToX(endPos.getScreenX() + 5);
+        GridNode startNode = board.getNodeFromGrid(startPosition.getMoveX(), startPosition.getMoveY());
+        GridNode endNode = board.getNodeFromGrid(endPosition.getMoveX(), endPosition.getMoveY());
+        setTranslateX(startNode.getScreenX() + 5);
+        setTranslateY(startNode.getScreenY());
+        shootMovement(startNode, endNode, player);
     }
 
-    transition.setFromY(startPos.getScreenY());
-    transition.setInterpolator(Interpolator.EASE_IN);
-    transition.setOnFinished(e -> onBulletStop());
+    private void shootMovement(GridNode startPos, GridNode endPos, Player player) {
+        TranslateTransition transition = new TranslateTransition();
 
-    transition.setDuration(Duration.seconds(.5));
-    transition.setToY(endPos.getScreenY());
-    transition.setNode(this);
-    transition.play();
-  }
+        this.setFill(Color.TRANSPARENT);
+        if (player.getFacingDirection().equals(Directions.SOUTH)
+                || player.getFacingDirection().equals(Directions.NORTH)) {
 
-  public void checkOverlap(){
-      Player playerToRemove = null;
-    for(int i = 0; i < board.players.size(); i++)
-      if(!board.players.get(i).equals(playerShooting) &&
-              getBoundsInParent().intersects(board.players.get(i).getPlayerNode().getBoundsInParent())){
+            transition.setFromX(startPos.getScreenX() + 5);
+            transition.setToX(endPos.getScreenX() + 5);
 
-          playerToRemove = board.players.get(i);
+        } else {
+            transition.setFromX(startPos.getScreenX() + 5);
+            transition.setToX(endPos.getScreenX() + 5);
+        }
 
+        transition.setFromY(startPos.getScreenY());
+        transition.setInterpolator(Interpolator.EASE_IN);
+        transition.setOnFinished(e -> onBulletStop());
 
-      }
-      if(playerToRemove != null){
+        transition.setDuration(Duration.seconds(.5));
+        transition.setToY(endPos.getScreenY());
+        transition.setNode(this);
+        transition.play();
+    }
 
-          timer.stop();
-          playerToRemove.Die();
-          onBulletStop();
-      }
+    public void checkOverlap() {
+        Player playerToRemove = null;
+        for (int i = 0; i < board.players.size(); i++)
+            if (!board.players.get(i).equals(playerShooting)
+                    && getBoundsInParent()
+                            .intersects(board.players.get(i).getPlayerNode().getBoundsInParent())) {
 
-  }
+                playerToRemove = board.players.get(i);
+            }
+        if (playerToRemove != null) {
 
-  private void onBulletStop() {
-      timer.stop();
-    board.gridBoard.getChildren().remove(this);
-    visualBullet.onBulletStop();
-  }
+            timer.stop();
+            playerToRemove.Die();
+            onBulletStop();
+        }
+    }
+
+    private void onBulletStop() {
+        timer.stop();
+        board.gridBoard.getChildren().remove(this);
+        visualBullet.onBulletStop();
+    }
 }

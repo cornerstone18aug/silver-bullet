@@ -10,9 +10,9 @@ import ca.ciccc.silverBullet.playerElements.Player;
  */
 public interface GameSceneEvents {
 
-  /** Remove a knocked-out player's visuals (its board node and timer image). */
-  void removePlayerVisuals(Player player);
+    /** Remove a knocked-out player's visuals (its board node and timer image). */
+    void removePlayerVisuals(Player player);
 
-  /** Announce the winner and show the game-over screen. */
-  void showGameOver(int winningPlayerNumber);
+    /** Announce the winner and show the game-over screen. */
+    void showGameOver(int winningPlayerNumber);
 }
