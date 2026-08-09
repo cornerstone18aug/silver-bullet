@@ -32,12 +32,12 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="80.0" opacity="0.4" stroke="#ffffff00" strokeType="INSIDE" width="900.0" />
          </children>
       </StackPane>
-      <VBox alignment="CENTER" layoutX="-5.0" layoutY="202.0" prefWidth="900.0" AnchorPane.bottomAnchor="276.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="202.0">
+      <VBox alignment="CENTER" layoutX="-5.0" layoutY="202.0" prefWidth="900.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="202.0">
          <effect>
             <DropShadow />
          </effect>
          <children>
-            <HBox prefHeight="150.0">
+            <HBox prefHeight="90.0">
                <children>
                   <StackPane alignment="CENTER_LEFT" prefWidth="400.0">
                      <children>
@@ -61,7 +61,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="150.0">
+            <HBox prefHeight="90.0">
                <children>
                   <StackPane alignment="TOP_LEFT" prefWidth="400.0">
                      <HBox.margin>
@@ -78,6 +78,27 @@
                   <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
                      <children>
                         <ComboBox fx:id="gameLevelCombo" prefWidth="150.0" promptText="Select number" StackPane.alignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+            <HBox prefHeight="90.0">
+               <children>
+                  <StackPane alignment="TOP_LEFT" prefWidth="400.0">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Text stroke="#ffffff82" strokeLineCap="BUTT" strokeLineJoin="BEVEL" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="2.0" text="- Command wait time" StackPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Pokemon GB" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefWidth="400.0">
+                     <children>
+                        <ComboBox fx:id="waitTimeCombo" prefWidth="150.0" promptText="Select wait time" StackPane.alignment="CENTER" />
                      </children>
                   </StackPane>
                </children>

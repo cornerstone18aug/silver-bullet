@@ -1,6 +1,7 @@
 package ca.ciccc.silverBullet.controller;
 
 import ca.ciccc.silverBullet.SilverBulletApp;
+import ca.ciccc.silverBullet.enums.gameplay.WaitTime;
 import ca.ciccc.silverBullet.utils.ConstUtil;
 import ca.ciccc.silverBullet.utils.ModalUtil;
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class SettingsController extends AbstractMenuController {
   private ComboBox<Integer> howManyPlayersCombo;
   @FXML
   private ComboBox<Integer> gameLevelCombo;
+  @FXML
+  private ComboBox<WaitTime> waitTimeCombo;
 
   static {
     FXMLLoader fxmlLoader = new FXMLLoader();
@@ -74,10 +77,12 @@ public class SettingsController extends AbstractMenuController {
                   .boxed()
                   .collect(Collectors.toList())
           );
+      this.waitTimeCombo.getItems().addAll(WaitTime.values());
 
       // Set default value
       this.howManyPlayersCombo.getSelectionModel().select(ConstUtil.DEFAULT_PLAYER_NUMBER_INDEX);
       this.gameLevelCombo.getSelectionModel().select(ConstUtil.DEFAULT_GAME_LEVEL_INDEX);
+      this.waitTimeCombo.getSelectionModel().select(WaitTime.DEFAULT);
 
     }
     SilverBulletApp.primaryStage.setScene(SCENE);
@@ -85,7 +90,8 @@ public class SettingsController extends AbstractMenuController {
 
   private boolean validate() {
     return !this.howManyPlayersCombo.getSelectionModel().isEmpty()
-        && !this.gameLevelCombo.getSelectionModel().isEmpty();
+        && !this.gameLevelCombo.getSelectionModel().isEmpty()
+        && !this.waitTimeCombo.getSelectionModel().isEmpty();
   }
 
   @FXML
@@ -101,7 +107,8 @@ public class SettingsController extends AbstractMenuController {
           () -> {
             GameController.getInstance().show(
                 this.howManyPlayersCombo.getSelectionModel().getSelectedItem(),
-                this.gameLevelCombo.getSelectionModel().getSelectedItem()
+                this.gameLevelCombo.getSelectionModel().getSelectedItem(),
+                this.waitTimeCombo.getSelectionModel().getSelectedItem().getSeconds()
             );
             if (AbstractMenuController.MENU_CLIP.isPlaying()) {
               AbstractMenuController.MENU_CLIP.stop();

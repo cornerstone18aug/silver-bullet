@@ -21,12 +21,15 @@ public class GameScene extends Pane {
   private int currentActionNumber = 0;
   private int controllingPlayer = 0;
   static GameScene instance;
-  private double turnTimer = 10;
+  private final int turnDuration;
+  private double turnTimer;
   TimerDisplay timerDisplay;
   private boolean isPaused;
   private Prompter prompter = ModalUtil::alertWithCallback;
 
-  private GameScene(int lvl, int numberOfPlayers) {
+  private GameScene(int lvl, int numberOfPlayers, int turnSeconds) {
+    this.turnDuration = turnSeconds;
+    this.turnTimer = turnSeconds;
     BackgroundGrid backgroundGrid = new BackgroundGrid();
     gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), lvl);
     instance = this;
@@ -77,6 +80,7 @@ public class GameScene extends Pane {
   public static class Builder {
     private int playerNumber;
     private int level;
+    private int turnSeconds = 10;
 
     public Builder player(int playerNumber) {
       this.playerNumber = playerNumber;
@@ -88,8 +92,13 @@ public class GameScene extends Pane {
       return this;
     }
 
+    public Builder turnSeconds(int turnSeconds) {
+      this.turnSeconds = turnSeconds;
+      return this;
+    }
+
     public GameScene build() {
-      return new GameScene(this.level, playerNumber);
+      return new GameScene(this.level, playerNumber, turnSeconds);
     }
 
   }
@@ -103,6 +112,11 @@ public class GameScene extends Pane {
   // Package-private accessor so the turn/planning flow can be smoke-tested.
   GridBoard getGameBoard() {
     return gameBoard;
+  }
+
+  // Package-private accessor exposing the countdown for tests.
+  double getTurnTimer() {
+    return turnTimer;
   }
 
   // Package-private seam so tests can auto-confirm the turn-flow dialogs.
@@ -246,14 +260,14 @@ public class GameScene extends Pane {
       timerDisplay.setHighlight(controllingPlayer);
       prompter.prompt("Next Turn", "Next Player's Turn", () -> {
         isPaused = false;
-        turnTimer = 10;
+        turnTimer = turnDuration;
       });
 
 
     } else {
       timerDisplay.highlightAll();
       prompter.prompt("Execute", "Move to execution?", () -> {
-        turnTimer = 10;
+        turnTimer = turnDuration;
         currentActionNumber = 0;
         controllingPlayer = 0;
         isExecuting = true;
