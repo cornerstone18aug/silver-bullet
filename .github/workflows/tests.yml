@@ -29,8 +29,10 @@ jobs:
           java-version: '21'
           cache: maven
 
+      # xvfb provides a virtual display so tests that start the JavaFX toolkit
+      # (e.g. constructing players/board) can run on the headless runner.
       - name: Run tests
-        run: mvn -B test
+        run: xvfb-run -a mvn -B test
 
       # Publish the JaCoCo coverage report generated during the test phase.
       - name: Upload coverage report
