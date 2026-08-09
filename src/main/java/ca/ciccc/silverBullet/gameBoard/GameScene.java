@@ -23,6 +23,7 @@ public class GameScene extends Pane {
   private double turnTimer = 10;
   TimerDisplay timerDisplay;
   private boolean isPaused;
+  private Prompter prompter = ModalUtil::alertWithCallback;
 
   private GameScene(int lvl, int numberOfPlayers) {
     BackgroundGrid backgroundGrid = new BackgroundGrid();
@@ -103,6 +104,11 @@ public class GameScene extends Pane {
     return gameBoard;
   }
 
+  // Package-private seam so tests can auto-confirm the turn-flow dialogs.
+  void setPrompter(Prompter prompter) {
+    this.prompter = prompter;
+  }
+
   public void boardUpdate() {
     if (!isExecuting && !isPaused) {
 
@@ -180,7 +186,7 @@ public class GameScene extends Pane {
     currentActionNumber = 0;
     isPaused = true;
     timerDisplay.setHighlight(controllingPlayer);
-    ModalUtil.alertWithCallback("Planning Phase", "Move to planning phase?", () -> {isPaused = false;
+    prompter.prompt("Planning Phase", "Move to planning phase?", () -> {isPaused = false;
       highlightActions(gameBoard.players.get(controllingPlayer));
     });
   }
@@ -227,7 +233,7 @@ public class GameScene extends Pane {
       controllingPlayer++;
       highlightActions(gameBoard.players.get(controllingPlayer));
       timerDisplay.setHighlight(controllingPlayer);
-      ModalUtil.alertWithCallback("Next Turn", "Next Player's Turn", () -> {
+      prompter.prompt("Next Turn", "Next Player's Turn", () -> {
         isPaused = false;
         turnTimer = 10;
       });
@@ -235,7 +241,7 @@ public class GameScene extends Pane {
 
     } else {
       timerDisplay.highlightAll();
-      ModalUtil.alertWithCallback("Execute", "Move to execution?", () -> {
+      prompter.prompt("Execute", "Move to execution?", () -> {
         turnTimer = 10;
         currentActionNumber = 0;
         controllingPlayer = 0;
