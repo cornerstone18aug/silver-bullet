@@ -1,6 +1,6 @@
 # Silver Bullet
 ## About
-- JavaFX 2 Player Game
+- JavaFX 2–4 player game
 - For Java Final Project in CICCC
 
 ## Screen shot
