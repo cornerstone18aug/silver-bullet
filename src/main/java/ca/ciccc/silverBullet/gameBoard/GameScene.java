@@ -13,14 +13,13 @@ import ca.ciccc.silverBullet.utils.ModalUtil;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
-public class GameScene extends Pane {
+public class GameScene extends Pane implements GameSceneEvents {
 
   private GridBoard gameBoard;
   private double t = 0;
   private boolean isExecuting;
   private int currentActionNumber = 0;
   private int controllingPlayer = 0;
-  static GameScene instance;
   private final int turnDuration;
   private double turnTimer;
   TimerDisplay timerDisplay;
@@ -32,7 +31,7 @@ public class GameScene extends Pane {
     this.turnTimer = turnSeconds;
     BackgroundGrid backgroundGrid = new BackgroundGrid();
     gameBoard = new GridBoard(GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), GameSceneCoordinatesEnum.SIZE_BOARD_TILE.get(), lvl);
-    instance = this;
+    gameBoard.setSceneEvents(this);
 
     this.getChildren().add(backgroundGrid.gridPane);
     this.getChildren().add(gameBoard.gridBoard);
@@ -103,7 +102,14 @@ public class GameScene extends Pane {
 
   }
 
-  void showGameOver(int playerWhoWon){
+  @Override
+  public void removePlayerVisuals(Player player) {
+    this.getChildren().remove(player.getPlayerNode());
+    timerDisplay.removePlayerImage(player);
+  }
+
+  @Override
+  public void showGameOver(int playerWhoWon){
     stopAll();
     GameOverScreen gameOverScreen = new GameOverScreen(playerWhoWon);
     this.getChildren().add(gameOverScreen);

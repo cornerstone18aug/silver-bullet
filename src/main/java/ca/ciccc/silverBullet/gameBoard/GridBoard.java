@@ -31,6 +31,7 @@ public class GridBoard {
   private GridNode[] playerStartLocation;
   private int gridSizeX;
   private int gridSizeY;
+  private GameSceneEvents sceneEvents;
   private static final String PICKUP_IMAGE_PATH = "/images/Tiles/Pickup.png";
 
   GridBoard(int sizeX, int sizeY, int level) {
@@ -185,13 +186,16 @@ public class GridBoard {
     return endpoint == null ? null : new Move(endpoint[0], endpoint[1]);
   }
 
+  void setSceneEvents(GameSceneEvents sceneEvents) {
+    this.sceneEvents = sceneEvents;
+  }
+
   public void removePlayer(Player playerToRemove) {
-    GameScene.instance.getChildren().remove(playerToRemove.getPlayerNode());
+    sceneEvents.removePlayerVisuals(playerToRemove);
     playerToRemove.getPlayerActionCounter().blackout();
-    GameScene.instance.timerDisplay.removePlayerImage(playerToRemove);
 
     detachPlayerFromBoard(playerToRemove)
-        .ifPresent(GameScene.instance::showGameOver);
+        .ifPresent(sceneEvents::showGameOver);
   }
 
   /**
