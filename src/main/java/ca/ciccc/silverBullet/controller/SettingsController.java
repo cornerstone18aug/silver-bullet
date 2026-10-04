@@ -114,8 +114,10 @@ public class SettingsController extends AbstractMenuController {
 
     @FXML
     public void onBackToMenuClicked() {
-        ModalUtil.confirm("BACK TO MENU", "Go back to menu?", () -> MenuController.getInstance()
-                .show());
+        ModalUtil.confirm(
+                "BACK TO MENU",
+                "Go back to menu?",
+                () -> MenuController.getInstance().show());
     }
 
     @FXML
